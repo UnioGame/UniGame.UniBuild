@@ -1,71 +1,50 @@
 ﻿namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.Generator
 {
     using System.Collections.Generic;
+    using System.Linq;
     using BuildConfiguration;
-    using CodeWriter;
+    using Core.Runtime.Extension;
+    using global::CodeWriter.Editor.UnityTools;
     using UniGreenModules.UniCore.EditorTools.Editor.AssetOperations;
     using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild;
+    using UnityEditor;
 
-    public struct MethodData
-    {
-        public string Name;
-        public string Content;
-    }
-    
     public class BuildMenuGenerator
     {
         private readonly BuildConfigurationBuilder buildConfigurationBuilder;
+        private const string _menuTemplate = "[MenuItem(\"UniGame/UniBuild/UniBuild_{0}\")]\n";
 
-        public BuildMenuGenerator()
+        public ScriptData CreateBuilderScriptBody()
         {
-            buildConfigurationBuilder = new BuildConfigurationBuilder(this);
+            var scriptData = new ScriptData() {
+                Namespace = "namespace UniGame.UnityBuild",
+                Name = "UniPlatformBuilder",
+                Usings = new [] {
+                    typeof(MenuItem).Namespace,
+                    typeof(UniBuildTool).Namespace
+                },
+                Methods = GetBuildMethods().ToArray()
+            };
+
+            return scriptData;
         }
 
-        public BuildConfigurationBuilder BuildConfigurationBuilder {
-            get { return buildConfigurationBuilder; }
-        }
-
-        public string CreateBuilderScriptBody()
+        public string[] GetBuildMethods()
         {
-            var methods = GetBuildMethods();
-            var writer = new CodeWriter(CodeWriterSettings.CSharpDefault);
-            var builderNamespace = typeof(UniBuildTool).Namespace;
-            using (writer.B("namespace UniGame.UnityBuild")) {
-                writer._("using UnityEditor;");
-                writer._($"using {builderNamespace};\n\n");
-
-                using (writer.B("public static class UniPlatformBuilder")) {
-                    foreach (var buildMethod in methods) {
-                        var method = buildMethod.Value;
-                        writer._($"[MenuItem(\"UniGame/UniBuild/UniBuild_{method.Name}\")]");
-                        writer._($"{method.Content}\n");
-                    }
-                }
-
-            }
-
-            return writer.ToString();
-        }
-
-        public Dictionary<UniBuildCommandsMap, MethodData> GetBuildMethods()
-        {
-            var map = new Dictionary<UniBuildCommandsMap,MethodData>();
+            var map = new List<string>();
             var commands = AssetEditorTools.GetAssets<UniBuildCommandsMap>();
             foreach (var command in commands) {
-                map[command] = CreateBuildMethod(command);
+                map.Add(CreateBuildMethod(command));
             }
-            return map;
+            return map.ToArray();
         }
 
-        public MethodData CreateBuildMethod(UniBuildCommandsMap config)
+        public string CreateBuildMethod(UniBuildCommandsMap config)
         {
-            var name = config.ItemName.Replace(" ", string.Empty);
+            var name = config.ItemName.RemoveSpecialAndDotsCharacters();
             var id = AssetEditorTools.GetGUID(config);
-            var method = $"public static void Build_{name}() => UniBuildTool.BuildByConfigurationId(\"{id}\");";
-            return new MethodData() {
-                Content = method,
-                Name = name,
-            };
+            var method = $"{string.Format(_menuTemplate,name)} public static void Build_{name}() => UniBuildTool.BuildByConfigurationId(\"{id}\");";
+            return method;
         }
     }
     
