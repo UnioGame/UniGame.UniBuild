@@ -4,7 +4,7 @@
   "displayName": "UniGame Unity Scriptable Build Pipeline",
   "description": "Configurable unity project build",
   "unity": "2019.3",
-  "version": "2020.0.0",
+  "version": "2020.0.2",
   "keywords": [
     "Build",
     "Pipeline"
@@ -14,6 +14,6 @@
     "com.unity.scriptablebuildpipeline": "1.5.10",
     "com.unity.addressables": "1.10.0",
     "com.unity.test-framework": "1.1.14",
-    "com.unigame.codewriter": "2020.0.0"
+    "com.unigame.codewriter": "2020.0.2"
   }
 }
