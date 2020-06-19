@@ -3,7 +3,7 @@
     using UnityEditor;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "UnityBuild/PreBuildCommands/Disable Unity Logo", fileName = "DisableUnityLogo")]
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Disable Unity Logo", fileName = "DisableUnityLogo")]
 
     public class DisableUnityLogoCommand : UnityPreBuildCommand
     {

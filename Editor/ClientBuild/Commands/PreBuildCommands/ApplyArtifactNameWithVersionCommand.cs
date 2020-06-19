@@ -8,7 +8,7 @@ namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildComm
     using UnityEditor;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "UnityBuild/PreBuildCommands/Apply Artifact Name With Version", fileName = "ApplyArtifactNameWithVersion")]
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Apply Artifact Name With Version", fileName = "ApplyArtifactNameWithVersion")]
     public class ApplyArtifactNameWithVersionCommand : UnityPreBuildCommand
     {
         private const string nameFormatTemplate = "{0}-{1}";
@@ -19,7 +19,7 @@ namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildComm
         public bool useNameTemplate = false;
         
         public string artifactNameTemplate = string.Empty;
-        [Tooltip("use '.' before file extension")]
+        [Header("Extension: use '.' before file extension")]
         public string artifactExtension = "";
         
         public override void Execute(IUniBuilderConfiguration buildParameters)

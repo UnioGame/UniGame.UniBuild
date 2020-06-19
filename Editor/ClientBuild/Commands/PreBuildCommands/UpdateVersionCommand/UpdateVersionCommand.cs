@@ -8,7 +8,7 @@
     /// <summary>
     /// update current project version
     /// </summary>
-    [CreateAssetMenu(menuName = "UnityBuild/PreBuildCommands/Update Project Version", fileName = "UpdateVersionCommand")]
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Update Project Version", fileName = "UpdateVersionCommand")]
     public class UpdateVersionCommand : UnityPreBuildCommand
     {
         [SerializeField]

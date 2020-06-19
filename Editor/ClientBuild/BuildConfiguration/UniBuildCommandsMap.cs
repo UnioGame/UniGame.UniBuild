@@ -19,6 +19,7 @@ namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration
 
 #if  ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty()]
+        [Sirenix.OdinInspector.HideLabel()]
 #endif
         [SerializeField]
         private UniBuildConfigurationData _buildData = new UniBuildConfigurationData();

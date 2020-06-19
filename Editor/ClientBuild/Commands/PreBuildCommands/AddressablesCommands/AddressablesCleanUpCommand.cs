@@ -17,7 +17,7 @@
         CleanBuildPipelineCache,
     }
     
-    [CreateAssetMenu(menuName = "UnityBuild/PreBuildCommands/Addressables Cleanup", fileName = nameof(AddressablesCleanUpCommand))]
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Addressables Cleanup", fileName = nameof(AddressablesCleanUpCommand))]
     public class AddressablesCleanUpCommand : UnityPreBuildCommand
     {
                 
