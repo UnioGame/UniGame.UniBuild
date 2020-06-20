@@ -10,7 +10,7 @@
     {
         private static string _path = "UniGame.Generated/UniBuild/Editor/BuildMethods.cs";
 
-        [MenuItem("UniGame/UniBuild/Rebuild Menu")]
+        [MenuItem("UniGame/Uni Build/Rebuild Menu")]
         public static void Rebuild()
         {
             var generator = new BuildMenuGenerator();
