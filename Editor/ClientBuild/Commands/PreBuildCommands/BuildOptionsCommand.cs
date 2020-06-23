@@ -12,13 +12,11 @@
     [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Apply BuildOptions", fileName = "BuildOptionsCommand")]
     public class BuildOptionsCommand : UnityPreBuildCommand
     {
-
-        public BuildOptions BuildOptions { get; protected set; }
+        [SerializeField]
+        public BuildOptions[] _buildOptions = new BuildOptions[] {BuildOptions.None};
 
         public override void Execute(IUniBuilderConfiguration configuration)
         {
-            BuildOptions = BuildOptions.None;
-            
             var enumBuildOptionsParser = new EnumArgumentParser<BuildOptions>();
             var buildOptions = enumBuildOptionsParser.Parse(configuration.Arguments);
             var options = BuildOptions.None;
@@ -27,7 +25,9 @@
                 options |= buildOptions[i];
             }
 
-            BuildOptions = options;
+            foreach (var buildValue in _buildOptions) {
+                options |= buildValue;
+            }
             
             configuration.BuildParameters.SetBuildOptions(options,false);
         }

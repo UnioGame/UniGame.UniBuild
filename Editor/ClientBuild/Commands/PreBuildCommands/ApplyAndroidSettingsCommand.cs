@@ -4,29 +4,8 @@ using UnityEngine;
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
-    using System;
     using UnityEditor;
 
-    [Serializable]
-    public class UniAndroidSettings
-    {
-        public AndroidBuildType AndroidBuildType = AndroidBuildType.Development;
-
-        public AndroidArchitecture AndroidArchitecture = AndroidArchitecture.ARMv7;
-
-        public ApiCompatibilityLevel ApiCompatibilityLevel = ApiCompatibilityLevel.NET_4_6;
-        
-        public bool BuildAppBundle = false;
-
-        public bool AllowDebugging = false;
-        
-        public bool IsDevelopment = false;
-
-        public bool ExportAsGoogleAndroidProject;
-
-        public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;
-    }
-    
     [CreateAssetMenu(
         menuName = "UniGame/UniBuild/Commands/ApplyAndroidSettings", 
         fileName              = nameof(ApplyAndroidSettingsCommand))]
@@ -45,7 +24,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
             EditorUserBuildSettings.allowDebugging = AndroidSettings.AllowDebugging;
             EditorUserBuildSettings.exportAsGoogleAndroidProject = AndroidSettings.ExportAsGoogleAndroidProject;
             EditorUserBuildSettings.development = AndroidSettings.IsDevelopment;
-
+            
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
             PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android,AndroidSettings.ScriptingBackend);
