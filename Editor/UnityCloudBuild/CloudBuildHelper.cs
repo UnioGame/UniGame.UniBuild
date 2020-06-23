@@ -32,7 +32,7 @@ namespace UniGame
         public static void PreExport(DummyManifest manifest)
         {
 #endif
-            GameLog.Log("UNITY BUILD: START PreExport COMMAND");
+            GameLog.Log("UNI BUILD: START PreExport COMMAND");
             
             args = new CloudBuildArgs(
                 manifest.GetValue<int>("buildNumber"),
@@ -43,7 +43,7 @@ namespace UniGame
                 manifest.GetValue<string>("cloudBuildTargetName")
             );
 
-            GameLog.Log($"UNITY BUILD: ARGS\n {args}");
+            GameLog.Log($"UNI BUILD: ARGS\n {args}");
             
             var parameters = CreateCommandParameters();
             var builder    = new UnityPlayerBuilder();
@@ -53,7 +53,7 @@ namespace UniGame
 
         public static void PostExport(string exportPath)
         {
-            GameLog.Log($"UNITY BUILD: START PostExport Path {exportPath} COMMAND");
+            GameLog.Log($"UNI BUILD: START PostExport Path {exportPath} COMMAND");
             
             if (string.IsNullOrEmpty(exportPath)) {
                 Debug.LogError("ExportPath is EMPTY PreExport methods can be skipped");
