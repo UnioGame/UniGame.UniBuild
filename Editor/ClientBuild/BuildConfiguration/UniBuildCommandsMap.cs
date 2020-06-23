@@ -13,7 +13,7 @@ namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration
     using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands;
     using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces;
 
-    [CreateAssetMenu(menuName = "UnityBuild/UniBuildConfiguration", fileName = nameof(UniBuildCommandsMap))]
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration", fileName = nameof(UniBuildCommandsMap))]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
     {
 

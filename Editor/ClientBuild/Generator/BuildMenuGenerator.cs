@@ -12,7 +12,7 @@
     public class BuildMenuGenerator
     {
         private readonly BuildConfigurationBuilder buildConfigurationBuilder;
-        private const string _menuTemplate = "[MenuItem(\"UniGame/UniBuild/UniBuild_{0}\")]\n";
+        private const string _menuTemplate = "[MenuItem(\"UniGame/Uni Build/UniBuild_{0}\")]\n";
 
         public ScriptData CreateBuilderScriptBody()
         {
