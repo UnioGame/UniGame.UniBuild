@@ -1,7 +1,6 @@
-﻿using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces;
-
-namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands.AddressablesCommands
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.AddressablesCommands
 {
+    using Interfaces;
     using UnityEditor.AddressableAssets.Settings;
     using UnityEngine;
 

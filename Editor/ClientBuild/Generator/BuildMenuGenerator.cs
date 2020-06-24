@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.Generator
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -6,7 +6,6 @@
     using Core.Runtime.Extension;
     using global::CodeWriter.Editor.UnityTools;
     using UniGreenModules.UniCore.EditorTools.Editor.AssetOperations;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild;
     using UnityEditor;
 
     public class BuildMenuGenerator
@@ -17,7 +16,7 @@
         public ScriptData CreateBuilderScriptBody()
         {
             var scriptData = new ScriptData() {
-                Namespace = "namespace UniGame.UnityBuild",
+                Namespace = "namespace UniGame.UniBuild",
                 Name = "UniPlatformBuilder",
                 Usings = new [] {
                     typeof(MenuItem).Namespace,

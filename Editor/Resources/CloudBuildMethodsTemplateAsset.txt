@@ -1,0 +1,51 @@
+
+#if UNITY_CLOUD_BUILD
+        public static void PreExport%CONFIG_NAME%(UnityEngine.CloudBuild.BuildManifestObject manifest) {
+#else
+        public static void PreExport%CONFIG_NAME%(DummyManifest manifest)
+        {
+#endif
+            GameLog.Log("UNI BUILD: START PreExport COMMAND");
+            
+            args = new CloudBuildArgs(
+                manifest.GetValue<int>("buildNumber"),
+                manifest.GetValue<string>("bundleId"),
+                manifest.GetValue<string>("projectId"),
+                manifest.GetValue<string>("scmCommitId"),
+                manifest.GetValue<string>("scmBranch"),
+                manifest.GetValue<string>("cloudBuildTargetName")
+            );
+
+            GameLog.Log($"UNI BUILD: ARGS\n {args}");
+            
+            var parameters = CreateCommandParameters();
+            var builder    = new UnityPlayerBuilder();
+
+            var guid = "%BUILDMAP-GUID%";
+            var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
+            builder.ExecuteCommands<UnityPreBuildCommand>(parameters,configuration,x => x.Execute(parameters));
+        }
+
+        public static void PostExport%CONFIG_NAME%(string exportPath)
+        {
+            GameLog.Log($"UNI BUILD: START PostExport Path {exportPath} COMMAND");
+            
+            if (string.IsNullOrEmpty(exportPath)) {
+                Debug.LogError("ExportPath is EMPTY PreExport methods can be skipped");
+            }
+
+            if (args == null) {
+                Debug.LogError("Error: PostExport skipped because args is NULL");
+                return;
+            }
+
+            var parameters = CreateCommandParameters();
+            var builder    = new UnityPlayerBuilder();
+
+            var guid          = "%BUILDMAP-GUID%";
+            var assetPath     = AssetDatabase.GUIDToAssetPath(guid);
+            var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
+            builder.ExecuteCommands<UnityPostBuildCommand>(parameters,configuration,x => x.Execute(parameters, null));
+        }
+        

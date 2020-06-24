@@ -1,10 +1,10 @@
-﻿namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Abstract
 {
     using System;
     using System.Collections.Generic;
+    using Interfaces;
     using UniGreenModules.UniCore.EditorTools.Editor.AssetOperations;
     using UniGreenModules.UniCore.Runtime.Interfaces;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces;
 
     public interface IUniBuildCommandsMap : 
         IUnityBuildCommandValidator,

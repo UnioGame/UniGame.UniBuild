@@ -1,19 +1,25 @@
 
 
 //Use UniGame.CloudBuildHelper.[PreExport || PostExport]
-namespace UniGame
+namespace UniModules.UniGame.UniBuild.Editor.UnityCloudBuild
 {
     using System;
+    using ClientBuild;
+    using ClientBuild.BuildConfiguration;
+    using ClientBuild.Commands.PostBuildCommands;
+    using ClientBuild.Commands.PreBuildCommands;
+    using ClientBuild.Extensions;
+    using ClientBuild.Interfaces;
     using UniCore.Runtime.ProfilerTools;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PostBuildCommands;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Extensions;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces;
-    using UniGreenModules.UniGame.UnityBuild.Editor.UnityCloudBuild;
+    using UnityEditor;
     using UnityEngine;
 
+    public class DummyManifest
+    {
+        public T GetValue<T>()           => default(T);
+        public T GetValue<T>(string key) => default(T);
+    }
+    
     //https://docs.unity3d.com/Manual/UnityCloudBuildManifestAsScriptableObject.html
     //https://docs.unity3d.com/Manual/UnityCloudBuildManifest.html
     public static class CloudBuildHelper
@@ -23,12 +29,6 @@ namespace UniGame
 #if UNITY_CLOUD_BUILD
         public static void PreExport(UnityEngine.CloudBuild.BuildManifestObject manifest) {
 #else
-        public class DummyManifest
-        {
-            public T GetValue<T>()           => default(T);
-            public T GetValue<T>(string key) => default(T);
-        }
-
         public static void PreExport(DummyManifest manifest)
         {
 #endif
@@ -48,7 +48,10 @@ namespace UniGame
             var parameters = CreateCommandParameters();
             var builder    = new UnityPlayerBuilder();
 
-            builder.ExecuteCommands<UnityPreBuildCommand>(parameters,x => x.Execute(parameters));
+            var guid = "%BUILDMAP-GUID%";
+            var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
+            builder.ExecuteCommands<UnityPreBuildCommand>(parameters,configuration,x => x.Execute(parameters));
         }
 
         public static void PostExport(string exportPath)
@@ -67,7 +70,10 @@ namespace UniGame
             var parameters = CreateCommandParameters();
             var builder    = new UnityPlayerBuilder();
 
-            builder.ExecuteCommands<UnityPostBuildCommand>(parameters,x => x.Execute(parameters, null));
+            var guid          = "%BUILDMAP-GUID%";
+            var assetPath     = AssetDatabase.GUIDToAssetPath(guid);
+            var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
+            builder.ExecuteCommands<UnityPostBuildCommand>(parameters,configuration,x => x.Execute(parameters, null));
         }
 
         private static IUniBuilderConfiguration CreateCommandParameters()

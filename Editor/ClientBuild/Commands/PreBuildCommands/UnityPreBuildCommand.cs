@@ -1,6 +1,5 @@
-﻿namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands {
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands {
     using Interfaces;
-    using UnityEngine;
 
     public abstract class UnityPreBuildCommand : 
         UnityBuildCommand,

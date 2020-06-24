@@ -1,8 +1,7 @@
-﻿namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PostBuildCommands {
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PostBuildCommands {
     using Interfaces;
     using PreBuildCommands;
     using UnityEditor.Build.Reporting;
-    using UnityEngine;
 
     public abstract class UnityPostBuildCommand : 
         UnityBuildCommand,

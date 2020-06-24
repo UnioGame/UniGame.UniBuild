@@ -1,4 +1,4 @@
-namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces 
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces 
 {
     public interface IUnityBuildCommandInfo {
 

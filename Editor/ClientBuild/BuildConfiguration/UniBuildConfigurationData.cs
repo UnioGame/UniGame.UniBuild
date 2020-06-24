@@ -1,7 +1,7 @@
-﻿namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using System;
-    using System.Collections.Generic;
+    using Abstract;
     using UnityEditor;
     using UnityEngine;
 

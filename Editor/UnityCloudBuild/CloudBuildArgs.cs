@@ -1,8 +1,8 @@
-namespace UniGreenModules.UniGame.UnityBuild.Editor.UnityCloudBuild
+namespace UniModules.UniGame.UniBuild.Editor.UnityCloudBuild
 {
     using System.Text;
 
-    internal class CloudBuildArgs
+    public class CloudBuildArgs
     {
         public CloudBuildArgs(int buildNumber, string bundleId, string projectId, string scmCommitId, string scmBranch, string cloudBuildTargetName)
         {

@@ -1,17 +1,15 @@
-﻿using UnityEngine;
-
-namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using System;
     using System.Collections.Generic;
+    using Abstract;
+    using Commands.PostBuildCommands;
+    using Commands.PreBuildCommands;
+    using Interfaces;
     using UniGreenModules.UniCore.EditorTools.Editor.AssetOperations;
     using UniGreenModules.UniCore.Runtime.ObjectPool.Runtime;
     using UniGreenModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PostBuildCommands;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces;
+    using UnityEngine;
 
     [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration", fileName = nameof(UniBuildCommandsMap))]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap

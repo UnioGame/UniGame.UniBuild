@@ -1,10 +1,8 @@
-﻿using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces;
-
-namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
     using System.IO;
     using GitTools.Runtime;
+    using Interfaces;
     using UnityEditor;
     using UnityEngine;
 

@@ -1,10 +1,8 @@
-﻿namespace UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands.AddressablesCommands
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.AddressablesCommands
 {
     using System.IO;
+    using Interfaces;
     using UniCore.Runtime.ProfilerTools;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-    using UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Interfaces;
-    using UnityEditor;
     using UnityEditor.AddressableAssets.Build;
     using UnityEditor.AddressableAssets.Settings;
     using UnityEditor.Build.Pipeline.Utilities;

@@ -1,4 +1,4 @@
-namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild {
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild {
     public enum ExecutionOrderType : byte 
     {
         PreBuildProcess,

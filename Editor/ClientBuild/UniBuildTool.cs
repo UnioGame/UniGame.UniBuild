@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEditor;
-using UnityEditor.Build.Reporting;
-
-namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 {
+    using System;
+    using Abstract;
     using BuildConfiguration;
     using Interfaces;
-    using UniModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration;
+    using UnityEditor;
+    using UnityEditor.Build.Reporting;
 
     public static class UniBuildTool
     {

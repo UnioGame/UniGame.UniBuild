@@ -1,10 +1,10 @@
-﻿namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
     using Interfaces;
     using Parsers;
     using UnityEditor;
     using UnityEngine;
-        
+
     /// <summary>
     /// https://docs.unity3d.com/ScriptReference/BuildOptions.html
     /// any build parameter and be used by template "-[BuildOptions Item]"

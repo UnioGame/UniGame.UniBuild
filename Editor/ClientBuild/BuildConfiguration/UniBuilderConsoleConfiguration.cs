@@ -1,4 +1,4 @@
-﻿namespace UniGreenModules.UniGame.UnityBuild.Editor.ClientBuild.BuildConfiguration
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using Extensions;
     using Interfaces;

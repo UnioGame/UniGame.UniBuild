@@ -1,0 +1,54 @@
+//Use UniGame.CloudBuildHelper.[PreExport || PostExport]
+namespace UniGame
+{
+    using System;
+    using UniCore.Runtime.ProfilerTools;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PostBuildCommands;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using UniModules.UniGame.UniBuild.Editor.UnityCloudBuild;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+    using UnityEditor;
+    using UnityEngine;
+    
+    public class DummyManifest
+    {
+        public T GetValue<T>()           => default(T);
+        public T GetValue<T>(string key) => default(T);
+    }
+    
+    //https://docs.unity3d.com/Manual/UnityCloudBuildManifestAsScriptableObject.html
+    //https://docs.unity3d.com/Manual/UnityCloudBuildManifest.html
+    public static class CloudBuildHelper
+    {
+        private static CloudBuildArgs args;
+
+        %CLOUD-METHODS%
+
+        private static IUniBuilderConfiguration CreateCommandParameters()
+        {
+            var argumentsProvider = new ArgumentsProvider(Environment.GetCommandLineArgs());
+            
+            Debug.LogFormat("\n[CloudBuildHelper] {0} \n", argumentsProvider);
+            Debug.Log(args.ToString());
+
+            var buildTarget      = argumentsProvider.GetBuildTarget();
+            var buildTargetGroup = argumentsProvider.GetBuildTargetGroup();
+            
+            var buildParameters = new BuildParameters(buildTarget, buildTargetGroup, argumentsProvider) {
+                buildNumber     = args.BuildNumber,
+                buildTarget     = buildTarget,
+                projectId       = args.ProjectId,
+                bundleId        = args.BundleId,
+                environmentType = BuildEnvironmentType.UnityCloudBuild,
+                branch          = args.ScmBranch,
+            };
+
+            var result = new EditorBuildConfiguration(argumentsProvider, buildParameters);
+            return result;
+        }
+    }
+}

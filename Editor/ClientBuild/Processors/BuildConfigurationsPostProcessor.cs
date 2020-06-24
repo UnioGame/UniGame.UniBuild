@@ -1,8 +1,7 @@
-﻿using UnityEditor;
-
-namespace UniModules.UniGame.UnityBuild.Editor.ClientBuild.Processors
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Processors
 {
     using Generator;
+    using UnityEditor;
 
     public class BuildConfigurationsPostProcessor : AssetPostprocessor
     {
