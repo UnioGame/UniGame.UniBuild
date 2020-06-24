@@ -31,10 +31,11 @@
             var buildVersionProvider = new BuildVersionProvider();
             var logBuilder = new StringBuilder(200);
 
-            var activeBuildNumber = buildNumber + minBuildNumber;
-            var bundleVersion = buildVersionProvider.GetBuildVersion(buildTarget, PlayerSettings.bundleVersion, activeBuildNumber, branch);
+            var activeBuildNumber = buildNumber < minBuildNumber ? minBuildNumber : buildNumber;
+            activeBuildNumber++;
             var resultBuildNumber = buildVersionProvider.GetActiveBuildNumber(buildTarget,activeBuildNumber);
-
+            var bundleVersion = buildVersionProvider.GetBuildVersion(buildTarget, PlayerSettings.bundleVersion, resultBuildNumber, branch);
+            
             PlayerSettings.bundleVersion = bundleVersion;
             var buildNumberString =  resultBuildNumber.ToString();
             PlayerSettings.iOS.buildNumber = buildNumberString;
