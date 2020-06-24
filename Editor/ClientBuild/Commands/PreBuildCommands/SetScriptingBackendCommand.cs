@@ -12,7 +12,9 @@
     {
         [SerializeField]
         private string l2cppEnabled = "-l2cppEnabled";
-        
+
+        private ScriptingImplementation _defaultBackend = ScriptingImplementation.Mono2x;
+
         public override void Execute(IUniBuilderConfiguration configuration)
         {
             var arguments = configuration.Arguments;
@@ -20,7 +22,7 @@
             
             var scriptingBackend = arguments.Contains(l2cppEnabled) ? 
                 ScriptingImplementation.IL2CPP : 
-                ScriptingImplementation.Mono2x;
+                _defaultBackend;
             
 #if FORCE_MONO
             scriptingBackend = ScriptingImplementation.Mono2x;
