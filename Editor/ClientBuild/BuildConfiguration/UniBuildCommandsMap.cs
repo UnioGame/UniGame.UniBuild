@@ -87,9 +87,6 @@
             isUnderCloud = true;
 #endif
             
-            if (isUnderCloud != BuildData.CloudBuild)
-                return false;
-            
             return ValidatePlatform(config);
         }
 
@@ -98,7 +95,7 @@
 #endif
         public void ExecuteBuild()
         {
-            UniBuildTool.ExecuteBuild(BuildData.ArtifactName,BuildData.BuildTarget,BuildData.BuildTargetGroup);
+            UniBuildTool.ExecuteBuild(this);
         }
         
         protected virtual bool ValidatePlatform(IUniBuilderConfiguration config)

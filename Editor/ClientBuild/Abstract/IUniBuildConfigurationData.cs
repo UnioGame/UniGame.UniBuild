@@ -4,7 +4,6 @@
 
     public interface IUniBuildConfigurationData
     {
-        bool CloudBuild { get; }
         BuildTargetGroup BuildTargetGroup { get; }
         BuildTarget BuildTarget { get; }
         string ArtifactName { get; }
