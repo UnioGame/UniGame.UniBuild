@@ -18,8 +18,18 @@
 
         public string CreateCloudBuildMethods()
         {
-            var classTextAsset = Resources.Load<TextAsset>(ClassTemplatePath).text;
-            var methodsTextAsset = Resources.Load<TextAsset>(MethodsTemplate).text;
+            var classTextAsset = Resources.Load<TextAsset>(ClassTemplatePath)?.text;
+            var methodsTextAsset = Resources.Load<TextAsset>(MethodsTemplate)?.text;
+
+            if (string.IsNullOrEmpty(classTextAsset)) {
+                Debug.LogError($"CreateCloudBuildMethods: ERROR CLASS {ClassTemplatePath} NULL value");
+                return string.Empty;
+            }
+            
+            if (string.IsNullOrEmpty(methodsTextAsset)) {
+                Debug.LogError($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplate} NULL value");
+                return string.Empty;
+            }
             
             var commands = AssetEditorTools.GetAssets<UniBuildCommandsMap>();
 
