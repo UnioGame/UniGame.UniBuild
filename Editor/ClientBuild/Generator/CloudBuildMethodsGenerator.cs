@@ -22,12 +22,12 @@
             var methodsTextAsset = Resources.Load<TextAsset>(MethodsTemplate)?.text;
 
             if (string.IsNullOrEmpty(classTextAsset)) {
-                Debug.LogError($"CreateCloudBuildMethods: ERROR CLASS {ClassTemplatePath} NULL value");
+                Debug.Log($"CreateCloudBuildMethods: ERROR CLASS {ClassTemplatePath} NULL value");
                 return string.Empty;
             }
             
             if (string.IsNullOrEmpty(methodsTextAsset)) {
-                Debug.LogError($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplate} NULL value");
+                Debug.Log($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplate} NULL value");
                 return string.Empty;
             }
             
