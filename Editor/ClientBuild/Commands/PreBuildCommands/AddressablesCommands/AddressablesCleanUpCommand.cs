@@ -19,7 +19,7 @@
     public class AddressablesCleanUpCommand : UnityPreBuildCommand
     {
                 
-        public const string AddressablesCachePath = "./Library/com.unity.addressables/StreamingAssetsCopy";
+        public const string AddressablesCachePath = "./Library/com.unity.addressables";
         public const string StreamingAddressablesPath = "/aa";
         
 
@@ -53,8 +53,7 @@
         {
             if (CleanUpLibraryCache == false) return;
             
-            var targetPath = AddressablesCachePath;
-            RemoveFolder(targetPath);
+            DeleteSubDirectories(AddressablesCachePath);
         }
         
         public void RemoveStreamingCache()
@@ -65,6 +64,15 @@
             RemoveFolder(targetPath);
         }
 
+        private void DeleteSubDirectories(string path)
+        {
+            if (!Directory.Exists(path))
+                return;
+            foreach (var subDir in new DirectoryInfo(path).GetDirectories()) {
+                subDir.Delete(true);
+            }
+        }
+        
         private void RemoveFolder(string path)
         {
             GameLog.Log($"COMMAND: {this.Name} \nRemove Addressables Folder {path}");
