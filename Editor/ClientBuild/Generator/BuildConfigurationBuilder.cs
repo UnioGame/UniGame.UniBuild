@@ -21,7 +21,6 @@
             var generator = new BuildMenuGenerator();
             var script    = generator.CreateBuilderScriptBody();
             script.CreateScript(_path);
-            Debug.Log("Rebuild UniBuild Menu");
         }
         
         public static void RebuildCloudMethods()
@@ -29,8 +28,6 @@
             var cloudGenerator = new CloudBuildMethodsGenerator();
             var content        = cloudGenerator.CreateCloudBuildMethods();
             content.WriteUnityFile(_cloudPath);
-            
-            Debug.Log("Rebuild UniCloudBuild Methods");
         }
     }
 }
