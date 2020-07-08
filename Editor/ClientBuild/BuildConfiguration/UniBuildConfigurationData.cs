@@ -15,10 +15,6 @@
         private BuildTarget _buildTarget;
         [SerializeField]
         private BuildTargetGroup _buildTargetGroup;
-        [SerializeField]
-        private bool _cloudBuild = false;
-
-        public bool CloudBuild => _cloudBuild;
 
         public BuildTargetGroup BuildTargetGroup => _buildTargetGroup;
 
