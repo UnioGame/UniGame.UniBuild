@@ -20,6 +20,12 @@
 
         public bool ExportAsGoogleAndroidProject;
 
+        public bool ForceSdkPermission = false;
+        
+        public bool ForceInternetPermission = false;
+
+        public bool UseAPKExpansionFiles = false;
+        
         public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;
     }
 }

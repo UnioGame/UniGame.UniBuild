@@ -23,11 +23,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
             EditorUserBuildSettings.allowDebugging = AndroidSettings.AllowDebugging;
             EditorUserBuildSettings.exportAsGoogleAndroidProject = AndroidSettings.ExportAsGoogleAndroidProject;
             EditorUserBuildSettings.development = AndroidSettings.IsDevelopment;
-            
-            PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
-            PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
-            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android,AndroidSettings.ScriptingBackend);
 
+            PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
+            PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSdkPermission;
+            PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;
+            PlayerSettings.Android.useAPKExpansionFiles = AndroidSettings.UseAPKExpansionFiles;
+            PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
+            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android,AndroidSettings.ScriptingBackend);
         }
     }
 }
