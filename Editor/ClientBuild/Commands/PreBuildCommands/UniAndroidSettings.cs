@@ -20,7 +20,7 @@
 
         public bool ExportAsGoogleAndroidProject;
 
-        public bool ForceSdkPermission = false;
+        public bool ForceSDCardPermission = false;
         
         public bool ForceInternetPermission = false;
 

@@ -25,7 +25,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
             EditorUserBuildSettings.development = AndroidSettings.IsDevelopment;
 
             PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
-            PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSdkPermission;
+            PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSDCardPermission;
             PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;
             PlayerSettings.Android.useAPKExpansionFiles = AndroidSettings.UseAPKExpansionFiles;
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
