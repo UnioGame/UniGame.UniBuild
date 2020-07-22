@@ -5,6 +5,11 @@
   "description": "Configurable unity project build",
   "unity": "2019.3",
   "version": "2020.0.6",
+  "homepage": "https://github.com/UniGameTeam/UniBuild#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UniGameTeam/UniBuild.git"
+  },
   "keywords": [
     "Build",
     "Pipeline"
