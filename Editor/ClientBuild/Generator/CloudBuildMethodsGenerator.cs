@@ -3,31 +3,32 @@
     using BuildConfiguration;
     using Core.Runtime.Extension;
     using UniGreenModules.UniCore.EditorTools.Editor.AssetOperations;
-    using UnityEditor;
     using UnityEngine;
 
     public class CloudBuildMethodsGenerator
     {
 
-        public static string ClassTemplatePath = "CloudBuildTemplateAsset";
-        public static string MethodsTemplate   = "CloudBuildMethodsTemplateAsset";
-        public static string MethodsKey   = "%CLOUD-METHODS%";
-        public static string BuildConfigKey = "%CONFIG_NAME%";
-        public static string ConfigGUIDKey   = "%BUILDMAP-GUID%";
+        public const string ClassTemplatePath = "CloudBuildTemplateAsset";
+        public const string MethodsTemplate   = "CloudBuildMethodsTemplateAsset";
+        public const string MethodsKey   = "%CLOUD-METHODS%";
+        public const string BuildConfigKey = "%CONFIG_NAME%";
+        public const string ConfigGUIDKey   = "%BUILDMAP-GUID%";
 
 
         public string CreateCloudBuildMethods()
         {
-            var classTextAsset = Resources.Load<TextAsset>(ClassTemplatePath)?.text;
-            var methodsTextAsset = Resources.Load<TextAsset>(MethodsTemplate)?.text;
+            var classAsset = Resources.Load<TextAsset>(ClassTemplatePath);
+            var methodsAsset = Resources.Load<TextAsset>(MethodsTemplate);
+            var classTextAsset = classAsset?.text;
+            var methodsTextAsset = methodsAsset?.text;
 
             if (string.IsNullOrEmpty(classTextAsset)) {
-                Debug.Log($"CreateCloudBuildMethods: ERROR CLASS {ClassTemplatePath} NULL value");
+                Debug.LogWarning($"CreateCloudBuildMethods: ERROR CLASS {ClassTemplatePath} NULL value");
                 return string.Empty;
             }
             
             if (string.IsNullOrEmpty(methodsTextAsset)) {
-                Debug.Log($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplate} NULL value");
+                Debug.LogWarning($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplate} NULL value");
                 return string.Empty;
             }
             

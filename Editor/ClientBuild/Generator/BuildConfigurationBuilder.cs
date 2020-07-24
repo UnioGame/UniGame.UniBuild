@@ -27,6 +27,8 @@
         {
             var cloudGenerator = new CloudBuildMethodsGenerator();
             var content        = cloudGenerator.CreateCloudBuildMethods();
+            if (string.IsNullOrEmpty(content))
+                return;
             content.WriteUnityFile(_cloudPath);
         }
     }
