@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using BuildConfiguration;
+    using Core.EditorTools.Editor.AssetOperations;
     using Core.Runtime.Extension;
     using global::CodeWriter.Editor.UnityTools;
-    using UniGreenModules.UniCore.EditorTools.Editor.AssetOperations;
     using UnityEditor;
 
     public class BuildMenuGenerator

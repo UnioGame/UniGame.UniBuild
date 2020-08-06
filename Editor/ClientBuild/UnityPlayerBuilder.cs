@@ -7,10 +7,10 @@
     using BuildConfiguration;
     using Commands.PostBuildCommands;
     using Commands.PreBuildCommands;
+    using Core.EditorTools.Editor.AssetOperations;
     using Extensions;
     using Interfaces;
     using UniCore.Runtime.ProfilerTools;
-    using UniGreenModules.UniCore.EditorTools.Editor.AssetOperations;
     using UnityEditor;
     using UnityEditor.Build.Reporting;
     using Object = UnityEngine.Object;
