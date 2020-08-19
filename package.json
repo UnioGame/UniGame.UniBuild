@@ -17,8 +17,8 @@
   "dependencies": {
     "com.unigame.unicore": "2020.0.1",
     "com.unity.scriptablebuildpipeline": "1.5.10",
-    "com.unity.addressables": "1.10.0",
-    "com.unity.test-framework": "1.1.14",
+    "com.unity.addressables": "1.14.2",
+    "com.unity.test-framework": "1.1.16",
     "com.unigame.codewriter": "2020.0.3"
   }
 }
