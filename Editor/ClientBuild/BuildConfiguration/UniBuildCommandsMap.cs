@@ -9,7 +9,9 @@
     using Interfaces;
     using UniGreenModules.UniCore.Runtime.ObjectPool.Runtime;
     using UniGreenModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
+    using UniGreenModules.UniCore.Runtime.Utils;
     using UnityEngine;
+    using Object = UnityEngine.Object;
 
     [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration", fileName = nameof(UniBuildCommandsMap))]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
@@ -25,12 +27,14 @@
         [Space]
 #if  ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineEditor()]
+        [Sirenix.OdinInspector.ValueDropdown("GetPreBuildCommands")]
 #endif
         [SerializeField]
         private List<UnityPreBuildCommand> _preBuildCommands = new List<UnityPreBuildCommand>();
         
 #if  ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineEditor()]
+        [Sirenix.OdinInspector.ValueDropdown("GetPostBuildCommands")]
 #endif
         [SerializeField]
         private List<UnityPostBuildCommand> _postBuildCommands = new List<UnityPostBuildCommand>();
@@ -102,6 +106,26 @@
         {
             return true;
         }
+
+#if ODIN_INSPECTOR
+
+        private static Func<Object, IEnumerable<UnityPreBuildCommand>> prebuildCommandsCache = MemorizeTool.
+            Create<Object, IEnumerable<UnityPreBuildCommand>>(x => AssetEditorTools.GetAssets<UnityPreBuildCommand>());
+        
+        public IEnumerable<UnityPreBuildCommand> GetPreBuildCommands()
+        {
+            return prebuildCommandsCache(this);
+        }
+        
+        private static Func<Object, IEnumerable<UnityPostBuildCommand>> postbuildCommandsCache = MemorizeTool.
+            Create<Object, IEnumerable<UnityPostBuildCommand>>(x => AssetEditorTools.GetAssets<UnityPostBuildCommand>());
+        
+        public IEnumerable<UnityPostBuildCommand> GetPostBuildCommands()
+        {
+            return postbuildCommandsCache(this);
+        }
+        
+#endif
 
     }
 }
