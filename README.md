@@ -71,7 +71,7 @@ If you want to add custom command into build pipeline your must realise one of t
 
 Some "ready to use" commands can be found at "UniGame Build Commands" package
 
-![](https://github.com/UniGameTeam/UniBuild/GitAssets/commands-package.png)
+![](https://github.com/UniGameTeam/UniBuild/blob/master/GitAssets/commands-package.png)
 
 1. AddressableImporter Package commands (https://github.com/favoyang/unity-addressable-importer)
 2. Unity Addressables Commands (FTP upload support, Rebuild e.t.c)
