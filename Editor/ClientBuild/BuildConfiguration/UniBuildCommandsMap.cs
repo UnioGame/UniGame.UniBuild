@@ -26,14 +26,14 @@
 
         [Space]
 #if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineEditor()]
+        [Sirenix.OdinInspector.InlineEditor(Sirenix.OdinInspector.InlineEditorModes.GUIAndHeader)]
         [Sirenix.OdinInspector.ValueDropdown("GetPreBuildCommands")]
 #endif
         [SerializeField]
         private List<UnityPreBuildCommand> _preBuildCommands = new List<UnityPreBuildCommand>();
         
 #if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineEditor()]
+        [Sirenix.OdinInspector.InlineEditor(Sirenix.OdinInspector.InlineEditorModes.GUIAndHeader)]
         [Sirenix.OdinInspector.ValueDropdown("GetPostBuildCommands")]
 #endif
         [SerializeField]
