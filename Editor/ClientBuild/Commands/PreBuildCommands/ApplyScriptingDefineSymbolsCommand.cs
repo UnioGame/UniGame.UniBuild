@@ -8,8 +8,8 @@
     using UnityEditor;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Apply Scripting Define Symbols", fileName = "ApplyScriptingDefineSymbols")]
-    public class ApplyScriptingDefineSymbolsCommand : UnityPreBuildCommand
+    [Serializable]
+    public class ApplyScriptingDefineSymbolsCommand : UnitySerializablePreBuildCommand
     {
         [SerializeField]
         private string definesKey = "-defineValues";

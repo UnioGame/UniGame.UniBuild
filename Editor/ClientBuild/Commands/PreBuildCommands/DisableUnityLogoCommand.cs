@@ -1,11 +1,11 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands {
+    using System;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Disable Unity Logo", fileName = "DisableUnityLogo")]
-
-    public class DisableUnityLogoCommand : UnityPreBuildCommand
+    [Serializable]
+    public class DisableUnityLogoCommand : UnitySerializablePreBuildCommand
     {
         public override void Execute(IUniBuilderConfiguration buildParameters) {
             PlayerSettings.SplashScreen.showUnityLogo = false;
