@@ -32,7 +32,7 @@
 
             var result = ExecuteBuild(configuration);
     
-            ExecuteCommands<UnityPostBuildCommand>(configuration,commandsMap,x => x.Execute(configuration,result));
+            ExecuteCommands<IUnityPostBuildCommand>(configuration,commandsMap,x => x.Execute(configuration,result));
 
             return result;
         }
