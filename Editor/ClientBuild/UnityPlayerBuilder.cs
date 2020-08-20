@@ -28,11 +28,11 @@
         
         public BuildReport Build(IUniBuilderConfiguration configuration,IUniBuildCommandsMap commandsMap)
         {
-            ExecuteCommands<UnityPreBuildCommand>(configuration,commandsMap,x => x.Execute(configuration));
+            ExecuteCommands<IUnityPreBuildCommand>(configuration,commandsMap,x => x.Execute(configuration));
 
             var result = ExecuteBuild(configuration);
     
-            ExecuteCommands<UnityPostBuildCommand>(configuration,commandsMap,x => x.Execute(configuration,result));
+            ExecuteCommands<IUnityPostBuildCommand>(configuration,commandsMap,x => x.Execute(configuration,result));
 
             return result;
         }
@@ -85,12 +85,13 @@
             IUniBuilderConfiguration configuration,
             IUniBuildCommandsMap commandsMap,
             Action<TTarget> action) 
-            where  TTarget : Object,IUnityBuildCommand
+            where  TTarget : IUnityBuildCommand
         {
             LogBuildStep($"ExecuteCommands: {nameof(ExecuteCommands)} : \n {configuration}");
 
             var assetResources = commandsMap.
-                LoadCommands<TTarget>(x => ValidateCommand(configuration,x));
+                LoadCommands<TTarget>(x => ValidateCommand(configuration,x)).
+                ToList();
 
             ExecuteCommands(assetResources, action);
         }
@@ -127,34 +128,35 @@
         }
 
         public void ExecuteCommands<TTarget>(
-            List<IEditorAssetResource> targetCommands, 
+            IEnumerable<TTarget> commands, 
             Action<TTarget> action)
-            where TTarget : Object, IUnityBuildCommand
+            where TTarget : IUnityBuildCommand
         {
-            var executingCommands = targetCommands;
-
+            var executingCommands = commands;
+            var stepCounter       = 1;
             foreach (var command in executingCommands) {
 
-                var commandAsset = command.Load<TTarget>();
-                if (commandAsset == null || !commandAsset.IsActive) 
+                if (command == null || !command.IsActive) 
                 {
                     LogBuildStep($"SKIP COMMAND {command}");
                     continue;
                 }
         
-                var commandName    = commandAsset.name;
+                var commandName    = command.Name;
                 
                 LogBuildStep($"EXECUTE COMMAND {commandName}");
                 
                 var startTime = DateTime.Now;
         
-                action?.Invoke(commandAsset);
+                action?.Invoke(command);
 
                 var endTime       = DateTime.Now;
                 var executionTime = endTime - startTime;
                 
-                LogBuildStep($"EXECUTE COMMAND FINISHED {commandName} DURATION: {executionTime.TotalSeconds}");
+                LogBuildStep($"EXECUTE COMMAND [{stepCounter++}] FINISHED {commandName} DURATION: {executionTime.TotalSeconds}");
             }
+            
+            LogBuildStep($"COMMANDS FINISHED");
         }
 
         public void LogBuildStep(string message)

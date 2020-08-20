@@ -7,8 +7,8 @@
     /// <summary>
     /// update current project version
     /// </summary>
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/SetManagedStrippingLevelCommand", fileName = nameof(SetManagedStrippingLevelCommand))]
-    public class SetManagedStrippingLevelCommand : UnityPreBuildCommand
+    [SerializeField]
+    public class SetManagedStrippingLevelCommand : UnitySerializablePreBuildCommand
     {
         [SerializeField]
         private ManagedStrippingLevel _managedStrippingLevel = ManagedStrippingLevel.Disabled;

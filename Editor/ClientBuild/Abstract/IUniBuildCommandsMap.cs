@@ -13,7 +13,7 @@
         
         IUniBuildConfigurationData BuildData { get; }
 
-        List<IEditorAssetResource> LoadCommands<T>(Func<T,bool> filter = null)
+        IEnumerable<T> LoadCommands<T>(Func<T,bool> filter = null)
             where T : IUnityBuildCommand;
     }
 }

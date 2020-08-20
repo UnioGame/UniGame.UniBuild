@@ -1,11 +1,12 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.AddressablesCommands
 {
+    using System;
     using Interfaces;
     using UnityEditor.AddressableAssets.Settings;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Build Addressables", fileName = nameof(AddressablesBuildCommand))]
-    public class AddressablesBuildCommand : UnityPreBuildCommand
+    [Serializable]
+    public class AddressablesBuildCommand : UnitySerializablePreBuildCommand
     {
         public override void Execute(IUniBuilderConfiguration buildParameters)
         {

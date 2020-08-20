@@ -1,13 +1,14 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
+    using System;
     using System.IO;
     using GitTools.Runtime;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Apply Artifact Name With Version", fileName = "ApplyArtifactNameWithVersion")]
-    public class ApplyArtifactNameWithVersionCommand : UnityPreBuildCommand
+    [Serializable]
+    public class ApplyArtifactNameWithVersionCommand : UnitySerializablePreBuildCommand
     {
         private const string nameFormatTemplate = "{0}-{1}";
 

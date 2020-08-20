@@ -1,5 +1,6 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
+    using System;
     using Interfaces;
     using Parsers;
     using UnityEditor;
@@ -9,8 +10,8 @@
     /// https://docs.unity3d.com/ScriptReference/BuildOptions.html
     /// any build parameter and be used by template "-[BuildOptions Item]"
     /// </summary>
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Apply BuildOptions", fileName = "BuildOptionsCommand")]
-    public class BuildOptionsCommand : UnityPreBuildCommand
+    [Serializable]
+    public class BuildOptionsCommand : UnitySerializablePreBuildCommand
     {
         [SerializeField]
         public BuildOptions[] _buildOptions = new BuildOptions[] {BuildOptions.None};
