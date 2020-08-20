@@ -1,5 +1,6 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
+    using System;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
@@ -7,8 +8,8 @@
     /// <summary>
     /// update current project version
     /// </summary>
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Set Scripting Backend", fileName = "SetScriptingBackendCommand")]
-    public class SetScriptingBackendCommand : UnityPreBuildCommand
+    [Serializable]
+    public class SetScriptingBackendCommand : UnitySerializablePreBuildCommand
     {
         [SerializeField]
         private string l2cppEnabled = "-l2cppEnabled";

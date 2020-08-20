@@ -1,11 +1,12 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands {
+    using System;
     using System.Text;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName ="UniGame/UniBuild/Commands/Update Android KeyStore", fileName = "UpdateAndroidKeyStore")]
-    public class UpdateAndroidKeyStoreCommand : UnityPreBuildCommand
+    [Serializable]
+    public class UpdateAndroidKeyStoreCommand : UnitySerializablePreBuildCommand
     {
         
         //android keys

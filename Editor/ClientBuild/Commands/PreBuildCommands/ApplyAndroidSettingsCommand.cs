@@ -2,13 +2,12 @@
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
+    using System;
     using Interfaces;
     using UnityEditor;
 
-    [CreateAssetMenu(
-        menuName = "UniGame/UniBuild/Commands/ApplyAndroidSettings", 
-        fileName              = nameof(ApplyAndroidSettingsCommand))]
-    public class ApplyAndroidSettingsCommand : UnityPreBuildCommand
+    [Serializable]
+    public class ApplyAndroidSettingsCommand : UnitySerializablePreBuildCommand
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty]

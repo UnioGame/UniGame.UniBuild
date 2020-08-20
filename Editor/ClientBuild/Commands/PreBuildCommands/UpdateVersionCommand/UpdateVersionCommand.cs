@@ -1,5 +1,6 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.UpdateVersionCommand 
 {
+    using System;
     using System.Text;
     using Interfaces;
     using UnityEditor;
@@ -8,8 +9,8 @@
     /// <summary>
     /// update current project version
     /// </summary>
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Update Project Version", fileName = "UpdateVersionCommand")]
-    public class UpdateVersionCommand : UnityPreBuildCommand
+    [Serializable]
+    public class UpdateVersionCommand : UnitySerializablePreBuildCommand
     {
         [SerializeField]
         private int minBuildNumber = 0;

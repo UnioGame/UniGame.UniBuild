@@ -2,11 +2,12 @@
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
+    using System;
     using UnityEditor;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/Switch Active Build Target", fileName = nameof(SwitchActiveBuildTargetCommand))]
-    public class SwitchActiveBuildTargetCommand : UnityPreBuildCommand
+    [Serializable]
+    public class SwitchActiveBuildTargetCommand : UnitySerializablePreBuildCommand
     {
         
         public BuildTargetGroup BuildTargetGroup = BuildTargetGroup.Android;
