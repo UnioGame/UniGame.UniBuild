@@ -5,6 +5,8 @@ Command based scriptable build pipeline for Unity 3D
 
 ### Unity Package Installation
 
+**Odin Inspector Asset recommended to usage with this Package (https://odininspector.com)**
+
 Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json these lines:
 
 ```json
@@ -30,6 +32,7 @@ Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json t
 Open window Package Manager in Unity and install UniBuild 
 
 ![](https://i.gyazo.com/724a7a8c10ad8876d1bdd99a4ab7c13f.png)
+
 
 ### Configurations SO
 
