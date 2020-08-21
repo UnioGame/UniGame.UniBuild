@@ -32,21 +32,21 @@
             
         }
         
-        public int GetActiveBuildNumber(BuildTarget target, int buildNumber) {
+        public int GetActiveBuildNumber(BuildTarget target) {
 
-            var activeVersion = buildNumber;
+            var activeVersion = 0;
             
             switch (target) {
                 case BuildTarget.Android:
-                    activeVersion += PlayerSettings.Android.bundleVersionCode;
+                    activeVersion = PlayerSettings.Android.bundleVersionCode;
                     break;
                 case BuildTarget.iOS:
-                    int.TryParse(PlayerSettings.iOS.buildNumber, out var iosBuildNumber);
-                    activeVersion += iosBuildNumber;
+                    if(int.TryParse(PlayerSettings.iOS.buildNumber, out var iosBuildNumber))
+                        activeVersion = iosBuildNumber;
                     break;
                 default:
-                    int.TryParse(PlayerSettings.bundleVersion, out var standaloneBuildNumber);
-                    activeVersion += standaloneBuildNumber;
+                    if(int.TryParse(PlayerSettings.bundleVersion, out var standaloneBuildNumber))
+                        activeVersion = standaloneBuildNumber;
                     break;
             }
 

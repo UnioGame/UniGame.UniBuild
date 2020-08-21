@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using GitTools.Runtime;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
@@ -26,16 +27,27 @@
             UpdateBuildVersion(buildParameters.BuildTarget, buildParameters.BuildNumber, branch);
             
         }
+
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Button]
+#endif
+        public void Execute()
+        {
+            var branch = appendBranch ?  GitCommands.GetGitBranch() : string.Empty;
+            UpdateBuildVersion(EditorUserBuildSettings.activeBuildTarget, 1, branch);
+        }
         
         public void UpdateBuildVersion(BuildTarget buildTarget,int buildNumber, string branch) 
         {
             var buildVersionProvider = new BuildVersionProvider();
             var logBuilder = new StringBuilder(200);
 
-            var activeBuildNumber = buildNumber < minBuildNumber ? minBuildNumber : buildNumber;
-            activeBuildNumber++;
-            var resultBuildNumber = buildVersionProvider.GetActiveBuildNumber(buildTarget,activeBuildNumber);
-            var bundleVersion = buildVersionProvider.GetBuildVersion(buildTarget, PlayerSettings.bundleVersion, resultBuildNumber, branch);
+            var currentBuildNumber = buildVersionProvider.GetActiveBuildNumber(buildTarget);
+            var activeBuildNumber  = Mathf.Max(buildNumber, minBuildNumber);
+            activeBuildNumber = Mathf.Max(1, activeBuildNumber);
+            var resultBuildNumber  = currentBuildNumber + activeBuildNumber;
+            
+            var bundleVersion     = buildVersionProvider.GetBuildVersion(buildTarget, PlayerSettings.bundleVersion, resultBuildNumber, branch);
             
             PlayerSettings.bundleVersion = bundleVersion;
             var buildNumberString =  resultBuildNumber.ToString();
