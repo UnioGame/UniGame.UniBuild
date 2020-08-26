@@ -22,6 +22,9 @@
 
         public static void RebuildMenu()
         {
+#if UNITY_CLOUD_BUILD
+            return;
+#endif
             var generator = new BuildMenuGenerator();
             var script    = generator.CreateBuilderScriptBody();
             script.CreateScript(_path);
@@ -29,6 +32,9 @@
         
         public static void RebuildCloudMethods()
         {
+#if UNITY_CLOUD_BUILD
+            return;
+#endif
             var cloudGenerator = new CloudBuildMethodsGenerator();
             var content        = cloudGenerator.CreateCloudBuildMethods();
             if (string.IsNullOrEmpty(content))

@@ -13,6 +13,7 @@
     using UniCore.Runtime.ProfilerTools;
     using UnityEditor;
     using UnityEditor.Build.Reporting;
+    using UnityEngine;
     using Object = UnityEngine.Object;
 
     public class UnityPlayerBuilder : IUnityPlayerBuilder
@@ -87,7 +88,7 @@
             Action<TTarget> action) 
             where  TTarget : IUnityBuildCommand
         {
-            LogBuildStep($"ExecuteCommands: {nameof(ExecuteCommands)} : \n {configuration}");
+            LogBuildStep($"ExecuteCommands: \n {configuration.ToString()}");
 
             var assetResources = commandsMap.
                 LoadCommands<TTarget>(x => ValidateCommand(configuration,x)).
@@ -132,7 +133,14 @@
             Action<TTarget> action)
             where TTarget : IUnityBuildCommand
         {
-            var executingCommands = commands;
+            LogBuildStep($"ExecuteCommands Of Type {typeof(TTarget).Name}");
+
+            var executingCommands = commands.ToList();
+            var commandsNames     = executingCommands.Select(x => x.Name);
+            var commandsNamesTest = string.Join("\n\t", commandsNames);
+            
+            LogBuildStep(commandsNamesTest);
+            
             var stepCounter       = 1;
             foreach (var command in executingCommands) {
 
@@ -161,7 +169,7 @@
 
         public void LogBuildStep(string message)
         {
-            GameLog.LogRuntime($"========= UNIBUILD : {message}\n");
+            Debug.Log($"========= UNIBUILD : {message}\n");
         }
         
     }
