@@ -23,7 +23,7 @@
             var methodsTextAsset = methodsAsset?.text;
 
             if (string.IsNullOrEmpty(classTextAsset)) {
-                Debug.LogWarning($"CreateCloudBuildMethods: ERROR CLASS {ClassTemplatePath} NULL value");
+                Debug.LogWarning($"CreateCloudBuildClass: ERROR CLASS {ClassTemplatePath} NULL value");
                 return string.Empty;
             }
             
