@@ -24,7 +24,7 @@
             var guid = "%BUILDMAP-GUID%";
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
-            builder.ExecuteCommands<UnityPreBuildCommand>(parameters,configuration,x => x.Execute(parameters));
+            builder.ExecuteCommands<IUnityPreBuildCommand>(parameters,configuration,x => x.Execute(parameters));
         }
 
         public static void PostExport%CONFIG_NAME%(string exportPath)
@@ -46,6 +46,6 @@
             var guid          = "%BUILDMAP-GUID%";
             var assetPath     = AssetDatabase.GUIDToAssetPath(guid);
             var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
-            builder.ExecuteCommands<UnityPostBuildCommand>(parameters,configuration,x => x.Execute(parameters, null));
+            builder.ExecuteCommands<IUnityPostBuildCommand>(parameters,configuration,x => x.Execute(parameters, null));
         }
         
