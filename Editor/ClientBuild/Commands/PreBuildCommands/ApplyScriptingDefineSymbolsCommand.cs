@@ -21,22 +21,28 @@
         
         public override void Execute(IUniBuilderConfiguration configuration)
         {
-
             if (!configuration.Arguments.GetStringValue(definesKey, out var defineValues))
             {
-                return;
+                defineValues = string.Empty;
             }
 
+            Execute(defineValues);
+        }
+
+        public void Execute(string defineValues)
+        {
             var activeBuildGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-            var symbolsValue = PlayerSettings.GetScriptingDefineSymbolsForGroup(activeBuildGroup);
+            var symbolsValue     = PlayerSettings.GetScriptingDefineSymbolsForGroup(activeBuildGroup);
             
-            var symbols = symbolsValue.Split(new []{DefinesSeparotor},StringSplitOptions.None);
+            var symbols      = symbolsValue.Split(new []{DefinesSeparotor},StringSplitOptions.None);
             var buildDefines = defineValues.Split(new []{DefinesSeparotor},StringSplitOptions.None);
 
             var defines = new List<string>(symbols.Length + buildDefines.Length + defaultDefines.Count);
             defines.AddRange(symbols);
             defines.AddRange(buildDefines);
             defines.AddRange(defaultDefines);
+            
+            defines = defines.Distinct().ToList();
             
             if (defines.Count == 0)
                 return;
@@ -52,6 +58,11 @@
             PlayerSettings.SetScriptingDefineSymbolsForGroup(activeBuildGroup,definesBuilder.ToString());
 
         }
+
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Button]
+#endif
+        public void Execute() => Execute(String.Empty);
         
         
     }
