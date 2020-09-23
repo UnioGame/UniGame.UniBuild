@@ -8,6 +8,7 @@
     using Commands.PostBuildCommands;
     using Commands.PreBuildCommands;
     using Core.EditorTools.Editor.AssetOperations;
+    using Core.EditorTools.Editor.Tools;
     using Extensions;
     using Interfaces;
     using UniCore.Runtime.ProfilerTools;
@@ -65,11 +66,17 @@
             return scenes.Where(x => x.enabled).ToArray();
         }
 
-        private string GetTargetBuildLocation(IBuildParameters buildParameters)
+        public string GetTargetBuildLocation(IBuildParameters buildParameters)
         {
             var file   = buildParameters.OutputFile;
             var folder = buildParameters.OutputFolder;
-            return $"{folder}/{buildParameters.BuildTarget.ToString()}/{file}";
+            var artifactPath = folder.
+                CombinePath(buildParameters.BuildTarget.ToString()).
+                CombinePath(file);
+            
+            buildParameters.ArtifactPath = artifactPath;
+            
+            return artifactPath;
         }
 
         public void ExecuteCommands<TTarget>(

@@ -8,9 +8,12 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces {
 
         BuildTargetGroup BuildTargetGroup { get; }
 
-        int BuildNumber { get; }
-        string OutputFile { get; set; }
-        string OutputFolder { get; }
+        int          BuildNumber  { get; }
+        string       OutputFile   { get; set; }
+        string       OutputFolder { get;  }
+        
+        string ArtifactPath { get; set; }
+        
         BuildOptions BuildOptions { get; }
 
         string ProjectId { get; }

@@ -13,12 +13,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public BuildTarget buildTarget;
         public BuildTargetGroup buildTargetGroup;
 
-        public string projectId = string.Empty;
-        public int buildNumber = 0;
-        public string outputFolder = "Build";
-        public string outputFile = "artifact";
-        public BuildOptions buildOptions = BuildOptions.None;
-        public List<EditorBuildSettingsScene> scenes = new List<EditorBuildSettingsScene>();
+        public string                         projectId    = string.Empty;
+        public int                            buildNumber  = 0;
+        public string                         outputFolder = "Build";
+        public string                         outputFile   = "artifact";
+        public string                         artifactPath;
+        public BuildOptions                   buildOptions = BuildOptions.None;
+        public List<EditorBuildSettingsScene> scenes       = new List<EditorBuildSettingsScene>();
         
         public string bundleId = string.Empty;
             
@@ -36,18 +37,22 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
         public BuildTargetGroup BuildTargetGroup => buildTargetGroup;
 
+        public string ArtifactPath
+        {
+            get => artifactPath;
+            set => artifactPath = value;
+        }
+        
         public int BuildNumber => this.buildNumber;
+        
         public string OutputFile
         {
-            get {
-                return this.outputFile;
-            }
-            set {
-                this.outputFile = value;
-            }
+            get => this.outputFile;
+            set => this.outputFile = value;
         }
         
         public string OutputFolder => this.outputFolder;       
+        
         public BuildOptions BuildOptions => this.buildOptions;
         
         public string ProjectId => projectId;
