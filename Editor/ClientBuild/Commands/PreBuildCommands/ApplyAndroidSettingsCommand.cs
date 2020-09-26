@@ -14,21 +14,29 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
         [Sirenix.OdinInspector.HideLabel]
 #endif
         public UniAndroidSettings AndroidSettings = new UniAndroidSettings();
-        
-        public override void Execute(IUniBuilderConfiguration buildParameters)
-        {
-            EditorUserBuildSettings.androidBuildType = AndroidSettings.AndroidBuildType;
-            EditorUserBuildSettings.buildAppBundle = AndroidSettings.BuildAppBundle;
-            EditorUserBuildSettings.allowDebugging = AndroidSettings.AllowDebugging;
-            EditorUserBuildSettings.exportAsGoogleAndroidProject = AndroidSettings.ExportAsGoogleAndroidProject;
-            EditorUserBuildSettings.development = AndroidSettings.IsDevelopment;
 
-            PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
-            PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSDCardPermission;
+        public override void Execute(IUniBuilderConfiguration buildParameters) => Execute();
+
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Button]
+#endif
+        public void Execute()
+        {
+            EditorUserBuildSettings.androidBuildType             = AndroidSettings.AndroidBuildType;
+            EditorUserBuildSettings.buildAppBundle               = AndroidSettings.BuildAppBundle;
+            EditorUserBuildSettings.allowDebugging               = AndroidSettings.AllowDebugging;
+            EditorUserBuildSettings.exportAsGoogleAndroidProject = AndroidSettings.ExportAsGoogleAndroidProject;
+            EditorUserBuildSettings.development                  = AndroidSettings.IsDevelopment;
+
+            PlayerSettings.Android.targetArchitectures     = AndroidSettings.AndroidArchitecture;
+            PlayerSettings.Android.forceSDCardPermission   = AndroidSettings.ForceSDCardPermission;
             PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;
-            PlayerSettings.Android.useAPKExpansionFiles = AndroidSettings.UseAPKExpansionFiles;
+            PlayerSettings.Android.useAPKExpansionFiles    = AndroidSettings.UseAPKExpansionFiles;
+            
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
-            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android,AndroidSettings.ScriptingBackend);
+            PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, AndroidSettings.ScriptingBackend);
+            
+            AssetDatabase.Refresh();
         }
     }
 }
