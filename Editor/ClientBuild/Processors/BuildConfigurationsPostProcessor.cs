@@ -1,5 +1,6 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Processors
 {
+    using Core.Editor.Tools;
     using Generator;
     using UnityEditor;
 
@@ -7,7 +8,7 @@
     {
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            BuildConfigurationBuilder.Rebuild();
+            UniEditorProfiler.LogTime(nameof(BuildConfigurationsPostProcessor), BuildConfigurationBuilder.Rebuild);
         }
     }
 }
