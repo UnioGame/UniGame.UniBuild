@@ -18,7 +18,13 @@
 
             GameLog.Log($"UNI BUILD: ARGS\n {args}");
             
-            var parameters = CreateCommandParameters();
+            var parameters   = CreateCommandParameters();
+            var artifactPath = UnityCloudPostBuild.OutputFiles.FirstOrDefault();
+            if (string.IsNullOrEmpty(artifactPath) == false)
+            {
+                parameters.BuildParameters.ArtifactPath = artifactPath;
+            }
+            
             var builder    = new UnityPlayerBuilder();
 
             var guid = "%BUILDMAP-GUID%";

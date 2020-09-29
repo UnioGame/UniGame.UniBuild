@@ -2,6 +2,10 @@
 namespace UniGame
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Newtonsoft.Json;
+        
     using UniCore.Runtime.ProfilerTools;
     using UniModules.UniGame.UniBuild.Editor.ClientBuild;
     using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
@@ -10,8 +14,9 @@ namespace UniGame
     using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
     using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UniModules.UniGame.UniBuild.Editor.UnityCloudBuild;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using UnityEditor;
+    using UnityEditor.Build;
+    using UnityEditor.Build.Reporting;
     using UnityEngine;
     
     public class DummyManifest
@@ -46,9 +51,53 @@ namespace UniGame
                 environmentType = BuildEnvironmentType.UnityCloudBuild,
                 branch          = args.ScmBranch,
             };
-
+            
+            var manifest = LoadBuildManifest();
+            if (manifest != null)
+            {
+                if (manifest.TryGetValue("buildNumber", out var buildNumberValue) &&
+                    Int32.TryParse(buildNumberValue.ToString(), out var buildNumber))
+                {
+                    buildParameters.buildNumber = buildNumber;
+                }
+            }
+            
             var result = new EditorBuildConfiguration(argumentsProvider, buildParameters);
             return result;
+        }
+        
+        private const string ManifestResource = "UnityCloudBuildManifest.json";
+        
+        public static Dictionary<string,object> LoadBuildManifest()
+        {
+            var manifest = (TextAsset) Resources.Load(ManifestResource);
+            if (manifest != null)
+            {
+                var manifestDict = JsonConvert.DeserializeObject<Dictionary<string,object>>(manifest.text) as Dictionary<string,object>;
+                foreach (var kvp in manifestDict)
+                {
+                    // Be sure to check for null values!
+                    var value = (kvp.Value != null) ? kvp.Value.ToString() : "";
+                    Debug.Log(string.Format("Key: {0}, Value: {1}", kvp.Key, value));
+                }
+
+                return manifestDict;
+            }
+
+            return null;
+        }
+    }
+    
+    
+    public class UnityCloudPostBuild : IPostprocessBuildWithReport
+    {
+        public static List<string> OutputFiles = new List<string>();    
+        
+        public int callbackOrder { get; } = 0;
+        public void OnPostprocessBuild(BuildReport report)
+        {
+            var files = report.files.Select(x => x.path).ToList();
+            OutputFiles.AddRange(files);
         }
     }
 }

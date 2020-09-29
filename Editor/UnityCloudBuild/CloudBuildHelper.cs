@@ -1,17 +1,24 @@
-
+    
 
 //Use UniGame.CloudBuildHelper.[PreExport || PostExport]
-namespace UniModules.UniGame.UniBuild.Editor.UnityCloudBuild
+namespace UniGame
 {
     using System;
-    using ClientBuild;
-    using ClientBuild.BuildConfiguration;
-    using ClientBuild.Commands.PostBuildCommands;
-    using ClientBuild.Commands.PreBuildCommands;
-    using ClientBuild.Extensions;
-    using ClientBuild.Interfaces;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Newtonsoft.Json;
+        
     using UniCore.Runtime.ProfilerTools;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PostBuildCommands;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using UniModules.UniGame.UniBuild.Editor.UnityCloudBuild;
     using UnityEditor;
+    using UnityEditor.Build;
+    using UnityEditor.Build.Reporting;
     using UnityEngine;
 
     public class DummyManifest
@@ -67,7 +74,14 @@ namespace UniModules.UniGame.UniBuild.Editor.UnityCloudBuild
                 return;
             }
 
-            var parameters = CreateCommandParameters();
+            var parameters   = CreateCommandParameters();
+            var artifactPath = UnityCloudPostBuild.OutputFiles.FirstOrDefault();
+            if (string.IsNullOrEmpty(artifactPath) == false)
+            {
+                parameters.BuildParameters.ArtifactPath = artifactPath;
+            }
+            
+            
             var builder    = new UnityPlayerBuilder();
 
             var guid          = "%BUILDMAP-GUID%";
@@ -85,7 +99,7 @@ namespace UniModules.UniGame.UniBuild.Editor.UnityCloudBuild
 
             var buildTarget      = argumentsProvider.GetBuildTarget();
             var buildTargetGroup = argumentsProvider.GetBuildTargetGroup();
-            
+
             var buildParameters = new BuildParameters(buildTarget, buildTargetGroup, argumentsProvider) {
                 buildNumber     = args.BuildNumber,
                 buildTarget     = buildTarget,
@@ -94,9 +108,53 @@ namespace UniModules.UniGame.UniBuild.Editor.UnityCloudBuild
                 environmentType = BuildEnvironmentType.UnityCloudBuild,
                 branch          = args.ScmBranch,
             };
+            
+            var manifest = LoadBuildManifest();
+            if (manifest != null)
+            {
+                if (manifest.TryGetValue("buildNumber", out var buildNumberValue) &&
+                    Int32.TryParse(buildNumberValue.ToString(), out var buildNumber))
+                {
+                    buildParameters.buildNumber = buildNumber;
+                }
+            }
 
             var result = new EditorBuildConfiguration(argumentsProvider, buildParameters);
             return result;
+        }
+
+        private const string ManifestResource = "UnityCloudBuildManifest.json";
+
+        public static Dictionary<string,object> LoadBuildManifest()
+        {
+            var manifest = (TextAsset) Resources.Load(ManifestResource);
+            if (manifest != null)
+            {
+                var manifestDict = JsonConvert.DeserializeObject<Dictionary<string,object>>(manifest.text) as Dictionary<string,object>;
+                foreach (var kvp in manifestDict)
+                {
+                    // Be sure to check for null values!
+                    var value = (kvp.Value != null) ? kvp.Value.ToString() : "";
+                    Debug.Log(string.Format("Key: {0}, Value: {1}", kvp.Key, value));
+                }
+
+                return manifestDict;
+            }
+
+            return null;
+        }
+    }
+
+    public class UnityCloudPostBuild : IPostprocessBuildWithReport
+    {
+        public static List<string> OutputFiles = new List<string>();    
+        
+    
+        public int callbackOrder { get; } = 0;
+        public void OnPostprocessBuild(BuildReport report)
+        {
+            var files = report.files.Select(x => x.path).ToList();
+            OutputFiles.AddRange(files);
         }
     }
 }
