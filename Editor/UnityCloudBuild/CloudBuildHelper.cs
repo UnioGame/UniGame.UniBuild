@@ -130,7 +130,11 @@ namespace UniGame
             var manifest = (TextAsset) Resources.Load(ManifestResource);
             if (manifest != null)
             {
-                var manifestDict = JsonConvert.DeserializeObject<Dictionary<string,object>>(manifest.text) as Dictionary<string,object>;
+                var manifestText = manifest.text;
+                
+                Debug.Log($"{nameof(LoadBuildManifest)}: MANIFEST \n {manifestText}");
+                
+                var manifestDict = JsonConvert.DeserializeObject<Dictionary<string,object>>(manifestText) as Dictionary<string,object>;
                 foreach (var kvp in manifestDict)
                 {
                     // Be sure to check for null values!
@@ -139,6 +143,10 @@ namespace UniGame
                 }
 
                 return manifestDict;
+            }
+            else
+            {
+                Debug.Log($"{nameof(LoadBuildManifest)}: MANIFEST NOT FOUND");
             }
 
             return null;
@@ -151,8 +159,11 @@ namespace UniGame
         
     
         public int callbackOrder { get; } = 0;
+
         public void OnPostprocessBuild(BuildReport report)
         {
+            Debug.Log($"===== UNIBUILD{nameof(UnityCloudPostBuild)} : {report}");
+            
             var files = report.files.Select(x => x.path).ToList();
             OutputFiles.AddRange(files);
         }
