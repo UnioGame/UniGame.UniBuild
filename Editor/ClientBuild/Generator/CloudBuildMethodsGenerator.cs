@@ -9,18 +9,21 @@
     {
 
         public const string ClassTemplatePath = "CloudBuildTemplateAsset";
-        public const string MethodsTemplate   = "CloudBuildMethodsTemplateAsset";
+        public const string MethodsTemplatePath   = "CloudBuildMethodsTemplateAsset";
         public const string MethodsKey   = "%CLOUD-METHODS%";
         public const string BuildConfigKey = "%CONFIG_NAME%";
         public const string ConfigGUIDKey   = "%BUILDMAP-GUID%";
 
+        private static TextAsset _classTemplate;
+        private static TextAsset _methodsTemplate;
+        
+        public static  TextAsset ClassTemplate   => (_classTemplate = _classTemplate ? Resources.Load<TextAsset>(ClassTemplatePath) : _classTemplate);
+        public static  TextAsset MethodsTemplate => (_methodsTemplate = _methodsTemplate ? Resources.Load<TextAsset>(MethodsTemplatePath) : _methodsTemplate);
 
         public string CreateCloudBuildMethods()
         {
-            var classAsset = Resources.Load<TextAsset>(ClassTemplatePath);
-            var methodsAsset = Resources.Load<TextAsset>(MethodsTemplate);
-            var classTextAsset = classAsset?.text;
-            var methodsTextAsset = methodsAsset?.text;
+            var classTextAsset   = ClassTemplate?.text;
+            var methodsTextAsset = MethodsTemplate?.text;
 
             if (string.IsNullOrEmpty(classTextAsset)) {
                 Debug.LogWarning($"CreateCloudBuildClass: ERROR CLASS {ClassTemplatePath} NULL value");
@@ -28,7 +31,7 @@
             }
             
             if (string.IsNullOrEmpty(methodsTextAsset)) {
-                Debug.LogWarning($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplate} NULL value");
+                Debug.LogWarning($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplatePath} NULL value");
                 return string.Empty;
             }
             
