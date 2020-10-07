@@ -16,14 +16,20 @@
         private static string _menuScript  = string.Empty;
         private static string _cloudScript = string.Empty;
         
+                
         [MenuItem("UniGame/Uni Build/Rebuild Menu")]
-        public static void Rebuild()
+        public static void RebuildMenuAction()
         {
-            RebuildMenu();
-            RebuildCloudMethods();
+            Rebuild(true);
         }
 
-        public static void RebuildMenu()
+        public static void Rebuild(bool forceUpdate = false)
+        {
+            RebuildMenu(forceUpdate);
+            RebuildCloudMethods(forceUpdate);
+        }
+
+        public static bool RebuildMenu(bool force = false)
         {
 #if UNITY_CLOUD_BUILD
             return;
@@ -32,14 +38,17 @@
             var script     = generator.CreateBuilderScriptBody();
             var scriptData = script.Convert();
             
-            if (string.IsNullOrEmpty(scriptData) || _menuScript.Equals(scriptData))
-                return;
+            if (string.IsNullOrEmpty(scriptData))
+                return false;
+            if (!force && _menuScript.Equals(scriptData))
+                return false;
             
-            script.CreateScript(_path);
+            var result =script.CreateScript(_path);
             _menuScript = scriptData;
+            return result;
         }
         
-        public static void RebuildCloudMethods()
+        public static bool RebuildCloudMethods(bool force = false)
         {
 #if UNITY_CLOUD_BUILD
             return;
@@ -47,11 +56,14 @@
             var cloudGenerator = new CloudBuildMethodsGenerator();
             var content        = cloudGenerator.CreateCloudBuildMethods();
             
-            if (string.IsNullOrEmpty(content) || content.Equals(_cloudScript))
-                return;
+            if (string.IsNullOrEmpty(content))
+                return false;
+            if (!force && _menuScript.Equals(content))
+                return false;
             
-            content.WriteUnityFile(_cloudPath);
+            var result = content.WriteUnityFile(_cloudPath);
             _cloudScript = content;
+            return result;
         }
     }
 }

@@ -17,8 +17,8 @@
         private static TextAsset _classTemplate;
         private static TextAsset _methodsTemplate;
         
-        public static  TextAsset ClassTemplate   => (_classTemplate = _classTemplate ? Resources.Load<TextAsset>(ClassTemplatePath) : _classTemplate);
-        public static  TextAsset MethodsTemplate => (_methodsTemplate = _methodsTemplate ? Resources.Load<TextAsset>(MethodsTemplatePath) : _methodsTemplate);
+        public static  TextAsset ClassTemplate   => (_classTemplate = !_classTemplate ? Resources.Load<TextAsset>(ClassTemplatePath) : _classTemplate);
+        public static  TextAsset MethodsTemplate => (_methodsTemplate = !_methodsTemplate ? Resources.Load<TextAsset>(MethodsTemplatePath) : _methodsTemplate);
 
         public string CreateCloudBuildMethods()
         {
