@@ -1,4 +1,4 @@
-﻿namespace UniGreenModules.UniGame.UnityBuild.Tests.Editor
+﻿namespace UniModules.UniGame.UnityBuild.Tests.Editor
 {
     using NUnit.Framework;
     using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.UpdateVersionCommand;

@@ -1,6 +1,6 @@
 ﻿//using NUnit.Framework;
 //
-//namespace UniGreenModules.UnityBuild.Tests.Editor
+//namespace UniModules.UnityBuild.Tests.Editor
 //{
 //    using UnityBuild.Editor.ClientBuild;
 //    using UnityBuild.Editor.ClientBuild.Interfaces;

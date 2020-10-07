@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Core.EditorTools.Editor.AssetOperations;
     using Interfaces;
-    using UniGreenModules.UniCore.Runtime.Interfaces;
+    using UniModules.UniCore.Runtime.Interfaces;
 
     public interface IUniBuildCommandsMap : 
         IUnityBuildCommandValidator,

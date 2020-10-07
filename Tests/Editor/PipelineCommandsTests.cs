@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UniGreenModules.UniGame.UnityBuild.Tests.Editor
+namespace UniModules.UniGame.UnityBuild.Tests.Editor
 {
     public class PipelineCommandsTest : MonoBehaviour
     {

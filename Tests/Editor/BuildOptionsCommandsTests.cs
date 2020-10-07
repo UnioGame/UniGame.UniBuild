@@ -1,8 +1,8 @@
 ﻿//using NSubstitute;
 //using NUnit.Framework;
-//using UniGreenModules.UnityBuild.Editor.ClientBuild;
-//using UniGreenModules.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-//using UniGreenModules.UnityBuild.Editor.ClientBuild.Interfaces;
+//using UniModules.UnityBuild.Editor.ClientBuild;
+//using UniModules.UnityBuild.Editor.ClientBuild.Commands.PreBuildCommands;
+//using UniModules.UnityBuild.Editor.ClientBuild.Interfaces;
 //using UnityEditor;
 //using UnityEngine;
 //
