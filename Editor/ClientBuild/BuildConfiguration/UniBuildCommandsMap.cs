@@ -20,19 +20,19 @@
         private UniBuildConfigurationData _buildData = new UniBuildConfigurationData();
 
         [Space]
-        public List<PreBuildCommandStep> preBuildCommands = new List<PreBuildCommandStep>();
+        public List<BuildCommandStep> preBuildCommands = new List<BuildCommandStep>();
 
         [Space]
-        public List<PostBuildCommandStep> postBuildCommands = new List<PostBuildCommandStep>();
+        public List<BuildCommandStep> postBuildCommands = new List<BuildCommandStep>();
 
         
         #region public properties
 
         public IUniBuildConfigurationData BuildData => _buildData;
         
-        public IEnumerable<IUnityPreBuildCommand> PreBuildCommands => LoadCommands<IUnityPreBuildCommand>();
+        public IEnumerable<IUnityBuildCommand> PreBuildCommands => FilterActiveCommands(preBuildCommands);
 
-        public IEnumerable<IUnityPostBuildCommand> PostBuildCommands =>  LoadCommands<IUnityPostBuildCommand>();
+        public IEnumerable<IUnityBuildCommand> PostBuildCommands =>  FilterActiveCommands(postBuildCommands);
         
         public string ItemName => name;
         
@@ -42,25 +42,22 @@
             where T : IUnityBuildCommand 
         {
             var commandsBuffer = ClassPool.Spawn<List<IUnityBuildCommand>>();
+            commandsBuffer.AddRange(PreBuildCommands);
+            commandsBuffer.AddRange(PostBuildCommands);
 
-            foreach (var command in preBuildCommands) {
-                commandsBuffer.AddRange(command.GetCommands());
-            }
-            foreach (var command in postBuildCommands) {
-                commandsBuffer.AddRange(command.GetCommands());
-            }
+            foreach (var command in commandsBuffer)
+            {
+                if (!(command is T targetCommand)) continue;
+                
+                if(filter!=null && !filter(targetCommand))
+                    continue;
 
-            foreach (var command in commandsBuffer) {
-                if (command is T targetCommand) {
-                    if(filter!=null && !filter(targetCommand))
-                        continue;
-
-                    yield return targetCommand;
-                }
+                yield return targetCommand;
             }
 
             commandsBuffer.Despawn();
         }
+        
 
         public bool Validate(IUniBuilderConfiguration config)
         {
@@ -81,6 +78,17 @@
         public void ExecuteBuild()
         {
             UniBuildTool.ExecuteBuild(this);
+        }
+
+        private IEnumerable<IUnityBuildCommand> FilterActiveCommands(IEnumerable<BuildCommandStep> commands)
+        {
+            var commandsBuffer = ClassPool.Spawn<List<IUnityBuildCommand>>();
+
+            foreach (var command in commands) {
+                commandsBuffer.AddRange(command.GetCommands());
+            }
+
+            return commandsBuffer;
         }
         
         protected virtual bool ValidatePlatform(IUniBuilderConfiguration config)

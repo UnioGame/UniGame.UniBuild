@@ -12,6 +12,12 @@
     {
         
         IUniBuildConfigurationData BuildData { get; }
+        
+                
+        IEnumerable<IUnityBuildCommand> PreBuildCommands { get; }
+
+        IEnumerable<IUnityBuildCommand> PostBuildCommands  { get; }
+
 
         IEnumerable<T> LoadCommands<T>(Func<T,bool> filter = null)
             where T : IUnityBuildCommand;

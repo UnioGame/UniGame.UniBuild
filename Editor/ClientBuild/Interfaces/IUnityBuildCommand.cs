@@ -2,6 +2,6 @@
 {
     public interface IUnityBuildCommand :IUnityBuildCommandValidator, IUnityBuildCommandInfo
     {
-
+        void Execute(IUniBuilderConfiguration configuration);
     }
 }

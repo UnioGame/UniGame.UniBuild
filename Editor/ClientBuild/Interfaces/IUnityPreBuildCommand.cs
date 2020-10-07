@@ -1,7 +1,6 @@
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces {
-    public interface IUnityPreBuildCommand : IUnityBuildCommand, IUnityBuildCommandValidator
+    public interface IUnityPreBuildCommand : IUnityBuildCommand
     {
-        void Execute(IUniBuilderConfiguration buildParameters);
-        
+
     }
 }

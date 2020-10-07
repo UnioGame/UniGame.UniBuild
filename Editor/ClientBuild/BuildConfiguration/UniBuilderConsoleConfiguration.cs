@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
+﻿using UnityEditor.Build.Reporting;
+
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using Extensions;
     using Interfaces;
@@ -13,11 +15,10 @@
         
         private ArgumentsProvider argumentsProvider;
         private BuildParameters buildParameters;
-        
+        private BuildReport _buildReport;
+
         public UniBuilderConsoleConfiguration(string[] commandLineArgs)
         {
-
-            
             argumentsProvider = new ArgumentsProvider(commandLineArgs);
 
             var buildTarget      = argumentsProvider.GetBuildTarget();
@@ -33,7 +34,10 @@
 
         public IBuildParameters BuildParameters => buildParameters;
 
-
-        
+        public BuildReport BuildReport
+        {
+            get => _buildReport;
+            set => _buildReport = value;
+        }
     }
 }

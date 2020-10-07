@@ -8,7 +8,5 @@
         IUnityPostBuildCommand
     {
 
-        public abstract void Execute(IUniBuilderConfiguration configuration,BuildReport buildReport);
-
     }
 }

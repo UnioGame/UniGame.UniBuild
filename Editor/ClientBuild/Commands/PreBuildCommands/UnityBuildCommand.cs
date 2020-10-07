@@ -15,6 +15,8 @@
         public bool IsActive => _isActive;
         public string Name => name;
         
+        public abstract void Execute(IUniBuilderConfiguration configuration);
+
         public virtual bool Validate(IUniBuilderConfiguration config) => _isActive;
     }
 }

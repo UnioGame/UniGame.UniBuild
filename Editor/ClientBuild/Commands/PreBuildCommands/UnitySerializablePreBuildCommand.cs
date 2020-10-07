@@ -14,6 +14,6 @@
     [Serializable]
     public abstract class UnitySerializablePostBuildCommand :SerializableBuildItem, IUnityPostBuildCommand
     {
-        public abstract void Execute(IUniBuilderConfiguration configuration,BuildReport buildReport = null);
+        public abstract void Execute(IUniBuilderConfiguration configuration);
     }
 }

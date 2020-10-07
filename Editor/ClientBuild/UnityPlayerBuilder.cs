@@ -30,11 +30,13 @@
         
         public BuildReport Build(IUniBuilderConfiguration configuration,IUniBuildCommandsMap commandsMap)
         {
-            ExecuteCommands<IUnityPreBuildCommand>(configuration,commandsMap,x => x.Execute(configuration));
+            ExecuteCommands(commandsMap.PreBuildCommands,x => x.Execute(configuration));
 
             var result = ExecuteBuild(configuration);
+
+            configuration.BuildReport = result;
     
-            ExecuteCommands<IUnityPostBuildCommand>(configuration,commandsMap,x => x.Execute(configuration,result));
+            ExecuteCommands(commandsMap.PostBuildCommands,x => x.Execute(configuration));
 
             return result;
         }
@@ -78,32 +80,6 @@
             
             return artifactPath;
         }
-
-        public void ExecuteCommands<TTarget>(
-            IUniBuilderConfiguration configuration,
-            Action<TTarget> action) 
-            where  TTarget : Object,IUnityBuildCommand
-        {
-            var commandMap = SelectActualBuildMap(configuration);
-
-            ExecuteCommands(configuration, commandMap, action);
-        }
-        
-        public void ExecuteCommands<TTarget>(
-            IUniBuilderConfiguration configuration,
-            IUniBuildCommandsMap commandsMap,
-            Action<TTarget> action) 
-            where  TTarget : IUnityBuildCommand
-        {
-            LogBuildStep($"ExecuteCommands: \n {configuration.ToString()}");
-
-            var assetResources = commandsMap.
-                LoadCommands<TTarget>(x => ValidateCommand(configuration,x)).
-                ToList();
-
-            ExecuteCommands(assetResources, action);
-        }
-        
 
         public IUniBuildCommandsMap SelectActualBuildMap(IUniBuilderConfiguration configuration)
         {

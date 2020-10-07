@@ -5,9 +5,7 @@
     [Serializable]
     public abstract class UnityPreBuildCommand : 
         UnityBuildCommand,
-        IUnityPreBuildCommand,
-        IUnityBuildCommandInfo
+        IUnityPreBuildCommand
     {
-        public abstract void Execute(IUniBuilderConfiguration buildParameters);
     }
 }

@@ -5,7 +5,7 @@
     using Interfaces;
 
     [Serializable]
-    public class PreBuildCommandStep : BuildCommandStep<UnityPreBuildCommand,IUnityPreBuildCommand>
+    public class BuildCommandStep : BuildCommandStep<UnityBuildCommand,IUnityBuildCommand>
     {
    
     }

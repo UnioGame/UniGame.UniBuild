@@ -58,7 +58,7 @@ namespace UniGame
             var guid = "%BUILDMAP-GUID%";
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
-            builder.ExecuteCommands<UnityPreBuildCommand>(parameters,configuration,x => x.Execute(parameters));
+            builder.ExecuteCommands(configuration.PreBuildCommands,x => x.Execute(parameters));
         }
 
         public static void PostExport(string exportPath)
@@ -87,7 +87,7 @@ namespace UniGame
             var guid          = "%BUILDMAP-GUID%";
             var assetPath     = AssetDatabase.GUIDToAssetPath(guid);
             var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
-            builder.ExecuteCommands<UnityPostBuildCommand>(parameters,configuration,x => x.Execute(parameters, null));
+            builder.ExecuteCommands(configuration.PostBuildCommands,x => x.Execute(parameters));
         }
 
         private static IUniBuilderConfiguration CreateCommandParameters()
