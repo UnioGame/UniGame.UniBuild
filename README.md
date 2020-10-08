@@ -74,7 +74,9 @@ You can create your own command with two ways:
 
 1. Unity ScriptableObject command
 
-In that case inherit your SO from - UnityBuildCommand . Scriptable Object Commands can be helpful when you want to share command between different pipelines and modify command parameters from single source
+In that case inherit your SO from - UnityBuildCommand . 
+Scriptable Object Commands can be helpful when you want to share command 
+between different pipelines and modify command parameters from single source
 
 2. Serializable Regular C# class 
 
