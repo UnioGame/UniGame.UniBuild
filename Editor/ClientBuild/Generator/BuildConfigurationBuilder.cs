@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
+﻿using System.Text.RegularExpressions;
+
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 {
     using CodeWriter.Editor.UnityTools;
     using Core.EditorTools.Editor;
@@ -7,6 +9,7 @@
 
     public class BuildConfigurationBuilder
     {
+
         private static string _path =  
                 EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,"UniBuild/Editor/BuildMethods.cs");
 
@@ -32,7 +35,7 @@
         public static bool RebuildMenu(bool force = false)
         {
 #if UNITY_CLOUD_BUILD
-            return;
+            return false;
 #endif
             var generator  = new BuildMenuGenerator();
             var script     = generator.CreateBuilderScriptBody();
@@ -51,7 +54,7 @@
         public static bool RebuildCloudMethods(bool force = false)
         {
 #if UNITY_CLOUD_BUILD
-            return;
+            return false;
 #endif
             var cloudGenerator = new CloudBuildMethodsGenerator();
             var content        = cloudGenerator.CreateCloudBuildMethods();

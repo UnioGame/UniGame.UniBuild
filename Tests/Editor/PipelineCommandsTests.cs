@@ -1,19 +1,20 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator;
 
-namespace UniModules.UniGame.UnityBuild.Tests.Editor
+namespace UniModules.UniGame.UniBuild.Tests.Editor
 {
-    public class PipelineCommandsTest : MonoBehaviour
+    public class PipelineTests 
     {
-        // Start is called before the first frame update
-        void Start()
+        [Test]
+        public void GetCloudMethodsTest()
         {
-        
-        }
+            //init
+            var generator = new CloudBuildMethodsGenerator();
 
-        // Update is called once per frame
-        void Update()
-        {
-        
+            //action
+            var methods = generator.LoadMethodsTemplate();
+            
+            Assert.That(string.IsNullOrEmpty(methods) == false);
         }
     }
 }

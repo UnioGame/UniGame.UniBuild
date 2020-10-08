@@ -1,4 +1,7 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
+﻿using System.Text.RegularExpressions;
+using UniGame;
+
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 {
     using BuildConfiguration;
     using Core.EditorTools.Editor.AssetOperations;
@@ -7,33 +10,50 @@
 
     public class CloudBuildMethodsGenerator
     {
+        private const string PreExportRegExpText = @"\/\/=====ExportMethods=====(?<category>[\w|\W|\s|\S]*)\/\/=====ExportMethodsEnd=====";
+        
+        private static Regex exportMethodsRegEx = new Regex(PreExportRegExpText,RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public const string ClassTemplatePath = "CloudBuildTemplateAsset";
-        public const string MethodsTemplatePath   = "CloudBuildMethodsTemplateAsset";
-        public const string MethodsKey   = "%CLOUD-METHODS%";
-        public const string BuildConfigKey = "%CONFIG_NAME%";
+        public const string MethodsKey   = "//%CLOUD-METHODS%";
+        public const string BuildConfigKey = "CONFIG_NAME";
         public const string ConfigGUIDKey   = "%BUILDMAP-GUID%";
 
-        private static TextAsset _classTemplate;
+        private static string _classTemplate;
         private static TextAsset _methodsTemplate;
-        
-        public static  TextAsset ClassTemplate   => (_classTemplate = !_classTemplate ? Resources.Load<TextAsset>(ClassTemplatePath) : _classTemplate);
-        public static  TextAsset MethodsTemplate => (_methodsTemplate = !_methodsTemplate ? Resources.Load<TextAsset>(MethodsTemplatePath) : _methodsTemplate);
 
-        public string CreateCloudBuildMethods()
-        {
-            var classTextAsset   = ClassTemplate?.text;
-            var methodsTextAsset = MethodsTemplate?.text;
+        public static  string ClassTemplate  => (_classTemplate = string.IsNullOrEmpty(_classTemplate) ?
+            typeof(CloudBuildHelper).GetScriptAsset()?.text : 
+            _classTemplate);
+
+        public string LoadMethodsTemplate()
+        {            
+            var classTextAsset   = ClassTemplate;
 
             if (string.IsNullOrEmpty(classTextAsset)) {
-                Debug.LogWarning($"CreateCloudBuildClass: ERROR CLASS {ClassTemplatePath} NULL value");
+                Debug.LogWarning($"CreateCloudBuildClass: ERROR CLASS {ClassTemplate} NULL value");
                 return string.Empty;
             }
             
-            if (string.IsNullOrEmpty(methodsTextAsset)) {
-                Debug.LogWarning($"CreateCloudBuildMethods: ERROR METHODS {MethodsTemplatePath} NULL value");
+            if(!exportMethodsRegEx.IsMatch(classTextAsset))
+            {
+                Debug.LogWarning($"exportMethodsRegEx: ERROR Methods {ClassTemplate} Missings");
                 return string.Empty;
             }
+
+            var exportMethodsMatch = exportMethodsRegEx.Match(classTextAsset);
+            var exportMethods = exportMethodsMatch.Value;
+            
+            if (string.IsNullOrEmpty(exportMethods)) {
+                Debug.LogWarning($"CreateCloudBuildMethods: ERROR METHODS EMPTY NULL value");
+                return string.Empty;
+            }
+
+            return exportMethods;
+        }
+        
+        public string CreateCloudBuildMethods()
+        {
+            var methodsTextAsset = LoadMethodsTemplate();
             
             var commands = AssetEditorTools.GetAssets<UniBuildCommandsMap>();
 
@@ -46,7 +66,7 @@
                 methodsValue += methodValue.Replace(BuildConfigKey, methodName);
             }
             
-            return classTextAsset.Replace(MethodsKey,methodsValue);
+            return ClassTemplate.Replace(MethodsKey,methodsValue);
         }
 
     }
