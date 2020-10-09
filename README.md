@@ -74,13 +74,15 @@ You can create your own command with two ways:
 
 1. Unity ScriptableObject command
 
-In that case inherit your SO from one of these classes - UnityPreBuildCommand, UnityPostBuildCommand
+In that case inherit your SO from - UnityBuildCommand . 
+Scriptable Object Commands can be helpful when you want to share command 
+between different pipelines and modify command parameters from single source
 
 2. Serializable Regular C# class 
 
 ![](https://github.com/UniGameTeam/UniBuild/blob/master/GitAssets/commands2.png)
 
-If you choose this way, then just realise Interface API, no addition actions required
+If you choose this way, then just realise Interface API - IUnityBuildCommand , no addition actions required
 
 ### Additional commands
 
@@ -91,6 +93,8 @@ Some "ready to use" commands can be found at "UniGame Build Commands" package
 1. AddressableImporter Package commands (https://github.com/favoyang/unity-addressable-importer)
 2. Unity Addressables Commands (FTP upload support, Rebuild e.t.c)
 3. WebRequests Commands
+4. Folder & File commands
+5. FTP commands
 
 
 
