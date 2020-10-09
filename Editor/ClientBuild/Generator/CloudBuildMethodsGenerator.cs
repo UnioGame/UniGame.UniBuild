@@ -17,6 +17,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
         public const string MethodsKey   = "//%CLOUD-METHODS%";
         public const string BuildConfigKey = "CONFIG_NAME";
         public const string ConfigGUIDKey   = "%BUILDMAP-GUID%";
+        public const string ClassNameTemplate = nameof(CloudBuildHelper);
+        public const string ClassName = "CloudBuildMethods";
 
         private static string _classTemplate;
         private static TextAsset _methodsTemplate;
@@ -33,7 +35,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
                 Debug.LogWarning($"CreateCloudBuildClass: ERROR CLASS {ClassTemplate} NULL value");
                 return string.Empty;
             }
-            
+
             if(!exportMethodsRegEx.IsMatch(classTextAsset))
             {
                 Debug.LogWarning($"exportMethodsRegEx: ERROR Methods {ClassTemplate} Missings");
@@ -66,7 +68,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
                 methodsValue += methodValue.Replace(BuildConfigKey, methodName);
             }
             
-            return ClassTemplate.Replace(MethodsKey,methodsValue);
+            var classTextAsset = ClassTemplate.Replace(ClassNameTemplate, ClassName);
+
+            return classTextAsset.Replace(MethodsKey,methodsValue);
         }
 
     }

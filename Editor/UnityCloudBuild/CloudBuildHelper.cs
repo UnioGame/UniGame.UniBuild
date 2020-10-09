@@ -24,28 +24,7 @@ namespace UniGame
 
 
         private static CloudBuildArgs args;
-
-        public static CloudBuildArgs LoadCloudBuildArgs()
-        {
-            var manifestAsset = (TextAsset) Resources.Load(ManifestFileName);
-            CloudBuildArgs cloudBuildArgs = null;
-            Dictionary<string, object> manifest = null;
-
-            if (manifestAsset)
-            {
-                manifest = JsonConvert.DeserializeObject<Dictionary<string, object>>(manifestAsset.text);
-                cloudBuildArgs = new CloudBuildArgs(
-                    int.Parse(manifest["buildNumber"].ToString()),
-                    manifest["bundleId"].ToString(),
-                    manifest["projectId"].ToString(),
-                    manifest["scmBranch"].ToString(),
-                    manifest["cloudBuildTargetName"].ToString(),
-                    manifest["bundleId"].ToString()
-                );
-            }
-
-            return cloudBuildArgs;
-        }
+        private static CloudBuildArgs CloudBuildArgs => args = args ?? LoadCloudBuildArgs();
 
         //%CLOUD-METHODS%"
 
@@ -53,10 +32,6 @@ namespace UniGame
         public static void PreExportCONFIG_NAME()
         {
             Debug.Log("UNI BUILD: START PreExport COMMAND");
-
-            args = LoadCloudBuildArgs();
-
-            Debug.Log($"UNI BUILD: ARGS\n {args}");
 
             var parameters = CreateCommandParameters();
             var builder = new UnityPlayerBuilder();
@@ -78,7 +53,7 @@ namespace UniGame
                 Debug.LogError("ExportPath is EMPTY PreExport methods can be skipped");
             }
 
-            if (args == null)
+            if (CloudBuildArgs == null)
             {
                 Debug.LogError("Error: PostExport skipped because args is NULL");
                 return;
@@ -106,29 +81,49 @@ namespace UniGame
             var argumentsProvider = new ArgumentsProvider(Environment.GetCommandLineArgs());
 
             Debug.LogFormat("\n[CloudBuildHelper] {0} \n", argumentsProvider);
-            Debug.Log(args.ToString());
 
             var buildTarget = argumentsProvider.GetBuildTarget();
             var buildTargetGroup = argumentsProvider.GetBuildTargetGroup();
 
             var buildParameters = new BuildParameters(buildTarget, buildTargetGroup, argumentsProvider)
             {
-                buildNumber = args.BuildNumber,
                 buildTarget = buildTarget,
-                projectId = args.ProjectId,
-                bundleId = args.BundleId,
                 environmentType = BuildEnvironmentType.UnityCloudBuild,
-                branch = args.ScmBranch,
             };
 
-            var cloudBuildArgs = LoadCloudBuildArgs();
-            if (cloudBuildArgs != null)
+            if (CloudBuildArgs != null)
             {
-                buildParameters.buildNumber = cloudBuildArgs.BuildNumber;
+                buildParameters.buildNumber = CloudBuildArgs.BuildNumber;
+                buildParameters.projectId = CloudBuildArgs.ProjectId;
+                buildParameters.bundleId = CloudBuildArgs.BundleId;
+                buildParameters.buildNumber = CloudBuildArgs.BuildNumber;
+                buildParameters.branch = CloudBuildArgs.ScmBranch;
             }
 
             var result = new EditorBuildConfiguration(argumentsProvider, buildParameters);
             return result;
+        }
+
+        /// <summary>
+        /// https://docs.unity3d.com/Manual/UnityCloudBuildManifest.html
+        /// </summary>
+        private static CloudBuildArgs LoadCloudBuildArgs()
+        {
+            var manifestAsset = (TextAsset) Resources.Load(ManifestFileName);
+            var cloudBuildArgs = new CloudBuildArgs();
+
+            if (manifestAsset)
+            {
+                var manifest = JsonConvert.DeserializeObject<Dictionary<string, object>>(manifestAsset.text);
+                cloudBuildArgs.BuildNumber = int.Parse(manifest["buildNumber"].ToString());
+                cloudBuildArgs.BundleId = manifest["bundleId"].ToString();
+                cloudBuildArgs.ProjectId = manifest["projectId"].ToString();
+                cloudBuildArgs.ScmBranch = manifest["scmBranch"].ToString();
+                cloudBuildArgs.CloudBuildTargetName = manifest["cloudBuildTargetName"].ToString();
+                cloudBuildArgs.ScmCommitId = manifest["scmCommitId"].ToString();
+            }
+
+            return cloudBuildArgs;
         }
 
     }

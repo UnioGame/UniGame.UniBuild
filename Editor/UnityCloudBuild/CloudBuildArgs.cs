@@ -4,45 +4,35 @@ namespace UniModules.UniGame.UniBuild.Editor.UnityCloudBuild
 
     public class CloudBuildArgs
     {
-        public CloudBuildArgs(int buildNumber, string bundleId, string projectId, string scmCommitId, string scmBranch, string cloudBuildTargetName)
-        {
-            BuildNumber = buildNumber;
-            BundleId    = bundleId;
-            ProjectId   = projectId;
-            ScmCommitId = scmCommitId;
-            ScmBranch = scmBranch;
-            CloudBuildTargetName = cloudBuildTargetName;
-        }
-
         /// <summary>
         /// The Unity Cloud Build “build number” corresponding to this build.
         /// </summary>
-        public int BuildNumber { get; }
+        public int BuildNumber { get; set; } = 0;
 
         /// <summary>
         /// The bundleIdentifier configured in Unity Cloud Build (iOS and Android only).
         /// </summary>
-        public string BundleId { get; }
+        public string BundleId { get; set; } = string.Empty;
 
         /// <summary>
         /// The Unity project identifier.
         /// </summary>
-        public string ProjectId { get; }
+        public string ProjectId  { get; set; }= string.Empty;
 
         /// <summary>
         /// The commit or changelist that was built.
         /// </summary>
-        public string ScmCommitId { get; }
+        public string ScmCommitId  { get; set; }= string.Empty;
 
         /// <summary>
         /// The name of the branch that was built.
         /// </summary>
-        public string ScmBranch { get; }
+        public string ScmBranch  { get; set; }= string.Empty;
 
         /// <summary>
         /// The name of the build target that was built (pipeline identifier).
         /// </summary>
-        public string CloudBuildTargetName { get; }
+        public string CloudBuildTargetName  { get; set; }= string.Empty;
 
         public override string ToString()
         {
