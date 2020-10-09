@@ -18,7 +18,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
         public const string BuildConfigKey = "CONFIG_NAME";
         public const string ConfigGUIDKey   = "%BUILDMAP-GUID%";
         public const string ClassNameTemplate = nameof(CloudBuildHelper);
-        public const string ClassName = "CloudBuildMethods";
+        public const string ClassFileName = ClassName + ".cs";
+        public const string ClassName = "CloudBuildCiMethods";
 
         private static string _classTemplate;
         private static TextAsset _methodsTemplate;

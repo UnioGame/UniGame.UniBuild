@@ -9,17 +9,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 
     public class BuildConfigurationBuilder
     {
-
-        private static string _path =  
-                EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,"UniBuild/Editor/BuildMethods.cs");
-
-        private static string _cloudPath = 
-                EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,"UniBuild/Editor/CloudBuildMethods.cs");
+        private static string _cloudLocalPath = "UniBuild/Editor/" + CloudBuildMethodsGenerator.ClassFileName;
+        private static string _path = EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,"UniBuild/Editor/BuildMethods.cs");
+        private static string _cloudPath = EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,_cloudLocalPath);
 
         private static string _menuScript  = string.Empty;
         private static string _cloudScript = string.Empty;
-        
-                
+
         [MenuItem("UniGame/Uni Build/Rebuild Menu")]
         public static void RebuildMenuAction()
         {
