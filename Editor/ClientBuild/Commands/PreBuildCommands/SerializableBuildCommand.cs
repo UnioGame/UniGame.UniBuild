@@ -5,7 +5,7 @@
     using UnityEngine;
 
     [Serializable]
-    public abstract class SerializableBuildItem
+    public abstract class SerializableBuildCommand : IUnityBuildCommand
     {
         [SerializeField]
         public bool isActive = true;
@@ -15,6 +15,8 @@
         public string Name => this.GetType().Name;
         
         public virtual bool Validate(IUniBuilderConfiguration config) => isActive;
+        
+        public abstract void Execute(IUniBuilderConfiguration buildParameters);
 
     }
 }

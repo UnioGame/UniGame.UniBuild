@@ -5,15 +5,13 @@
     using UnityEditor.Build.Reporting;
 
     [Serializable]
-    public abstract class UnitySerializablePreBuildCommand : SerializableBuildItem, IUnityPreBuildCommand
+    public abstract class UnitySerializablePreBuildCommand : SerializableBuildCommand, IUnityPreBuildCommand
     {
-        public abstract void Execute(IUniBuilderConfiguration buildParameters);
     }
     
     
     [Serializable]
-    public abstract class UnitySerializablePostBuildCommand :SerializableBuildItem, IUnityPostBuildCommand
+    public abstract class UnitySerializablePostBuildCommand :SerializableBuildCommand, IUnityPostBuildCommand
     {
-        public abstract void Execute(IUniBuilderConfiguration configuration);
     }
 }
