@@ -47,6 +47,9 @@
 
             foreach (var command in commandsBuffer)
             {
+                if(command.IsActive == false)
+                    continue;
+                
                 if (!(command is T targetCommand)) continue;
                 
                 if(filter!=null && !filter(targetCommand))
