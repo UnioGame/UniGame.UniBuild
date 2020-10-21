@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Core.EditorTools.Editor.AssetOperations;
+    using Core.Runtime.Interfaces;
     using Interfaces;
-    using UniModules.UniCore.Runtime.Interfaces;
 
     public interface IUniBuildCommandsMap : 
         IUnityBuildCommandValidator,
