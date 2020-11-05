@@ -15,8 +15,8 @@
         [Space]
 #if  ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineEditor()]
-        [Sirenix.OdinInspector.ValueDropdown("GetPostBuildCommands")]
-        [Sirenix.OdinInspector.HideIf("IsSerializedCommandInitialized")]
+        [Sirenix.OdinInspector.ValueDropdown(nameof(GetPostBuildCommands))]
+        [Sirenix.OdinInspector.HideIf(nameof(IsSerializedCommandInitialized))]
         [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel",Expanded = true)]
         [Sirenix.OdinInspector.HideLabel]
 #endif
@@ -25,7 +25,7 @@
         [Space] 
         [SerializeReference] 
 #if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.HideIf("IsUnityCommandInitialized")]
+        [Sirenix.OdinInspector.HideIf(nameof(IsUnityCommandInitialized))]
         [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel",Expanded = true)]
         [Sirenix.OdinInspector.HideLabel]
         [Sirenix.OdinInspector.InlineProperty]
