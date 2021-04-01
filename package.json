@@ -4,7 +4,7 @@
   "displayName": "UniGame Unity Scriptable Build Pipeline",
   "description": "Configurable unity project build",
   "unity": "2019.3",
-  "version": "2021.0.1",
+  "version": "2021.0.2",
   "homepage": "https://github.com/UniGameTeam/UniBuild#readme",
   "repository": {
     "type": "git",
