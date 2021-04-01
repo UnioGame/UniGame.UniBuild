@@ -17,7 +17,7 @@
         [Sirenix.OdinInspector.InlineEditor()]
         [Sirenix.OdinInspector.ValueDropdown(nameof(GetPostBuildCommands))]
         [Sirenix.OdinInspector.HideIf(nameof(IsSerializedCommandInitialized))]
-        [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel",Expanded = true)]
+        [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel")]
         [Sirenix.OdinInspector.HideLabel]
 #endif
         public TUnityCommand buildCommand;
@@ -26,7 +26,7 @@
         [SerializeReference] 
 #if  ODIN_INSPECTOR
         [Sirenix.OdinInspector.HideIf(nameof(IsUnityCommandInitialized))]
-        [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel",Expanded = true)]
+        [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel")]
         [Sirenix.OdinInspector.HideLabel]
         [Sirenix.OdinInspector.InlineProperty]
 #endif

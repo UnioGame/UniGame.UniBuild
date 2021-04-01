@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
+﻿using System.Linq;
+
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using System;
     using System.Collections.Generic;
@@ -19,13 +21,18 @@
         [SerializeField]
         private UniBuildConfigurationData _buildData = new UniBuildConfigurationData();
 
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Searchable]
+#endif
         [Space]
         public List<BuildCommandStep> preBuildCommands = new List<BuildCommandStep>();
 
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Searchable]
+#endif
         [Space]
         public List<BuildCommandStep> postBuildCommands = new List<BuildCommandStep>();
 
-        
         #region public properties
 
         public IUniBuildConfigurationData BuildData => _buildData;
@@ -37,6 +44,36 @@
         public string ItemName => name;
         
         #endregion
+
+        public IEnumerable<BuildCommandStep> Filter(string filter)
+        {
+            return Filter(filter, preBuildCommands)
+                .Concat(Filter(filter, postBuildCommands));
+        }
+
+        public IEnumerable<BuildCommandStep> Filter(string filter, IEnumerable<BuildCommandStep> commandSteps)
+        {
+            return commandSteps.Where(x => ValidateCommandFilter(x, filter));
+        }
+        
+        public bool ValidateCommandFilter(BuildCommandStep commandStep, string filterValue)
+        {
+            if (string.IsNullOrEmpty(filterValue))
+                return true;
+            
+            var isValid = false;
+            var commands = commandStep.GetCommands();
+            foreach (var buildCommand in commands)
+            {
+                isValid |= buildCommand.Name.IndexOf(filterValue,StringComparison.OrdinalIgnoreCase) >= 0;
+                isValid |= buildCommand
+                    .GetType()
+                    .Name
+                    .IndexOf(filterValue,StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+
+            return isValid;
+        }
 
         public IEnumerable<T> LoadCommands<T>(Func<T,bool> filter = null)
             where T : IUnityBuildCommand 
@@ -98,7 +135,6 @@
         {
             return true;
         }
-
 
     }
 }
