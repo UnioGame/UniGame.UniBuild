@@ -5,10 +5,10 @@
   "description": "Configurable unity project build",
   "unity": "2019.3",
   "version": "2021.0.2",
-  "homepage": "https://github.com/UniGameTeam/UniBuild#readme",
+  "homepage": "https://github.com/UniGameTeam/UniGame.UniBuild#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/UniGameTeam/UniBuild.git"
+    "url": "https://github.com/UniGameTeam/UniGame.UniBuild"
   },
   "keywords": [
     "Build",
