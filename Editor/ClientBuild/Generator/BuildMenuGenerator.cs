@@ -18,11 +18,11 @@
             var scriptData = new ScriptData() {
                 Namespace = "namespace UniGame.UniBuild",
                 Name = "UniPlatformBuilder",
-                Usings = new [] {
+                Usings = new List<string>() {
                     typeof(MenuItem).Namespace,
                     typeof(UniBuildTool).Namespace
                 },
-                Methods = GetBuildMethods().ToArray()
+                Methods = GetBuildMethods().ToList()
             };
 
             return scriptData;

@@ -35,15 +35,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 #endif
             var generator  = new BuildMenuGenerator();
             var script     = generator.CreateBuilderScriptBody();
-            var scriptData = script.Convert();
+            var result = script.CreateScript(_path,force);
             
-            if (string.IsNullOrEmpty(scriptData))
-                return false;
-            if (!force && _menuScript.Equals(scriptData))
-                return false;
-            
-            var result =script.CreateScript(_path);
-            _menuScript = scriptData;
             return result;
         }
         
@@ -54,14 +47,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 #endif
             var cloudGenerator = new CloudBuildMethodsGenerator();
             var content        = cloudGenerator.CreateCloudBuildMethods();
-            
-            if (string.IsNullOrEmpty(content))
-                return false;
-            if (!force && _menuScript.Equals(content))
-                return false;
-            
-            var result = content.WriteUnityFile(_cloudPath);
-            _cloudScript = content;
+            var result = content.WriteUnityFile(_cloudPath,force);
             return result;
         }
     }
