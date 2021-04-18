@@ -10,12 +10,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
     public class BuildConfigurationBuilder
     {
         private static string _cloudLocalPath = "UniBuild/Editor/" + CloudBuildMethodsGenerator.ClassFileName;
-        private static string _path = EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,"UniBuild/Editor/BuildMethods.cs");
         private static string _cloudPath = EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,_cloudLocalPath);
 
         private static string _menuScript  = string.Empty;
         private static string _cloudScript = string.Empty;
 
+        public static string BuildPath => EditorFileUtils.Combine(EditorPathConstants.GeneratedContentPath,"UniBuild/Editor/BuildMethods.cs");
+        
         [MenuItem("UniGame/Uni Build/Rebuild Menu")]
         public static void RebuildMenuAction()
         {
@@ -35,7 +36,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 #endif
             var generator  = new BuildMenuGenerator();
             var script     = generator.CreateBuilderScriptBody();
-            var result = script.CreateScript(_path,force);
+            var result = script.CreateScript(BuildPath,force);
             
             return result;
         }
