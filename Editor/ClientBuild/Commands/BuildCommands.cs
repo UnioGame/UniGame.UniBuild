@@ -1,35 +1,38 @@
-using System;
-using System.Collections.Generic;
-using UniModules.UniCore.Runtime.ObjectPool.Runtime;
-using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Abstract;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-using UnityEngine;
 
-[Serializable]
-public class BuildCommands : IBuildCommands
+namespace UniModules.UniGame.UniBuild
 {
-    #region inspector
+    using System;
+    using System.Collections.Generic;
+    using Editor.ClientBuild.Abstract;
+    using Editor.ClientBuild.BuildConfiguration;
+    using Editor.ClientBuild.Interfaces;
+    using UnityEngine;
+
+    [Serializable]
+    public class BuildCommands : IBuildCommands
+    {
+        #region inspector
     
 #if ODIN_INSPECTOR
-    [Sirenix.OdinInspector.Searchable]
+        [Sirenix.OdinInspector.Searchable]
 #endif
-    [Space]
-    public List<BuildCommandStep> commands = new List<BuildCommandStep>();
+        [Space]
+        public List<BuildCommandStep> commands = new List<BuildCommandStep>();
 
-    #endregion
-    
-    public IEnumerable<IUnityBuildCommand> Commands => FilterActiveCommands(commands);
+        #endregion
 
-    private IEnumerable<IUnityBuildCommand> FilterActiveCommands(IEnumerable<BuildCommandStep> commands)
-    {
-        foreach (var command in commands) {
-            foreach (var buildCommand in command.GetCommands())
-            {
-                yield return buildCommand;
+        public IEnumerable<IUnityBuildCommand> Commands => FilterActiveCommands(commands);
+
+        private IEnumerable<IUnityBuildCommand> FilterActiveCommands(IEnumerable<BuildCommandStep> filteredCommands)
+        {
+            var items = new List<IUnityBuildCommand>();
+
+            foreach (var command in filteredCommands) {
+                items.AddRange(command.GetCommands());
             }
+            
+            return items;
         }
-    }
 
+    }
 }

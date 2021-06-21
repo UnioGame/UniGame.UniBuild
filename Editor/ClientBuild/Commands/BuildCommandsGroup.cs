@@ -1,5 +1,6 @@
 ﻿using System;
 using UniModules.UniGame.Core.Editor.Tools;
+using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
 
