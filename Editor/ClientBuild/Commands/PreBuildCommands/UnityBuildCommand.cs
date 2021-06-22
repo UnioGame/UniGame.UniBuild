@@ -10,6 +10,7 @@
     public abstract class UnityBuildCommand : ScriptableObject,IUnityBuildCommand
     {
         [SerializeField]
+        [HideInInspector]
         public string commandName = String.Empty;
         
         [SerializeField]
@@ -26,7 +27,7 @@
 
         public virtual void OnValidate()
         {
-            commandName = string.IsNullOrEmpty(commandName) ? name : commandName;
+            commandName = string.IsNullOrEmpty(commandName) || commandName!=name ? name : commandName;
         }
     }
 }
