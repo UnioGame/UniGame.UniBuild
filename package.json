@@ -15,7 +15,7 @@
     "Pipeline"
   ],
   "dependencies": {
-    "com.unigame.coremodules": "2021.3.7",
+    "com.unigame.coremodules": "2021.3.6",
     "com.unity.scriptablebuildpipeline": "1.5.10",
     "com.unity.addressables": "1.17.17",
     "com.unity.test-framework": "1.1.27",
