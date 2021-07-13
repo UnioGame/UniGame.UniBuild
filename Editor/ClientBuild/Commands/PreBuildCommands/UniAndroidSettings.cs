@@ -25,7 +25,11 @@
         public bool ForceInternetPermission = false;
 
         public bool UseAPKExpansionFiles = false;
-        
+
+#if UNITY_2020
+        public bool AndroidCreateSymbolsZip = false;
+#endif
+
         public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;
     }
 }
