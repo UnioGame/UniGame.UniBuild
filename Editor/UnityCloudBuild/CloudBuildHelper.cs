@@ -37,7 +37,12 @@ namespace UniGame
             var guid = "%BUILDMAP-GUID%";
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
+
+#if UNITY_CLOUD_BUILD
             builder.ExecuteCommands(configuration.PreBuildCommands, x => x.Execute(parameters));
+#else 
+            configuration.ExecuteBuild();
+#endif
             
             Debug.Log("UNI BUILD: START PreExport COMMAND");
         }
