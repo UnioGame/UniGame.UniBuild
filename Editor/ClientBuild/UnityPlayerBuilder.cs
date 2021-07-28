@@ -73,7 +73,7 @@
             var file   = buildParameters.OutputFile;
             var folder = buildParameters.OutputFolder;
             var artifactPath = folder.
-                CombinePath(buildParameters.BuildTarget.ToString()).
+//                CombinePath(buildParameters.BuildTarget.ToString()).
                 CombinePath(file);
             
             buildParameters.ArtifactPath = artifactPath;

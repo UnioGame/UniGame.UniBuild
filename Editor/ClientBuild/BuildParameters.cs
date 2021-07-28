@@ -50,8 +50,12 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             get => this.outputFile;
             set => this.outputFile = value;
         }
-        
-        public string OutputFolder => this.outputFolder;       
+
+        public string OutputFolder
+        {
+            get => this.outputFolder;
+            set => this.outputFolder = value;
+        }      
         
         public BuildOptions BuildOptions => this.buildOptions;
         

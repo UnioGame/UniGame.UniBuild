@@ -10,7 +10,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces {
 
         int          BuildNumber  { get; }
         string       OutputFile   { get; set; }
-        string       OutputFolder { get;  }
+        string       OutputFolder { get; set; }
         
         string ArtifactPath { get; set; }
         
