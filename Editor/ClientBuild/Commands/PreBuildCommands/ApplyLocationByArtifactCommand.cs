@@ -12,7 +12,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
     public class ApplyLocationByArtifactCommand : SerializableBuildCommand
     {
 
-        public ArtifactLocationOption option;
+        public ArtifactLocationOption option = ArtifactLocationOption.Append;
 
         public bool useArtifactNameAsFolderPath = true;
 

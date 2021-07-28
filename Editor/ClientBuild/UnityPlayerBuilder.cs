@@ -144,7 +144,7 @@
                 var endTime       = DateTime.Now;
                 var executionTime = endTime - startTime;
                 
-                LogBuildStep($"EXECUTE COMMAND [{stepCounter++}] FINISHED {commandName} DURATION: {executionTime.TotalSeconds}");
+                LogBuildStep($"EXECUTE COMMAND [{commandName} [{stepCounter++}]] FINISHED. DURATION: {executionTime.TotalSeconds}");
             }
             
             LogBuildStep($"COMMANDS FINISHED");

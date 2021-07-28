@@ -3,6 +3,7 @@ using UniModules.UniGame.Core.Editor.Tools;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+using UnityEngine;
 
 namespace UniModules.UniGame.UniBuild
 {
@@ -22,15 +23,33 @@ namespace UniModules.UniGame.UniBuild
     
         public override void Execute(IUniBuilderConfiguration configuration)
         {
-            UniEditorProfiler.LogTime($"===BUILD COMMAND {Name} ===",() => ExecuteCommands(configuration));
+            ExecuteCommands(configuration);
         }
     
         private void ExecuteCommands(IUniBuilderConfiguration configuration)
         {
             foreach (var buildCommand in commands.Commands)
             {
+                var commandName = buildCommand.Name;
+                
+                LogBuildStep($"EXECUTE COMMAND {commandName}");
+                
+                var startTime = DateTime.Now;
+        
                 buildCommand.Execute(configuration);
+
+                var endTime       = DateTime.Now;
+                var executionTime = endTime - startTime;
+                
+                LogBuildStep($"EXECUTE COMMAND [{commandName}] FINISHED DURATION: {executionTime.TotalSeconds}");
+                
             }
         }
+        
+        public void LogBuildStep(string message)
+        {
+            Debug.Log($"\tUNIBUILD GROUP [{Name}] : \n{message}");
+        }
+
     }
 }
