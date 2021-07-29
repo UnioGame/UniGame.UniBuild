@@ -8,7 +8,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces {
 
         BuildTargetGroup BuildTargetGroup { get; }
 
-        int          BuildNumber  { get; }
+        int          BuildNumber  { get; set; }
         string       OutputFile   { get; set; }
         string       OutputFolder { get; set; }
         
@@ -20,7 +20,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces {
         string BundleId { get; }
 
         BuildEnvironmentType EnvironmentType { get; }
-        string Branch { get; }
+        
+        string Branch { get;set;  }
 
         /// <summary>
         /// Player Build scenes

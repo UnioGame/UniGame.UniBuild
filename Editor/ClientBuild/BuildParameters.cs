@@ -42,8 +42,12 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             get => artifactPath;
             set => artifactPath = value;
         }
-        
-        public int BuildNumber => this.buildNumber;
+
+        public int BuildNumber
+        {
+            get => this.buildNumber;
+            set => this.buildNumber = value;
+        }
         
         public string OutputFile
         {
@@ -64,8 +68,12 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public string BundleId => bundleId;
         
         public BuildEnvironmentType EnvironmentType => environmentType;
-        
-        public string Branch => branch;
+
+        public string Branch
+        {
+            get =>  branch;
+            set => branch = value;
+        }
 
         public IReadOnlyList<EditorBuildSettingsScene> Scenes => scenes;
 
