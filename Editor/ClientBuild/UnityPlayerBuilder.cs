@@ -32,13 +32,17 @@
         {
             ExecuteCommands(commandsMap.PreBuildCommands,x => x.Execute(configuration));
 
-            var result = ExecuteBuild(configuration);
-
-            configuration.BuildReport = result;
+            BuildReport report = null;
+            
+            if (commandsMap.PlayerBuildEnabled)
+            {
+                report = ExecuteBuild(configuration);
+                configuration.BuildReport = report;
+            }
     
             ExecuteCommands(commandsMap.PostBuildCommands,x => x.Execute(configuration));
 
-            return result;
+            return report;
         }
 
         private BuildReport ExecuteBuild(IUniBuilderConfiguration configuration)

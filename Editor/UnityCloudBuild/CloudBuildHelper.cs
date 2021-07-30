@@ -31,18 +31,24 @@ namespace UniGame
         {
             Debug.Log("UNI BUILD: START PreExport COMMAND");
 
-            var parameters = CreateCommandParameters();
-            var builder = new UnityPlayerBuilder();
-
             var guid = "%BUILDMAP-GUID%";
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             var configuration = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
 
+            var isCloudBuild = false;
 #if UNITY_CLOUD_BUILD
-            builder.ExecuteCommands(configuration.PreBuildCommands, x => x.Execute(parameters));
-#else 
-            configuration.ExecuteBuild();
+            isCloudBuild = true;
 #endif
+            if (isCloudBuild)
+            {
+                var parameters = CreateCommandParameters();
+                var builder = new UnityPlayerBuilder();
+                builder.ExecuteCommands(configuration.PreBuildCommands, x => x.Execute(parameters));
+            }
+            else
+            {
+                UniBuildTool.ExecuteBuild(configuration);
+            }
             
             Debug.Log("UNI BUILD: START PreExport COMMAND");
         }
@@ -73,7 +79,7 @@ namespace UniGame
         
         //=====ExportMethodsEnd=====
         
-        private static IUniBuilderConfiguration CreateCommandParameters()
+        public static IUniBuilderConfiguration CreateCommandParameters()
         {
             var argumentsProvider = new ArgumentsProvider(Environment.GetCommandLineArgs());
 
@@ -95,10 +101,6 @@ namespace UniGame
                 buildParameters.bundleId = CloudBuildArgs.BundleId;
                 buildParameters.buildNumber = CloudBuildArgs.BuildNumber;
                 buildParameters.branch = CloudBuildArgs.ScmBranch;
-            }
-            else
-            {
-                
             }
 
             var result = new EditorBuildConfiguration(argumentsProvider, buildParameters);

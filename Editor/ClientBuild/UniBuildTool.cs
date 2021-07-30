@@ -1,4 +1,8 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
+﻿using System.Linq;
+using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
+using UnityEngine;
+
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 {
     using System;
     using Abstract;
@@ -14,17 +18,18 @@
 
         private static UnityPlayerBuilder builder = new UnityPlayerBuilder();
     
-        
         public static EditorBuildConfiguration CreateConfiguration(string outputFileName,BuildTarget buildTarget,BuildTargetGroup targetGroup)
         {
-            var argumentsProvider = new ArgumentsProvider(new[] {
-                $"{BuildArguments.BuildOutputFolderKey}:Builds",
-                $"{BuildArguments.BuildOutputNameKey}:{outputFileName}",
-            });
-
-            var buildConfiguration = new EditorBuildConfiguration(
-                argumentsProvider, 
-                new BuildParameters(buildTarget, targetGroup, argumentsProvider));
+            var commandLineParameters = Environment.GetCommandLineArgs().ToList();
+            commandLineParameters.Add( $"{BuildArguments.BuildOutputFolderKey}:Builds");
+            commandLineParameters.Add( $"{BuildArguments.BuildOutputNameKey}:{outputFileName}");
+            
+            var argumentsProvider = new ArgumentsProvider(commandLineParameters.ToArray());
+            var buildParameters = new BuildParameters(buildTarget, targetGroup, argumentsProvider);
+            var buildConfiguration = new EditorBuildConfiguration(argumentsProvider, buildParameters);
+            
+            Debug.LogFormat("\nUNIBUILD [CreateConfiguration] {0} \n", argumentsProvider);
+            
             return buildConfiguration;
         }
         
@@ -41,12 +46,13 @@
             var buildConfiguration = CreateConfiguration(outputFileName, buildTarget, targetGroup);
             return UniBuildTool.BuildPlayer(buildConfiguration);
         }
+
         
         public static BuildReport ExecuteBuild(IUniBuildCommandsMap commandsMap)
         {
             var buildData     = commandsMap.BuildData;
             var configuration = CreateConfiguration(buildData.ArtifactName, buildData.BuildTarget, buildData.BuildTargetGroup);
-            return UniBuildTool.BuildPlayer(configuration,commandsMap);
+            return BuildPlayer(configuration,commandsMap);
         }
         
         /// <summary>

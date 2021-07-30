@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using UnityEngine.Serialization;
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
@@ -14,12 +15,16 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration", fileName = nameof(UniBuildCommandsMap))]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
     {
+
+        public bool playerBuildEnabled = true;
+        
 #if  ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty()]
         [Sirenix.OdinInspector.HideLabel()]
 #endif
+        [FormerlySerializedAs("_buildData")]
         [SerializeField]
-        private UniBuildConfigurationData _buildData = new UniBuildConfigurationData();
+        private UniBuildConfigurationData buildData = new UniBuildConfigurationData();
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.Searchable]
@@ -35,7 +40,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 
         #region public properties
 
-        public IUniBuildConfigurationData BuildData => _buildData;
+        public bool PlayerBuildEnabled => playerBuildEnabled;
+        
+        public IUniBuildConfigurationData BuildData => buildData;
         
         public IEnumerable<IUnityBuildCommand> PreBuildCommands => FilterActiveCommands(preBuildCommands);
 

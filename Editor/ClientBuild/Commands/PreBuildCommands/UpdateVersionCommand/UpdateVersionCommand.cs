@@ -54,23 +54,23 @@
             PlayerSettings.iOS.buildNumber = buildNumberString;
             PlayerSettings.Android.bundleVersionCode = resultBuildNumber;
             
-            logBuilder.Append("\t Parameters build number : ");
+            logBuilder.Append("\tUNIBUILD: Parameters build number : ");
             logBuilder.Append(buildNumber);
             logBuilder.AppendLine();
  
-            logBuilder.Append("\t ResultBuildNumber build number : ");
+            logBuilder.Append("\tUNIBUILD: ResultBuildNumber build number : ");
             logBuilder.Append(resultBuildNumber);
             logBuilder.AppendLine();
                                   
-            logBuilder.Append("\t PlayerSettings.bundleVersion : ");
+            logBuilder.Append("\tUNIBUILD: PlayerSettings.bundleVersion : ");
             logBuilder.Append(bundleVersion);
             logBuilder.AppendLine();
             
-            logBuilder.Append("\t PlayerSettings.iOS.buildNumber : ");
+            logBuilder.Append("\tUNIBUILD: PlayerSettings.iOS.buildNumber : ");
             logBuilder.Append(buildNumberString);
             logBuilder.AppendLine();
             
-            logBuilder.Append("\t PlayerSettings.Android.bundleVersionCode : ");
+            logBuilder.Append("\tUNIBUILD: PlayerSettings.Android.bundleVersionCode : ");
             logBuilder.Append(resultBuildNumber);
             logBuilder.AppendLine();
             

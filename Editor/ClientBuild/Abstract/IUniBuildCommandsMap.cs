@@ -11,6 +11,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Abstract
         INamedItem
     {
         
+        public bool PlayerBuildEnabled { get; }
+        
         IUniBuildConfigurationData BuildData { get; }
         
         IEnumerable<IUnityBuildCommand> PreBuildCommands { get; }
