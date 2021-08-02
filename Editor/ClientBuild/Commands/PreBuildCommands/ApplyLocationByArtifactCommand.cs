@@ -1,11 +1,10 @@
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
+    using UniModules.Editor;
     using System.IO;
     using Core.Runtime.Extension;
     using UnityEditor;
-    
     using System;
-    using UniModules.UniGame.Core.EditorTools.Editor.Tools;
     using Interfaces;
 
     [Serializable]

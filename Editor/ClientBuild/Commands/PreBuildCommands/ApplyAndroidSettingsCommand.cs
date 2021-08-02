@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
+﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
     using System;
     using Interfaces;

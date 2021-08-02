@@ -2,7 +2,6 @@
     using System;
     using Interfaces;
     using UnityEditor;
-    using UnityEngine;
 
     [Serializable]
     public class DisableUnityLogoCommand : UnitySerializablePreBuildCommand

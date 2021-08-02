@@ -2,7 +2,6 @@
 {
     using System;
     using Interfaces;
-    using UnityEditor.Build.Reporting;
 
     [Serializable]
     public abstract class UnitySerializablePreBuildCommand : SerializableBuildCommand, IUnityPreBuildCommand

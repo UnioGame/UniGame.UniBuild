@@ -1,10 +1,9 @@
-﻿using System.Text.RegularExpressions;
-
+﻿
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 {
+    using UniModules.Editor;
     using CodeWriter.Editor.UnityTools;
     using Core.EditorTools.Editor;
-    using Core.EditorTools.Editor.Tools;
     using UnityEditor;
 
     public class BuildConfigurationBuilder

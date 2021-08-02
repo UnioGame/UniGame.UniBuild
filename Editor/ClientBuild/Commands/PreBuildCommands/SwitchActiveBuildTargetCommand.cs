@@ -4,7 +4,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
 {
     using System;
     using UnityEditor;
-    using UnityEngine;
 
     [Serializable]
     public class SwitchActiveBuildTargetCommand : UnitySerializablePreBuildCommand
