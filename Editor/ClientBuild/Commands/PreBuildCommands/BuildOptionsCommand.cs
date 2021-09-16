@@ -13,6 +13,8 @@
     [Serializable]
     public class BuildOptionsCommand : UnitySerializablePreBuildCommand
     {
+        public bool setIncrementalIl2CppBuild = true;
+        
         [SerializeField]
         public BuildOptions[] _buildOptions = new BuildOptions[] {BuildOptions.None};
 
@@ -31,6 +33,7 @@
             }
             
             configuration.BuildParameters.SetBuildOptions(options,false);
+            
         }
         
     }
