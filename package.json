@@ -15,9 +15,9 @@
     "Pipeline"
   ],
   "dependencies": {
-    "com.unigame.coremodules": "2021.5.2",
+    "com.unigame.coremodules": "2021.6.0",
     "com.unity.scriptablebuildpipeline": "1.5.10",
-    "com.unity.addressables": "1.17.17",
+    "com.unity.addressables": "1.18.15",
     "com.unity.test-framework": "1.1.27",
     "com.unity.nuget.newtonsoft-json": "2.0.0",
     "com.unigame.gittools": "2020.0.4"
