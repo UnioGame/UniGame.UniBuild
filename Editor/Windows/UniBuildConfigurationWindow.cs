@@ -1,9 +1,9 @@
 #if ODIN_INSPECTOR
 
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using UniModules.Editor;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
 using UnityEditor;
 using UnityEngine;
@@ -30,27 +30,19 @@ namespace UniModules.UniGame.UniBuild.Editor.Windows
         #endregion
 
         #region public properties
-        
-        [Searchable]
-        [ListDrawerSettings(Expanded = true)]
-        [InlineEditor]
-        public List<UniBuildCommandsMap> configurations = new List<UniBuildCommandsMap>();
 
-        #endregion
+        [HideLabel]
+        [InlineEditor(InlineEditorObjectFieldModes.Boxed)]
+        public UniBuildConfigurationAsset configurationAsset;
         
+        #endregion
+
         public void InitializeWindow()
         {
-            Refresh();
+            configurationAsset = CreateInstance<UniBuildConfigurationAsset>();
+            configurationAsset.Refresh();
         }
 
-        [Sirenix.OdinInspector.Button]
-        public void Refresh()
-        {
-            configurations.Clear();
-            var configs = AssetEditorTools.GetAssets<UniBuildCommandsMap>();
-            configurations.AddRange(configs);
-        }
-        
     }
     
     

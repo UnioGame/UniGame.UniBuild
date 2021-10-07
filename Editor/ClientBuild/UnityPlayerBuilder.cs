@@ -25,7 +25,7 @@
         
         public BuildReport Build(IUniBuilderConfiguration configuration,IUniBuildCommandsMap commandsMap)
         {
-            ExecuteCommands(commandsMap.PreBuildCommands,x => x.Execute(configuration));
+            ExecuteCommands(commandsMap.PreBuildCommands,configuration);
 
             BuildReport report = null;
             
@@ -35,9 +35,14 @@
                 configuration.BuildReport = report;
             }
     
-            ExecuteCommands(commandsMap.PostBuildCommands,x => x.Execute(configuration));
+            ExecuteCommands(commandsMap.PostBuildCommands,configuration);
 
             return report;
+        }
+
+        public void ExecuteCommands(IEnumerable<IUnityBuildCommand> commands, IUniBuilderConfiguration configuration)
+        {
+            ExecuteCommands(commands,x => x.Execute(configuration));
         }
 
         private BuildReport ExecuteBuild(IUniBuilderConfiguration configuration)
