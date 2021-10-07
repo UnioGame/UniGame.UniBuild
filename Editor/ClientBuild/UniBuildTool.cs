@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
@@ -52,6 +53,19 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             var buildData     = commandsMap.BuildData;
             var configuration = CreateConfiguration(buildData.ArtifactName, buildData.BuildTarget, buildData.BuildTargetGroup);
             return BuildPlayer(configuration,commandsMap);
+        }
+
+        public static void ExecuteCommands(this IEnumerable<IUnityBuildCommand> commands, IUniBuildConfigurationData buildData = null)
+        {
+            buildData ??= new UniBuildConfigurationData()
+            {
+                _buildTarget = EditorUserBuildSettings.activeBuildTarget,
+                _buildTargetGroup = EditorUserBuildSettings.selectedBuildTargetGroup,
+                _artifactName = "Empty"
+            }; 
+            
+            var configuration = CreateConfiguration(buildData.ArtifactName, buildData.BuildTarget, buildData.BuildTargetGroup);
+            builder.ExecuteCommands(commands,configuration);
         }
         
         /// <summary>

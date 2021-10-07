@@ -10,11 +10,11 @@
     {
 
         [SerializeField]
-        private string _artifactName = string.Empty;
+        public string _artifactName = string.Empty;
         [SerializeField]
-        private BuildTarget _buildTarget;
+        public BuildTarget _buildTarget;
         [SerializeField]
-        private BuildTargetGroup _buildTargetGroup;
+        public BuildTargetGroup _buildTargetGroup;
 
         public BuildTargetGroup BuildTargetGroup => _buildTargetGroup;
 
