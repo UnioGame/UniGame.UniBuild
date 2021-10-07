@@ -11,6 +11,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
 
     [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration", fileName = nameof(UniBuildCommandsMap))]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
@@ -19,21 +22,23 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         public bool playerBuildEnabled = true;
         
 #if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineProperty()]
-        [Sirenix.OdinInspector.HideLabel()]
+        [InlineProperty()]
+        [HideLabel()]
 #endif
         [FormerlySerializedAs("_buildData")]
         [SerializeField]
         private UniBuildConfigurationData buildData = new UniBuildConfigurationData();
 
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Searchable]
+        [Searchable]
+        [BoxGroup(nameof(PreBuildCommands),false)]
 #endif
         [Space]
         public List<BuildCommandStep> preBuildCommands = new List<BuildCommandStep>();
 
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Searchable]
+        [Searchable]
+        [BoxGroup(nameof(PostBuildCommands),false)]
 #endif
         [Space]
         public List<BuildCommandStep> postBuildCommands = new List<BuildCommandStep>();
@@ -119,8 +124,26 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
             return ValidatePlatform(config);
         }
 
+#if ODIN_INSPECTOR
+        [BoxGroup(nameof(PreBuildCommands))]
+        [Button(nameof(ExecutePreBuildCommands))]
+#endif
+        public void ExecutePreBuildCommands()
+        {
+            PreBuildCommands.ExecuteCommands(buildData);
+        }
+        
+#if ODIN_INSPECTOR
+        [BoxGroup(nameof(PostBuildCommands))]
+        [Button(nameof(ExecutePostBuildCommands))]
+#endif
+        public void ExecutePostBuildCommands()
+        {
+            PreBuildCommands.ExecuteCommands(buildData);
+        }
+        
 #if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Button("Execute")]
+        [Button("Execute")]
 #endif
         public void ExecuteBuild()
         {
