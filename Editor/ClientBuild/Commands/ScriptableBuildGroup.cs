@@ -1,3 +1,4 @@
+using UniCore.Runtime.ProfilerTools;
 using UniModules.UniGame.Core.Editor.Tools;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
@@ -23,21 +24,18 @@ namespace UniModules.UniGame.UniBuild
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.Button]
 #endif
-        public void ExecuteGroup()
-        {
-            commands.Commands.ExecuteCommands();
-        }
+        public void ExecuteGroup() => commands.Commands.ExecuteCommands();
         
         public override void Execute(IUniBuilderConfiguration configuration)
         {
-            UniEditorProfiler.LogTime($"===BUILD COMMAND {Name} ===",() => ExecuteCommands(configuration));
+            UniEditorProfiler.LogTime($"===UNIBUILD: Execute Group {Name} ===",() => ExecuteCommands(configuration));
         }
 
         private void ExecuteCommands(IUniBuilderConfiguration configuration)
         {
             foreach (var buildCommand in commands.Commands)
             {
-                buildCommand.Execute(configuration);
+                UniEditorProfiler.LogTime($"===Execute COMMAND {buildCommand.Name} ===",() => buildCommand.Execute(configuration));
             }
         }
     }
