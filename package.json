@@ -4,7 +4,7 @@
   "displayName": "UniGame Unity Scriptable Build Pipeline",
   "description": "Configurable unity project build",
   "unity": "2019.3",
-  "version": "2021.4.3",
+  "version": "2021.4.4",
   "homepage": "https://github.com/UniGameTeam/UniGame.UniBuild#readme",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "Pipeline"
   ],
   "dependencies": {
-    "com.unigame.coremodules": "2021.9.5",
+    "com.unigame.coremodules": "2021.11.9",
     "com.unity.scriptablebuildpipeline": "1.19.2",
     "com.unity.addressables": "1.18.15",
     "com.unity.test-framework": "1.1.27",
