@@ -1,4 +1,5 @@
 using UniModules.UniGame.Core.Editor.Tools;
+using UniModules.UniGame.UniBuild.Editor.ClientBuild;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
 using UnityEngine;
@@ -18,7 +19,15 @@ namespace UniModules.UniGame.UniBuild
         [Sirenix.OdinInspector.HideLabel]
 #endif
         public BuildCommands commands = new BuildCommands();
-    
+
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Button]
+#endif
+        public void ExecuteGroup()
+        {
+            commands.Commands.ExecuteCommands();
+        }
+        
         public override void Execute(IUniBuilderConfiguration configuration)
         {
             UniEditorProfiler.LogTime($"===BUILD COMMAND {Name} ===",() => ExecuteCommands(configuration));
