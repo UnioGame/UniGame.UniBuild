@@ -16,6 +16,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
         public void Execute()
         {
             PlayerSettings.SplashScreen.showUnityLogo = false;
+            AssetDatabase.SaveAssets();
         }
         
     }
