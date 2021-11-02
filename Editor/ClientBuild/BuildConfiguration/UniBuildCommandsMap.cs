@@ -128,19 +128,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [BoxGroup(nameof(PreBuildCommands))]
         [Button(nameof(ExecutePreBuildCommands))]
 #endif
-        public void ExecutePreBuildCommands()
-        {
-            PreBuildCommands.ExecuteCommands(buildData);
-        }
+        public void ExecutePreBuildCommands() => PreBuildCommands.ExecuteCommands(buildData);
         
 #if ODIN_INSPECTOR
         [BoxGroup(nameof(PostBuildCommands))]
         [Button(nameof(ExecutePostBuildCommands))]
 #endif
-        public void ExecutePostBuildCommands()
-        {
-            PreBuildCommands.ExecuteCommands(buildData);
-        }
+        public void ExecutePostBuildCommands() => PostBuildCommands.ExecuteCommands(buildData);
         
 #if  ODIN_INSPECTOR
         [Button("Execute")]
