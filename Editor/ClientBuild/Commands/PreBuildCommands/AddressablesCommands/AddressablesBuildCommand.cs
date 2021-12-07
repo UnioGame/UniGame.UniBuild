@@ -9,7 +9,16 @@
     {
         public override void Execute(IUniBuilderConfiguration buildParameters)
         {
+            Execute();
+        }
+
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Button]
+#endif
+        public void Execute()
+        {
             AddressableAssetSettings.BuildPlayerContent();
         }
+        
     }
 }
