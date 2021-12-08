@@ -25,6 +25,10 @@
         
         public BuildReport Build(IUniBuilderConfiguration configuration,IUniBuildCommandsMap commandsMap)
         {
+            BuildLogger.Initialize();
+            
+            LogBuildStep($"Build Start At {DateTime.Now.ToLongDateString()}");
+            
             ExecuteCommands(commandsMap.PreBuildCommands,configuration);
 
             BuildReport report = null;
@@ -37,39 +41,16 @@
     
             ExecuteCommands(commandsMap.PostBuildCommands,configuration);
 
+            LogBuildStep($"Build Finish At At {DateTime.Now.ToLongDateString()}");
+            
+            PrintBuildLog();
+            
             return report;
         }
 
         public void ExecuteCommands(IEnumerable<IUnityBuildCommand> commands, IUniBuilderConfiguration configuration)
         {
             ExecuteCommands(commands,x => x.Execute(configuration));
-        }
-
-        private BuildReport ExecuteBuild(IUniBuilderConfiguration configuration)
-        {
-            var scenes = GetBuildInScenes(configuration);
-
-            var buildParameters = configuration.BuildParameters;
-            var outputLocation = GetTargetBuildLocation(configuration.BuildParameters);
-            var buildOptions   = buildParameters.BuildOptions;
-    
-            LogBuildStep($"OUTPUT LOCATION : {outputLocation}");
-
-            var report = BuildPipeline.BuildPlayer(scenes, outputLocation,
-                buildParameters.BuildTarget, buildOptions);
-
-            LogBuildStep(report.ReportMessage());
-
-            return report;
-
-        }
-
-        private EditorBuildSettingsScene[] GetBuildInScenes(IUniBuilderConfiguration configuration)
-        {
-            var parameters = configuration.BuildParameters;
-            var scenes = parameters.Scenes.Count > 0 ? parameters.Scenes :
-                EditorBuildSettings.scenes;
-            return scenes.Where(x => x.enabled).ToArray();
         }
 
         public string GetTargetBuildLocation(IBuildParameters buildParameters)
@@ -154,10 +135,41 @@
             LogBuildStep($"COMMANDS FINISHED");
         }
 
-        public void LogBuildStep(string message)
+        private void LogBuildStep(string message) => BuildLogger.Log(message);
+        
+        private BuildReport ExecuteBuild(IUniBuilderConfiguration configuration)
         {
-            Debug.Log($"========= UNIBUILD : {message}\n");
+            var scenes = GetBuildInScenes(configuration);
+
+            var buildParameters = configuration.BuildParameters;
+            var outputLocation = GetTargetBuildLocation(configuration.BuildParameters);
+            var buildOptions   = buildParameters.BuildOptions;
+    
+            LogBuildStep($"OUTPUT LOCATION : {outputLocation}");
+
+            var report = BuildPipeline.BuildPlayer(scenes, outputLocation,
+                buildParameters.BuildTarget, buildOptions);
+
+            LogBuildStep(report.ReportMessage());
+
+            return report;
+
         }
+
+        private void PrintBuildLog()
+        {
+            BuildLogger.Print();
+            BuildLogger.Finish();
+        }
+        
+        private EditorBuildSettingsScene[] GetBuildInScenes(IUniBuilderConfiguration configuration)
+        {
+            var parameters = configuration.BuildParameters;
+            var scenes = parameters.Scenes.Count > 0 ? parameters.Scenes :
+                EditorBuildSettings.scenes;
+            return scenes.Where(x => x.enabled).ToArray();
+        }
+
         
     }
 }

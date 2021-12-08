@@ -1,4 +1,5 @@
 ﻿using System;
+using UniModules.UniGame.UniBuild.Editor.ClientBuild;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
 using UnityEngine;
@@ -40,13 +41,12 @@ namespace UniModules.UniGame.UniBuild
                 var executionTime = endTime - startTime;
                 
                 LogBuildStep($"EXECUTE COMMAND [{commandName}] FINISHED DURATION: {executionTime.TotalSeconds}");
-                
             }
         }
         
         public void LogBuildStep(string message)
         {
-            Debug.Log($"\tUNIBUILD GROUP [{Name}] : \n{message}");
+            BuildLogger.Log($"GROUP [{Name}] : \n{message}");
         }
 
     }
