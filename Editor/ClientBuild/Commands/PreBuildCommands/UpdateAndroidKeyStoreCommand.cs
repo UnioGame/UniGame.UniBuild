@@ -9,10 +9,26 @@
     [Serializable]
     public class UpdateAndroidKeyStoreCommand : UnitySerializablePreBuildCommand
     {
+        [Space]
+        public bool useDebugKeyStore = false;
+
+        [Space]
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.VerticalGroup()]
+#endif
         //android keys
         public string KeyStorePath      = "-keystorePath";
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.VerticalGroup()]
+#endif
         public string KeyStorePass      = "-keystorePass";
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.VerticalGroup()]
+#endif
         public string KeyStoreAlias     = "-keystoreAlias";
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.VerticalGroup()]
+#endif
         public string KeyStoreAliasPass = "-keystoreAliasPass";
 
 #if ODIN_INSPECTOR
@@ -46,6 +62,8 @@
 
         public void UpdateAndroidBuildParameters(IArgumentsProvider arguments)
         {
+            
+            
             //update android key store parameters
             arguments.GetStringValue(KeyStorePath, out var keystore, _defaultKeyStorePath);
             arguments.GetStringValue(KeyStorePass, out var keypass, string.IsNullOrEmpty(_defaultStorePass) ? PlayerSettings.Android.keystorePass : _defaultStorePass);
@@ -78,16 +96,13 @@
         {
             var isUseKeyStore = Validate(keystore, keypass, alias, aliaspass);
 
-            if (!isUseKeyStore) {
+            if (!isUseKeyStore)
+            {
+                PlayerSettings.Android.useCustomKeystore = true;
                 return;
             }
-
-#if UNITY_2019
-
-            PlayerSettings.Android.useCustomKeystore = isUseKeyStore;
-
-#endif
-
+            
+            PlayerSettings.Android.useCustomKeystore = !useDebugKeyStore;
             PlayerSettings.Android.keystorePass = keypass;
             PlayerSettings.Android.keystoreName = keystore;
             PlayerSettings.Android.keyaliasName = alias;
