@@ -11,14 +11,17 @@
     [Serializable]
     public class ApplyScriptingDefineSymbolsCommand : UnitySerializablePreBuildCommand
     {
+        private const string DefinesSeparator = ";";
+
         [SerializeField]
         private string definesKey = "-defineValues";
 
         [SerializeField]
         private List<string> defaultDefines = new List<string>();
-        
-        private const string DefinesSeparotor = ";";
-        
+
+        [SerializeField]
+        private List<string> removeDefines = new List<string>();
+
         public override void Execute(IUniBuilderConfiguration configuration)
         {
             if (!configuration.Arguments.GetStringValue(definesKey, out var defineValues))
@@ -34,13 +37,15 @@
             var activeBuildGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
             var symbolsValue     = PlayerSettings.GetScriptingDefineSymbolsForGroup(activeBuildGroup);
             
-            var symbols      = symbolsValue.Split(new []{DefinesSeparotor},StringSplitOptions.None);
-            var buildDefines = defineValues.Split(new []{DefinesSeparotor},StringSplitOptions.None);
+            var symbols      = symbolsValue.Split(new []{DefinesSeparator},StringSplitOptions.None);
+            var buildDefines = defineValues.Split(new []{DefinesSeparator},StringSplitOptions.None);
 
             var defines = new List<string>(symbols.Length + buildDefines.Length + defaultDefines.Count);
+            
             defines.AddRange(symbols);
             defines.AddRange(buildDefines);
             defines.AddRange(defaultDefines);
+            defines.RemoveAll(x => removeDefines.Contains(x));
             
             defines = defines.Distinct().ToList();
             
@@ -52,7 +57,7 @@
             foreach (var define in defines.Distinct())
             {
                 definesBuilder.Append(define);
-                definesBuilder.Append(DefinesSeparotor);
+                definesBuilder.Append(DefinesSeparator);
             }
             
             PlayerSettings.SetScriptingDefineSymbolsForGroup(activeBuildGroup,definesBuilder.ToString());
