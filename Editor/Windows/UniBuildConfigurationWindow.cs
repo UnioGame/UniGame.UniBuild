@@ -18,7 +18,7 @@ namespace UniModules.UniGame.UniBuild.Editor.Windows
         public static readonly string Title = "Build Configurations";
         
         [MenuItem("UniGame/Uni Build/Show Configs")]
-        static void ShowWindow()
+        public static void ShowWindow()
         {
             // Get existing open window or if none, make a new one:
             var window = GetWindow<UniBuildConfigurationWindow>();
