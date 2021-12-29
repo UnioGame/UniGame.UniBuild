@@ -22,6 +22,9 @@
 #if UNITY_2020
             EditorUserBuildSettings.androidCreateSymbolsZip = AndroidSettings.AndroidCreateSymbolsZip;
 #endif
+            EditorUserBuildSettings.connectProfiler = AndroidSettings.AutoConnetcProfiler;
+            EditorUserBuildSettings.androidETC2Fallback = AndroidSettings.ETC2Fallback;
+            EditorUserBuildSettings.androidBuildSubtarget = AndroidSettings.TextureCompression;
             EditorUserBuildSettings.androidBuildType = AndroidSettings.AndroidBuildType;
             EditorUserBuildSettings.buildAppBundle = AndroidSettings.BuildAppBundle;
             EditorUserBuildSettings.allowDebugging = AndroidSettings.AllowDebugging;

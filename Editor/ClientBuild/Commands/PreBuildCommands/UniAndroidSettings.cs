@@ -26,6 +26,12 @@
 
         public bool UseAPKExpansionFiles = false;
 
+        public bool AutoConnetcProfiler = false;
+        
+        public MobileTextureSubtarget TextureCompression = MobileTextureSubtarget.ASTC;
+        
+        public AndroidETC2Fallback ETC2Fallback = AndroidETC2Fallback.Quality32BitDownscaled;
+        
 #if UNITY_2020
         public bool AndroidCreateSymbolsZip = false;
 #endif
