@@ -31,7 +31,7 @@ namespace UniModules.UniGame.UniBuild
             {
                 var commandName = buildCommand.Name;
                 
-                LogBuildStep($"EXECUTE COMMAND {commandName}");
+                LogBuildStep($"\tEXECUTE COMMAND {commandName}");
                 
                 var startTime = DateTime.Now;
         
@@ -40,7 +40,7 @@ namespace UniModules.UniGame.UniBuild
                 var endTime       = DateTime.Now;
                 var executionTime = endTime - startTime;
                 
-                LogBuildStep($"EXECUTE COMMAND [{commandName}] FINISHED DURATION: {executionTime.TotalSeconds}");
+                LogBuildStep($"\tEXECUTE COMMAND [{commandName}] FINISHED DURATION: {executionTime.TotalSeconds}");
             }
         }
         

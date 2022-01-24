@@ -29,7 +29,7 @@ namespace UniModules.UniGame.UniBuild
         public override void Execute(IUniBuilderConfiguration configuration)
         {
             var message = $"===UNIBUILD: Execute Group {Name} ===";
-            GameLog.Log(message);
+            BuildLogger.Log(message);
             UniEditorProfiler.LogTime(message,() => ExecuteCommands(configuration));
         }
 
@@ -37,9 +37,12 @@ namespace UniModules.UniGame.UniBuild
         {
             foreach (var buildCommand in commands.Commands)
             {
-                var message = $"===Execute COMMAND {buildCommand.Name} ===";
-                GameLog.Log(message);
+                var message = $"\tExecute COMMAND {buildCommand.Name} ===";
+                BuildLogger.Log(message);
+                
                 UniEditorProfiler.LogTime(message,() => buildCommand.Execute(configuration));
+                
+                BuildLogger.Log($"\tExecute COMMAND {buildCommand.Name} FINISHED ===");
             }
         }
     }
