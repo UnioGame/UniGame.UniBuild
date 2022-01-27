@@ -20,6 +20,9 @@
             _command.Execute(configuration);
         }
 
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.Button("Apply Defines")]
+#endif
         public void Execute() => _command.Execute(string.Empty);
         
     }
