@@ -13,14 +13,11 @@
     {
         private const string DefinesSeparator = ";";
 
-        [SerializeField]
-        private string definesKey = "-defineValues";
+        [SerializeField] private string definesKey = "-defineValues";
 
-        [SerializeField]
-        private List<string> defaultDefines = new List<string>();
+        [SerializeField] private List<string> defaultDefines = new List<string>();
 
-        [SerializeField]
-        private List<string> removeDefines = new List<string>();
+        [SerializeField] private List<string> removeDefines = new List<string>();
 
         public override void Execute(IUniBuilderConfiguration configuration)
         {
@@ -35,40 +32,41 @@
         public void Execute(string defineValues)
         {
             var activeBuildGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-            var symbolsValue     = PlayerSettings.GetScriptingDefineSymbolsForGroup(activeBuildGroup);
-            
-            var symbols      = symbolsValue.Split(new []{DefinesSeparator},StringSplitOptions.None);
-            var buildDefines = defineValues.Split(new []{DefinesSeparator},StringSplitOptions.None);
+            var symbolsValue = PlayerSettings.GetScriptingDefineSymbolsForGroup(activeBuildGroup);
+
+            var origin = symbolsValue.Split(new[] { DefinesSeparator }, StringSplitOptions.None);
+            var symbols = symbolsValue.Split(new[] { DefinesSeparator }, StringSplitOptions.None);
+            var buildDefines = defineValues.Split(new[] { DefinesSeparator }, StringSplitOptions.None);
 
             var defines = new List<string>(symbols.Length + buildDefines.Length + defaultDefines.Count);
-            
+
             defines.AddRange(symbols);
             defines.AddRange(buildDefines);
             defines.AddRange(defaultDefines);
             defines.RemoveAll(x => removeDefines.Contains(x));
-            
+
             defines = defines.Distinct().ToList();
-            
+
             if (defines.Count == 0)
+                return;
+
+            if (origin.All(defines.Contains) && defines.All(origin.Contains))
                 return;
 
             var definesBuilder = new StringBuilder(300);
             
-            foreach (var define in defines.Distinct())
+            foreach (var define in defines)
             {
                 definesBuilder.Append(define);
                 definesBuilder.Append(DefinesSeparator);
             }
-            
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(activeBuildGroup,definesBuilder.ToString());
 
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(activeBuildGroup,  definesBuilder.ToString());
         }
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.Button]
 #endif
         public void Execute() => Execute(String.Empty);
-        
-        
     }
 }
