@@ -28,21 +28,26 @@ namespace UniModules.UniGame.UniBuild
         
         public override void Execute(IUniBuilderConfiguration configuration)
         {
-            var message = $"===UNIBUILD: Execute Group {Name} ===";
-            BuildLogger.Log(message);
-            UniEditorProfiler.LogTime(message,() => ExecuteCommands(configuration));
+            var groupName = Name;
+            var message = $"Execute Group {groupName}";
+            var id = BuildLogger.LogWithTimeTrack(message);
+            ExecuteCommands(configuration);
+            BuildLogger.Log($"Execute Group {groupName} FINISHED",id);
         }
 
         private void ExecuteCommands(IUniBuilderConfiguration configuration)
         {
             foreach (var buildCommand in commands.Commands)
             {
-                var message = $"\tExecute COMMAND {buildCommand.Name} ===";
-                BuildLogger.Log(message);
+                var id = buildCommand.Name;
                 
-                UniEditorProfiler.LogTime(message,() => buildCommand.Execute(configuration));
+                var message = $"\tExecute COMMAND {id}";
                 
-                BuildLogger.Log($"\tExecute COMMAND {buildCommand.Name} FINISHED ===");
+                var logId = BuildLogger.LogWithTimeTrack(message);
+
+                buildCommand.Execute(configuration);
+                
+                BuildLogger.Log($"\tExecute COMMAND {buildCommand.Name} FINISHED",logId);
             }
         }
     }

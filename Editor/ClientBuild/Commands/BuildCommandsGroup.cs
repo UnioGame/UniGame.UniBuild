@@ -9,6 +9,8 @@ namespace UniModules.UniGame.UniBuild
     [Serializable]
     public class BuildCommandsGroup : SerializableBuildCommand,IUnityPreBuildCommand,IUnityPostBuildCommand
     {
+        private const string LogMessageFormat = "GROUP [{0}] : \n{1}";
+        
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.MultiLineProperty]
 #endif 
@@ -30,24 +32,20 @@ namespace UniModules.UniGame.UniBuild
             foreach (var buildCommand in commands.Commands)
             {
                 var commandName = buildCommand.Name;
+                var message = $"\tEXECUTE COMMAND {commandName}";
+                var logMessage = string.Format(LogMessageFormat, commandName, message);
                 
-                LogBuildStep($"\tEXECUTE COMMAND {commandName}");
-                
-                var startTime = DateTime.Now;
+                var id = BuildLogger.LogWithTimeTrack(logMessage);
         
                 buildCommand.Execute(configuration);
-
-                var endTime       = DateTime.Now;
-                var executionTime = endTime - startTime;
                 
-                LogBuildStep($"\tEXECUTE COMMAND [{commandName}] FINISHED DURATION: {executionTime.TotalSeconds}");
+                message = $"\tEXECUTE COMMAND [{commandName}] FINISHED";
+                logMessage = string.Format(LogMessageFormat, commandName, message);
+                
+                BuildLogger.Log(logMessage,id);
             }
         }
-        
-        public void LogBuildStep(string message)
-        {
-            BuildLogger.Log($"GROUP [{Name}] : \n{message}");
-        }
+
 
     }
 }

@@ -27,7 +27,7 @@
         {
             BuildLogger.Initialize();
             
-            LogBuildStep($"Build Start At {DateTime.Now.ToLongDateString()}");
+            var id = BuildLogger.LogWithTimeTrack($"Build Start At {DateTime.Now.ToLongDateString()}");
             
             ExecuteCommands(commandsMap.PreBuildCommands,configuration);
 
@@ -41,7 +41,7 @@
     
             ExecuteCommands(commandsMap.PostBuildCommands,configuration);
 
-            LogBuildStep($"Build Finish At At {DateTime.Now.ToLongDateString()}");
+            BuildLogger.Log($"Build Finish At At {DateTime.Now.ToLongDateString()}",id,false);
             
             PrintBuildLog();
             
@@ -79,7 +79,7 @@
                 if(!commandMap.Validate(configuration) ) 
                     continue;
                 
-                LogBuildStep($"SELECT BUILD MAP {commandMap.ItemName}");
+                BuildLogger.Log($"SELECT BUILD MAP {commandMap.ItemName}");
                 return commandMap;
             }
 
@@ -101,42 +101,35 @@
             Action<TTarget> action)
             where TTarget : IUnityBuildCommand
         {
-            LogBuildStep($"ExecuteCommands Of Type {typeof(TTarget).Name}");
+            BuildLogger.Log($"ExecuteCommands Of Type {typeof(TTarget).Name}");
 
             var executingCommands = commands.ToList();
             var commandsNames     = executingCommands.Select(x => x.Name);
             var commandsNamesTest = string.Join("\n\t", commandsNames);
             
-            LogBuildStep(commandsNamesTest);
+            BuildLogger.Log(commandsNamesTest);
             
             var stepCounter       = 1;
             foreach (var command in executingCommands) {
 
                 if (command == null || !command.IsActive) 
                 {
-                    LogBuildStep($"SKIP COMMAND {command}");
+                    BuildLogger.Log($"SKIP COMMAND {command}");
                     continue;
                 }
         
                 var commandName    = command.Name;
                 
-                LogBuildStep($"EXECUTE COMMAND {commandName}");
+                var id = BuildLogger.LogWithTimeTrack($"EXECUTE COMMAND {commandName}");
                 
-                var startTime = DateTime.Now;
-        
                 action?.Invoke(command);
-
-                var endTime       = DateTime.Now;
-                var executionTime = endTime - startTime;
                 
-                LogBuildStep($"EXECUTE COMMAND [{commandName} [{stepCounter++}]] FINISHED. DURATION: {executionTime.TotalSeconds}");
+                BuildLogger.Log($"EXECUTE COMMAND [{commandName} [{stepCounter++}]] FINISHED",id);
             }
             
-            LogBuildStep($"COMMANDS FINISHED");
+            BuildLogger.Log("COMMANDS FINISHED");
         }
 
-        private void LogBuildStep(string message) => BuildLogger.Log(message);
-        
         private BuildReport ExecuteBuild(IUniBuilderConfiguration configuration)
         {
             var scenes = GetBuildInScenes(configuration);
@@ -145,12 +138,12 @@
             var outputLocation = GetTargetBuildLocation(configuration.BuildParameters);
             var buildOptions   = buildParameters.BuildOptions;
     
-            LogBuildStep($"OUTPUT LOCATION : {outputLocation}");
+            BuildLogger.Log($"OUTPUT LOCATION : {outputLocation}");
 
             var report = BuildPipeline.BuildPlayer(scenes, outputLocation,
                 buildParameters.BuildTarget, buildOptions);
 
-            LogBuildStep(report.ReportMessage());
+            BuildLogger.Log(report.ReportMessage());
 
             return report;
 
