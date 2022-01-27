@@ -44,6 +44,7 @@
             defines.AddRange(buildDefines);
             defines.AddRange(defaultDefines);
             defines.RemoveAll(x => removeDefines.Contains(x));
+            defines.RemoveAll(string.IsNullOrEmpty);
 
             defines = defines.Distinct().ToList();
 
