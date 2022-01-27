@@ -11,7 +11,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     public static class BuildLogger
     {
         private const string MessageFormat = "=== UNIBUILD [{0}] : {1} {2}\n";
-        private const string DurationFormat = "| DURATION [{0}]";
+        private const string DurationFormat = "| DURATION [{0} sec]";
         private static string BuildDirectory = "Builds".ToAbsoluteProjectPath();
         private static string BuildLogPath = BuildDirectory.CombinePath("last_build_log.log");
         private static string BuildStartMessage = "=== UNIBUILD BUILD REPORT ===\n\n";
