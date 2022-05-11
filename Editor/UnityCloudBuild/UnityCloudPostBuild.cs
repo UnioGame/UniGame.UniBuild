@@ -37,7 +37,7 @@ namespace UniGame
         {
             Debug.Log($"===== UNIBUILD{nameof(UnityCloudPostBuild)} : {report}");
 
-            var files = report.files.Select(x => x.path).ToList();
+            var files = report.GetFiles().Select(x => x.path).ToList();
 
             var buildResults = JsonConvert.SerializeObject(files);
             
