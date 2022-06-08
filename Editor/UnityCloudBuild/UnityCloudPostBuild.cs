@@ -37,13 +37,17 @@ namespace UniGame
         {
             Debug.Log($"===== UNIBUILD{nameof(UnityCloudPostBuild)} : {report}");
 
-            var files = report.GetFiles().Select(x => x.path).ToList();
-
-            var buildResults = JsonConvert.SerializeObject(files);
+#if UNITY_2022_1_OR_NEWER
+            var filesPaths = report.GetFiles().Select(x => x.path).ToList();
+#else 
+            var filesPaths = report.files.Select(x => x.path).ToList();
+#endif
+            
+            var buildResults = JsonConvert.SerializeObject(filesPaths);
             
             EditorPrefs.SetString(BuildFileKey,buildResults);
 
-            OutputFiles = files;
+            OutputFiles = filesPaths;
         }
     }
 }
