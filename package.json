@@ -16,10 +16,7 @@
   ],
   "dependencies": {
     "com.unigame.unicore": "2021.2.0",
-    "com.unity.scriptablebuildpipeline": "1.19.2",
-    "com.unity.addressables": "1.19.18",
     "com.unity.test-framework": "1.1.30",
-    "com.unity.nuget.newtonsoft-json": "2.0.0",
-    "com.unigame.gittools": "2020.0.4"
+    "com.unity.nuget.newtonsoft-json": "2.0.0"
   }
 }
