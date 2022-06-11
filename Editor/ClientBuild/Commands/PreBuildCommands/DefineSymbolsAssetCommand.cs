@@ -5,7 +5,7 @@
     using UnityEngine;
 
     [Serializable]
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/DefineSymbolsAssetCommand",fileName = nameof(DefineSymbolsAssetCommand))]
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/Commands/DefineSymbolsAssetCommand",fileName = nameof(DefineSymbolsAssetCommand))]
     public class DefineSymbolsAssetCommand : UnityPreBuildCommand
     {
         [SerializeField]

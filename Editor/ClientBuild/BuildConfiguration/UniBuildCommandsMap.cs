@@ -29,6 +29,18 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [SerializeField]
         private UniBuildConfigurationData buildData = new UniBuildConfigurationData();
 
+        /// <summary>
+        /// you can set build arguments with inspector
+        /// </summary>
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.InlineProperty]
+        [Sirenix.OdinInspector.HideLabel]
+        [Sirenix.OdinInspector.BoxGroup()]
+        [Sirenix.OdinInspector.Title(nameof(arguments))]
+#endif
+        public ApplyBuildArgumentsCommand arguments = new ApplyBuildArgumentsCommand();
+
+        
 #if ODIN_INSPECTOR
         [Searchable]
         [BoxGroup(nameof(PreBuildCommands),false)]
@@ -46,7 +58,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         #region public properties
 
         public bool PlayerBuildEnabled => playerBuildEnabled;
-        
+
+        public IUnityBuildCommand ArgumentsCommand => arguments;
+
         public IUniBuildConfigurationData BuildData => buildData;
         
         public IEnumerable<IUnityBuildCommand> PreBuildCommands => FilterActiveCommands(preBuildCommands);

@@ -5,29 +5,20 @@
     using UnityEngine;
 
     
-    
     [Serializable]
     public abstract class UnityBuildCommand : ScriptableObject,IUnityBuildCommand
     {
-        [SerializeField]
-        [HideInInspector]
-        public string commandName = String.Empty;
-        
         [SerializeField]
         public bool _isActive = true;
 
         public bool IsActive => _isActive;
         
-        public string Name => commandName;
+        public virtual string Name => $"{name} : [{GetType().Name}]";
         
         public abstract void Execute(IUniBuilderConfiguration configuration);
 
         public virtual bool Validate(IUniBuilderConfiguration config) => _isActive;
-
-
-        public virtual void OnValidate()
-        {
-            commandName = string.IsNullOrEmpty(commandName) || commandName!=name ? name : commandName;
-        }
+        
+        public virtual void OnValidate() { }
     }
 }

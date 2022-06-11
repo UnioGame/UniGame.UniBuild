@@ -1,34 +1,52 @@
-using UniCore.Runtime.ProfilerTools;
-using UniModules.UniGame.Core.Editor.Tools;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-using UnityEngine;
-
 namespace UniModules.UniGame.UniBuild
 {
+    using Editor.ClientBuild;
+    using Editor.ClientBuild.Commands.PreBuildCommands;
+    using Editor.ClientBuild.Interfaces;
+    using UnityEngine;
+    
     [CreateAssetMenu(menuName = "UniGame/UniBuild/ScriptableBuildGroup",fileName = nameof(ScriptableBuildGroup))]
     public class ScriptableBuildGroup : UnityBuildCommand, IUnityPreBuildCommand,IUnityPostBuildCommand
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.MultiLineProperty]
+        [Sirenix.OdinInspector.PropertyOrder(0)]
 #endif 
         public string description;
-    
+        
+        /// <summary>
+        /// you can set build arguments with inspector
+        /// </summary>
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.InlineProperty]
+        [Sirenix.OdinInspector.HideLabel]
+        [Sirenix.OdinInspector.BoxGroup()]
+        [Sirenix.OdinInspector.Title(nameof(arguments))]
+#endif
+        [Space]
+        public ApplyBuildArgumentsCommand arguments = new ApplyBuildArgumentsCommand();
+        
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty]
         [Sirenix.OdinInspector.HideLabel]
 #endif
+        [Space]
         public BuildCommands commands = new BuildCommands();
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.Button]
 #endif
-        public void ExecuteGroup() => commands.Commands.ExecuteCommands();
-        
+        public void ExecuteGroup()
+        {
+            commands.Commands.ExecuteCommands();
+        }
+
         public override void Execute(IUniBuilderConfiguration configuration)
         {
             var groupName = Name;
+            
+            arguments.Execute(configuration);
+            
             var message = $"Execute Group {groupName}";
             var id = BuildLogger.LogWithTimeTrack(message);
             ExecuteCommands(configuration);
@@ -51,4 +69,6 @@ namespace UniModules.UniGame.UniBuild
             }
         }
     }
+
+
 }

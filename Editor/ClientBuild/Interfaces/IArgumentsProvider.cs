@@ -2,9 +2,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces {
     using System;
     using System.Collections.Generic;
 
-    public interface IArgumentsProvider {
+    public interface IArgumentsProvider
+    {
         List<string> SourceArguments { get; }
+
+        string EvaluateValue(string expression);
         IReadOnlyDictionary<string, string> Arguments { get; }
+        string SetValue(string key, string value);
         bool GetIntValue(string name, out int result, int defaultValue = 0);
         bool GetBoolValue(string name, out bool result, bool defaultValue = false);
         

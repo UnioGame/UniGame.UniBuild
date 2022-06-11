@@ -9,12 +9,10 @@
     {
         [SerializeField]
         public bool isActive = true;
-
-        public string name;
         
         public bool IsActive => isActive;
 
-        public string Name => string.IsNullOrEmpty(name) ? this.GetType().Name : name;
+        public virtual string Name => this.GetType().Name;
         
         public virtual bool Validate(IUniBuilderConfiguration config) => isActive;
         

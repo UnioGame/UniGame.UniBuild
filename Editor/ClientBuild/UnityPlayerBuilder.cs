@@ -29,6 +29,8 @@
             
             var id = BuildLogger.LogWithTimeTrack($"Build Start At {DateTime.Now.ToLongDateString()}");
             
+            commandsMap.ArgumentsCommand?.Execute(configuration);
+            
             ExecuteCommands(commandsMap.PreBuildCommands,configuration);
 
             BuildReport report = null;

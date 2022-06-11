@@ -8,7 +8,6 @@ using UnityEngine;
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands
 {
     [Serializable]
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/SharedCommands",fileName = nameof(SharedCommands))]
     public class SharedCommands : UnityBuildCommand
     {
         

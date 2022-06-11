@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild 
+﻿using System.Text.RegularExpressions;
+
+namespace UniModules.UniGame.UniBuild.Editor.ClientBuild 
 {
     using System;
     using System.Collections.Generic;
@@ -9,36 +11,60 @@
     {
         
         private const string SeparatorValue = ":";
-    
+        private const char ArgumentKey = '$';
+        private const string ArgumentRegExprPattern = @"(\$[\w,\d]+)";
+
+        private Regex argumentRefExpr = new Regex(ArgumentRegExprPattern,
+            RegexOptions.Multiline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        
         private Dictionary<string, string> arguments;
     
         public ArgumentsProvider(string[] arguments)
         {
-            this.SourceArguments = new List<string>();
-            this.SourceArguments.AddRange(arguments);
+            SourceArguments = new List<string>();
+            SourceArguments.AddRange(arguments);
 
             this.arguments = ParseInputArgumets(arguments);
         }
     
         public List<string> SourceArguments { get; private set; }
 
-        public IReadOnlyDictionary<string, string> Arguments => this.arguments;
+        public IReadOnlyDictionary<string, string> Arguments => arguments;
 
-        public bool GetIntValue(string name, out int result, int defaultValue = 0)
+        public string EvaluateValue(string expression)
         {
-
-            if (this.GetStringValue(name, out var value))
+            var matches = argumentRefExpr.Matches(expression);
+            var resultExpression = expression;
+            
+            foreach (var match in matches)
             {
-                return int.TryParse(value, out result);
+                var key = match.ToString();
+                GetStringValue(key, out var value, string.Empty);
+                resultExpression = resultExpression.Replace(key, value);
             }
 
+            return resultExpression;
+        }
+
+        public string SetValue(string key, string value)
+        {
+            var argument = key.TrimStart(ArgumentKey);
+            arguments[argument] = value;
+            return value;
+        }
+        
+        public bool GetIntValue(string name, out int result, int defaultValue = 0)
+        {
+            if (GetStringValue(name, out var value))
+                return int.TryParse(value, out result);
+            
             result = defaultValue;
             return false;
         }
 
         public bool GetBoolValue(string name, out bool result, bool defaultValue = false)
         {
-            if (this.GetStringValue(name, out var value))
+            if (GetStringValue(name, out var value))
             {
                 return bool.TryParse(value, out result);
             }
@@ -49,7 +75,7 @@
 
         public bool Contains(string name)
         {
-            var contain = this.Arguments.ContainsKey(name);
+            var contain = Arguments.ContainsKey(name);
             return contain;
         }
     
@@ -57,26 +83,21 @@
             where TEnum : struct
         {
 
-            if (this.GetStringValue(parameterName, out var value))
-            {
+            if (GetStringValue(parameterName, out var value))
                 return Enum.TryParse(value, out result);
-            }
-        
+            
             result = default(TEnum);
             return false;
         }
     
         public bool GetStringValue(string name, out string result,string defaultValue = "")
         {
-            if (this.Arguments.ContainsKey(name))
-            {
-                var value = this.Arguments[name];
-                value = value.TrimStart();
-            
-                result = value;
-                if (!string.IsNullOrEmpty(result))
-                    return true;
-            }
+            if (GetArgument(name,out result))
+                return true;
+
+            var argumentName = name.TrimStart(ArgumentKey);
+            if (GetArgument(argumentName,out result))
+                return true;
 
             result = defaultValue;
             return false;
@@ -105,6 +126,19 @@
             return stringBuilder.ToString();
         }
 
+        private bool GetArgument(string name, out string result)
+        {
+            result = string.Empty;
+            
+            if (!Arguments.ContainsKey(name)) return false;
+            
+            var value = Arguments[name];
+            value = value.TrimStart();
+            result = value;
+            
+            return true;
+        }
+        
         private Dictionary<string,string> ParseInputArgumets(string[] args) {
         
             var resultArguments = new Dictionary<string,string>();
