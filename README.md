@@ -36,7 +36,7 @@ Open window Package Manager in Unity and install UniBuild
 
 ### Configurations SO
 
-![](https://github.com/UniGameTeam/UniBuild/blob/master/GitAssets/demo_build_pipeline.png)
+![](https://github.com/UnioGame/UniGame.UniBuild/blob/master/GitAssets/build_map_window.png)
 
 ### Menu Items
 
