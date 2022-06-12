@@ -33,24 +33,29 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         /// you can set build arguments with inspector
         /// </summary>
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineProperty]
-        [Sirenix.OdinInspector.HideLabel]
-        [Sirenix.OdinInspector.BoxGroup()]
-        [Sirenix.OdinInspector.Title(nameof(arguments))]
+        [InlineProperty]
+        [HideLabel]
+        [BoxGroup()]
+        [Title("Arguments")]
 #endif
         public ApplyBuildArgumentsCommand arguments = new ApplyBuildArgumentsCommand();
 
         
 #if ODIN_INSPECTOR
+        [Space]
         [Searchable]
         [BoxGroup(nameof(PreBuildCommands),false)]
+        [ListDrawerSettings(AddCopiesLastElement = false)]
+        //[GUIColor(0.3f,0.33f,0.8f)]
 #endif
         [Space]
         public List<BuildCommandStep> preBuildCommands = new List<BuildCommandStep>();
 
 #if ODIN_INSPECTOR
+        [Space(6f)]
         [Searchable]
         [BoxGroup(nameof(PostBuildCommands),false)]
+        [ListDrawerSettings(AddCopiesLastElement = false)]
 #endif
         [Space]
         public List<BuildCommandStep> postBuildCommands = new List<BuildCommandStep>();
@@ -139,19 +144,22 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         }
 
 #if ODIN_INSPECTOR
+        [GUIColor(0.2f, 0.6f, 0.1f)]
         [BoxGroup(nameof(PreBuildCommands))]
         [Button(nameof(ExecutePreBuildCommands))]
 #endif
         public void ExecutePreBuildCommands() => PreBuildCommands.ExecuteCommands(buildData);
         
 #if ODIN_INSPECTOR
+        [GUIColor(0.2f, 0.6f, 0.1f)]
         [BoxGroup(nameof(PostBuildCommands))]
         [Button(nameof(ExecutePostBuildCommands))]
 #endif
         public void ExecutePostBuildCommands() => PostBuildCommands.ExecuteCommands(buildData);
         
 #if  ODIN_INSPECTOR
-        [Button("Execute")]
+        [Button("Execute",ButtonSizes.Large)]
+        [GUIColor(0.2f, 0.8f, 0.1f)]
 #endif
         public void ExecuteBuild()
         {

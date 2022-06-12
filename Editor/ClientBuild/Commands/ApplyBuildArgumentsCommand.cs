@@ -9,12 +9,11 @@
     
     [Serializable]
     public class ApplyBuildArgumentsCommand : SerializableBuildCommand
-    {
-        
-        public ArgumentsMap argumentsMap = new ArgumentsMap();
-        
+    {        
         public bool logArguments = true;
-        
+
+        public ArgumentsMap argumentsMap = new ArgumentsMap();
+
         public override void Execute(IUniBuilderConfiguration buildParameters)
         {
             var arguments = buildParameters.Arguments;
