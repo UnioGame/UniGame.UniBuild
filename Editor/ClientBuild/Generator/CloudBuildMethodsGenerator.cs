@@ -5,7 +5,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 {
     using BuildConfiguration;
     using UniModules.Editor;
-    using Core.Runtime.Extension;
+    using global::UniGame.Core.Runtime.Extension;
     using UnityEngine;
 
     public class CloudBuildMethodsGenerator

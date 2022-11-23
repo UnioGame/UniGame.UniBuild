@@ -1,4 +1,4 @@
-﻿using UniModules.UniGame.Core.Runtime.Interfaces;
+﻿using UniGame.Core.Runtime;
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands {
     using System;

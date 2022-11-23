@@ -2,7 +2,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
 {
     using UniModules.Editor;
     using System.IO;
-    using Core.Runtime.Extension;
+    using global::UniGame.Core.Runtime.Extension;
     using UnityEditor;
     using System;
     using Interfaces;

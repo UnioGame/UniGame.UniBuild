@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Abstract
 {
-    using Core.Runtime.Interfaces;
+    using global::UniGame.Core.Runtime;
     using Interfaces;
 
     public interface IUniBuildCommandsMap : 

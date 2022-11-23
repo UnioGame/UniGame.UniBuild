@@ -4,7 +4,7 @@
     using System.Linq;
     using BuildConfiguration;
     using UniModules.Editor;
-    using Core.Runtime.Extension;
+    using global::UniGame.Core.Runtime.Extension;
     using global::CodeWriter.Editor.UnityTools;
     using UnityEditor;
 
