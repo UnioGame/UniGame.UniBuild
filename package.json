@@ -4,7 +4,7 @@
   "displayName": "UniGame UniBuild Scriptable Build Pipeline",
   "description": "Configurable unity project build",
   "unity": "2019.3",
-  "version": "2022.1.8",
+  "version": "2022.1.10",
   "homepage": "https://github.com/UniGameTeam/UniGame.UniBuild#readme",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "Pipeline"
   ],
   "dependencies": {
-    "com.unigame.coremodules": "2023.0.1",
+    "com.unigame.coremodules": "2023.0.3",
     "com.unity.test-framework": "1.1.30",
     "com.unity.nuget.newtonsoft-json": "3.0.2"
   }
