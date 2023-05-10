@@ -18,43 +18,44 @@
         public bool useNameTemplate = false;
 
         public string artifactNameTemplate = string.Empty;
-        
+
         [Header("Optional: Extension: use '.' before file extension")]
         public string artifactExtension = "";
-        
+
         public override void Execute(IUniBuilderConfiguration buildParameters)
         {
             var outputFilename = buildParameters.BuildParameters.OutputFile;
-            var artifactName = CreateArtifactLocation(outputFilename,PlayerSettings.productName);
+            var artifactName = CreateArtifactLocation(outputFilename, PlayerSettings.productName);
             buildParameters.BuildParameters.OutputFile = artifactName;
         }
 
         public string CreateArtifactLocation(string outputFilename, string productName)
         {
-            var outputExtension = 
-                string.IsNullOrEmpty(artifactExtension)?
-                Path.GetExtension(outputFilename) 
-                : artifactExtension;
-            
+            var outputExtension = string.IsNullOrEmpty(artifactExtension)
+                    ? GetExtension()
+                    : artifactExtension;
+
             var fileName = Path.GetFileNameWithoutExtension(outputFilename);
-            
-            var artifactName = useProductName ? 
-                productName :
-                fileName;
-            
-            if (useNameTemplate) {
+
+            var artifactName = useProductName ? productName : fileName;
+
+            if (useNameTemplate)
+            {
                 artifactName = string.Format(artifactNameTemplate, artifactName);
             }
-            
-            if (includeGitBranch) {
+
+            if (includeGitBranch)
+            {
                 var branch = GitCommands.GetGitBranch();
-                if (string.IsNullOrEmpty(branch) == false) {
-                    artifactName = string.Format(nameFormatTemplate, artifactName,branch);
+                if (string.IsNullOrEmpty(branch) == false)
+                {
+                    artifactName = string.Format(nameFormatTemplate, artifactName, branch);
                 }
             }
-            
-            if (includeBundleVersion) {
-                artifactName = string.Format(nameFormatTemplate, artifactName,PlayerSettings.bundleVersion);
+
+            if (includeBundleVersion)
+            {
+                artifactName = string.Format(nameFormatTemplate, artifactName, PlayerSettings.bundleVersion);
             }
 
             artifactName += $"{outputExtension}";
@@ -62,6 +63,25 @@
             return artifactName;
         }
 
-    }
+        private string GetExtension()
+        {
+            var extension = string.Empty;
 
+            switch (EditorUserBuildSettings.activeBuildTarget)
+            {
+                case BuildTarget.StandaloneWindows:
+                    return extension;
+                case BuildTarget.Android:
+                    if (EditorUserBuildSettings.exportAsGoogleAndroidProject)
+                        return string.Empty;
+                    var isAppBundle = EditorUserBuildSettings.buildAppBundle;
+                    extension = isAppBundle ? ".aab" : ".apk";
+                    break;
+                default:
+                    return extension;
+            }
+
+            return extension;
+        }
+    }
 }
