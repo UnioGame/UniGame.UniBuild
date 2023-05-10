@@ -2,6 +2,7 @@
 {
     using System;
     using UnityEditor;
+    using UnityEngine.Serialization;
 
     [Serializable]
     public class UniAndroidSettings
@@ -32,8 +33,8 @@
         
         public AndroidETC2Fallback ETC2Fallback = AndroidETC2Fallback.Quality32BitDownscaled;
         
-#if UNITY_2020
-        public bool AndroidCreateSymbolsZip = false;
+#if UNITY_2021_1_OR_NEWER
+        public AndroidCreateSymbols AndroidDebugSymbolsMode = AndroidCreateSymbols.Public;
 #endif
 
         public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;

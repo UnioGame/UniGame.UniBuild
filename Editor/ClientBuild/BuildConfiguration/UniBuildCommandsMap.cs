@@ -15,10 +15,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     using Sirenix.OdinInspector;
 #endif
 
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration", fileName = nameof(UniBuildCommandsMap))]
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration",fileName = "UniGame Builder")]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
     {
-
         public bool playerBuildEnabled = true;
         
 #if  ODIN_INSPECTOR

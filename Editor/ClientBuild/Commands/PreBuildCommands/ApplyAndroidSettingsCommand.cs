@@ -19,8 +19,8 @@
 #endif
         public void Execute()
         {
-#if UNITY_2020
-            EditorUserBuildSettings.androidCreateSymbolsZip = AndroidSettings.AndroidCreateSymbolsZip;
+#if UNITY_2021_1_OR_NEWER
+            EditorUserBuildSettings.androidCreateSymbols = AndroidSettings.AndroidDebugSymbolsMode;
 #endif
             EditorUserBuildSettings.connectProfiler = AndroidSettings.AutoConnetcProfiler;
             EditorUserBuildSettings.androidETC2Fallback = AndroidSettings.ETC2Fallback;
@@ -30,7 +30,8 @@
             EditorUserBuildSettings.allowDebugging = AndroidSettings.AllowDebugging;
             EditorUserBuildSettings.exportAsGoogleAndroidProject = AndroidSettings.ExportAsGoogleAndroidProject;
             EditorUserBuildSettings.development = AndroidSettings.IsDevelopment;
-
+           
+                    
             PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
             PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSDCardPermission;
             PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;

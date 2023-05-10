@@ -18,7 +18,8 @@
         public bool useNameTemplate = false;
 
         public string artifactNameTemplate = string.Empty;
-        [Header("Extension: use '.' before file extension")]
+        
+        [Header("Optional: Extension: use '.' before file extension")]
         public string artifactExtension = "";
         
         public override void Execute(IUniBuilderConfiguration buildParameters)
@@ -30,8 +31,10 @@
 
         public string CreateArtifactLocation(string outputFilename, string productName)
         {
-            var outputExtension = string.IsNullOrEmpty(artifactExtension)?
-                Path.GetExtension(outputFilename) : artifactExtension;
+            var outputExtension = 
+                string.IsNullOrEmpty(artifactExtension)?
+                Path.GetExtension(outputFilename) 
+                : artifactExtension;
             
             var fileName = Path.GetFileNameWithoutExtension(outputFilename);
             
