@@ -5,8 +5,8 @@ namespace UniModules.UniGame.UniBuild
     using Editor.ClientBuild.Interfaces;
     using UnityEngine;
     
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/ScriptableBuildGroup",fileName = nameof(ScriptableBuildGroup))]
-    public class ScriptableBuildGroup : UnityBuildCommand, IUnityPreBuildCommand,IUnityPostBuildCommand
+    [CreateAssetMenu(menuName = "UniGame/UniBuild/ScriptableCommandsGroup",fileName = nameof(ScriptableCommandsGroup))]
+    public class ScriptableCommandsGroup : UnityBuildCommand, IUnityPreBuildCommand,IUnityPostBuildCommand
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.MultiLineProperty]
