@@ -58,6 +58,7 @@
                 artifactName = string.Format(nameFormatTemplate, artifactName, PlayerSettings.bundleVersion);
             }
 
+            artifactName = artifactName.Replace(":", "");
             artifactName += $"{outputExtension}";
 
             return artifactName;
