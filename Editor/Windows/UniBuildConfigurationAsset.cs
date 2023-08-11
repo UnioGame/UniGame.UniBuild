@@ -7,6 +7,7 @@ using UniModules.Editor;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuild ConfigurationAsset", fileName ="UniBuildConfigurationAsset")]
 public class UniBuildConfigurationAsset : ScriptableObject
 {
     #region public properties
@@ -20,6 +21,7 @@ public class UniBuildConfigurationAsset : ScriptableObject
     #endregion
     
     [Button]
+    [OnInspectorInit]
     public UniBuildConfigurationAsset Refresh()
     {
         configurations.Clear();
