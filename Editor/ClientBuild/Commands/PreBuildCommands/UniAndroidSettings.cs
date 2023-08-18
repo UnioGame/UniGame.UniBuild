@@ -29,6 +29,8 @@
 
         public bool AutoConnetcProfiler = false;
         
+        public Il2CppCompilerConfiguration CppCompilerConfiguration = Il2CppCompilerConfiguration.Debug;
+        
         public MobileTextureSubtarget TextureCompression = MobileTextureSubtarget.ASTC;
         
         public AndroidETC2Fallback ETC2Fallback = AndroidETC2Fallback.Quality32BitDownscaled;
