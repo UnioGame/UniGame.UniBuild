@@ -30,8 +30,7 @@
             EditorUserBuildSettings.allowDebugging = AndroidSettings.AllowDebugging;
             EditorUserBuildSettings.exportAsGoogleAndroidProject = AndroidSettings.ExportAsGoogleAndroidProject;
             EditorUserBuildSettings.development = AndroidSettings.IsDevelopment;
-           
-                    
+            
             PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
             PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSDCardPermission;
             PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;
@@ -40,8 +39,6 @@
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, AndroidSettings.ScriptingBackend);
             PlayerSettings.SetIl2CppCompilerConfiguration(BuildTargetGroup.Android,AndroidSettings.CppCompilerConfiguration);
-            
-            AssetDatabase.Refresh();
         }
     }
 }
