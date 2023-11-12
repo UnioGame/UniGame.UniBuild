@@ -34,7 +34,7 @@
             PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
             PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSDCardPermission;
             PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;
-            PlayerSettings.Android.useAPKExpansionFiles = AndroidSettings.UseAPKExpansionFiles;
+            PlayerSettings.Android.splitApplicationBinary = AndroidSettings.UseAPKExpansionFiles;
 
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, AndroidSettings.ScriptingBackend);
