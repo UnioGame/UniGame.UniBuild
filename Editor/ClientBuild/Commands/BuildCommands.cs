@@ -8,13 +8,20 @@ namespace UniModules.UniGame.UniBuild
     using Editor.ClientBuild.Interfaces;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class BuildCommands : IBuildCommands
     {
+        private static Color _oddColor = new Color(0.2f, 0.4f, 0.3f);
+        
         #region inspector
     
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Searchable]
+        [Searchable]
+        [ListDrawerSettings(ElementColor = nameof(GetElementColor))]//ListElementLabelName = "GroupLabel"
 #endif
         [Space]
         public List<BuildCommandStep> commands = new List<BuildCommandStep>();
@@ -34,5 +41,11 @@ namespace UniModules.UniGame.UniBuild
             return items;
         }
 
+        private Color GetElementColor(int index, Color defaultColor)
+        {
+            var result = index % 2 == 0 
+                ? _oddColor : defaultColor;
+            return result;
+        }
     }
 }
