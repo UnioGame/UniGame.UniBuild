@@ -18,6 +18,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration",fileName = "UniGame Builder")]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
     {
+        private static Color _oddColor = new Color(0.2f, 0.4f, 0.3f);
+        
         public bool playerBuildEnabled = true;
         
 #if  ODIN_INSPECTOR
@@ -44,8 +46,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [Space]
         [Searchable]
         [BoxGroup(nameof(PreBuildCommands),false)]
-        [ListDrawerSettings(AddCopiesLastElement = false)]
-        //[GUIColor(0.3f,0.33f,0.8f)]
+        [ListDrawerSettings(AddCopiesLastElement = false,ElementColor = nameof(GetElementColor))]
 #endif
         [Space]
         public List<BuildCommandStep> preBuildCommands = new List<BuildCommandStep>();
@@ -54,7 +55,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [Space(6f)]
         [Searchable]
         [BoxGroup(nameof(PostBuildCommands),false)]
-        [ListDrawerSettings(AddCopiesLastElement = false)]
+        [ListDrawerSettings(AddCopiesLastElement = false,ElementColor = nameof(GetElementColor))]
 #endif
         [Space]
         public List<BuildCommandStep> postBuildCommands = new List<BuildCommandStep>();
@@ -181,5 +182,11 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
             return true;
         }
 
+        private Color GetElementColor(int index, Color defaultColor)
+        {
+            var result = index % 2 == 0 
+                ? _oddColor : defaultColor;
+            return result;
+        }
     }
 }
