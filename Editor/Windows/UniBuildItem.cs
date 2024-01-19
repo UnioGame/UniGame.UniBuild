@@ -2,7 +2,7 @@
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
 
 #if ODIN_INSPECTOR
-using Sirenix.Utilities.Editor;
+using Sirenix.OdinInspector;
 #endif
 
 [Serializable]
