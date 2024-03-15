@@ -6,7 +6,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     using Interfaces;
 
     [Serializable]
-    public class PostBuildCommandStep : BuildCommandStep<UnityBuildCommand,IUnityBuildCommand>
+    public class PostBuildCommandStep : BuildCommandStep
     {
     
     }

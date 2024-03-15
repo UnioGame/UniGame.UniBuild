@@ -2,11 +2,5 @@
 {
     using System;
     using Commands.PreBuildCommands;
-    using Interfaces;
 
-    [Serializable]
-    public class BuildCommandStep : BuildCommandStep<UnityBuildCommand,IUnityBuildCommand>
-    {
-   
-    }
 }

@@ -2,38 +2,51 @@
 {
     using System;
     using System.Collections.Generic;
+    using Commands.PreBuildCommands;
     using UniModules.Editor;
     using Interfaces;
     using UnityEngine;
-    using Object = UnityEngine.Object;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
-    public class BuildCommandStep<TUnityCommand,TSerializableCommand>
-        where TUnityCommand : Object,IUnityBuildCommand
-        where TSerializableCommand :class, IUnityBuildCommand
+    public class BuildCommandStep
     {
         [Space]
 #if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineEditor()]
-        [Sirenix.OdinInspector.ValueDropdown(nameof(GetPostBuildCommands))]
-        [Sirenix.OdinInspector.HideIf(nameof(IsSerializedCommandInitialized))]
-        [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel")]
-        [Sirenix.OdinInspector.HideLabel]
+        [ValueDropdown(nameof(GetBuildCommands))]
+        [FoldoutGroup("$GroupLabel")]
+        //[HideLabel]
+        [ShowIf(nameof(IsUnityCommandInitialized))]
+        [InlineEditor()]
 #endif
-        public TUnityCommand buildCommand;
+        public UnityBuildCommand buildCommand = null;
 
         [Space] 
         [SerializeReference] 
 #if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.HideIf(nameof(IsUnityCommandInitialized))]
-        [Sirenix.OdinInspector.FoldoutGroup("$GroupLabel")]
-        [Sirenix.OdinInspector.HideLabel]
-        [Sirenix.OdinInspector.InlineProperty]
+        [FoldoutGroup("$GroupLabel")]
+        [HideLabel]
+        [ShowIf(nameof(IsSerializedCommandInitialized))]
+        [InlineProperty]
 #endif
-        public TSerializableCommand serializableCommand;
+        public IUnityBuildCommand serializableCommand = null;
 
-        public string GroupLabel => IsUnityCommandInitialized ? buildCommand.Name :
-            IsSerializedCommandInitialized ? serializableCommand.Name : "command";
+        public string GroupLabel => buildCommand !=null
+            ? buildCommand.Name 
+            : serializableCommand!=null && serializableCommand is not EmptyBuildCommand 
+                ? serializableCommand.Name : "command";
+
+        public bool IsEmptySerializedEmpty => serializableCommand is null or EmptyBuildCommand;
+        
+        public bool IsUnityCommandInitialized => buildCommand != null || (buildCommand == null && IsEmptySerializedEmpty);
+        
+
+        public bool IsSerializedCommandInitialized => (serializableCommand != null && serializableCommand is not EmptyBuildCommand) ||
+                                                      (buildCommand == null && IsEmptySerializedEmpty);
+ 
         
         public IEnumerable<IUnityBuildCommand> GetCommands()
         {
@@ -43,13 +56,29 @@
                 yield return serializableCommand;
         }
         
-        public bool IsUnityCommandInitialized => buildCommand != null;
-
-        public bool IsSerializedCommandInitialized => serializableCommand != null;
- 
-        public IEnumerable<TUnityCommand> GetPostBuildCommands()
+        public IEnumerable<UnityBuildCommand> GetBuildCommands()
         {
-            return AssetEditorTools.GetAssets<TUnityCommand>();
+            return AssetEditorTools.GetAssets<UnityBuildCommand>();
+        }
+    }
+    
+    [Serializable]
+    public class EmptyBuildCommand : IUnityBuildCommand
+    {
+        public bool Validate(IUniBuilderConfiguration config)
+        {
+            return true;
+        }
+
+        public bool IsActive => false;
+
+        public string GroupLabel => Name;
+
+        public string Name => nameof(EmptyBuildCommand);
+        
+        public void Execute(IUniBuilderConfiguration configuration)
+        {
+            
         }
     }
 }
