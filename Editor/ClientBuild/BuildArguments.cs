@@ -1,11 +1,20 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
+﻿namespace UniGame.UniBuild.Editor.ClientBuild
 {
     public class BuildArguments
     {
-
-        public const string BuildNumberKey       = "-buildnumber";
-        public const string BuildOutputNameKey   = "-outputFileName";
+        public const string GitBranchKey = "-gitBranch";
+        public const string BundleVersionKey = "-bundleVersion";
+        public const string BuildNumberKey = "-buildnumber";
+        public const string BuildOutputNameKey = "-outputFileName";
         public const string BuildOutputFolderKey = "-outputFolder";
-
+        public const string BundleIdKey = "-bundleId";
+        public const string BuildTargetKey = "-buildTarget";
+        public const string BuildTargetGroupKey = "-buildTargeGroupt";
+        public const string StandaloneBuildSubTargetKey = "-standaloneBuildSubtarget";
+        public const string Linux64BuildTargetKey = "-buildLinux64Player";
+        public const string LinuxUniversalBuildTargetKey = "-buildOSXUniversalPlayer";
+        public const string Windows64PlayerBuildTargetKey = "-buildWindows64Player";
+        public const string ScriptingImplementationKey = "-scriptingImplementation";
+        public const string BuildEnvironmentType = "-buildEnvironmentType";
     }
 }

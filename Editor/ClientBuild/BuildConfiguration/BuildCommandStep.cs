@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Commands.PreBuildCommands;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UniModules.Editor;
     using Interfaces;
     using UnityEngine;

@@ -3,6 +3,7 @@
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
     using System;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEditor;
 
     [Serializable]

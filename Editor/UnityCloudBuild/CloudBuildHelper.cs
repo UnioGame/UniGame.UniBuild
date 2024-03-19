@@ -6,6 +6,8 @@ namespace UniGame
     using System.Collections.Generic;
     using System.Linq;
     using Newtonsoft.Json;
+    using UniBuild.Editor.ClientBuild.BuildConfiguration;
+    using UniBuild.Editor.ClientBuild.Interfaces;
     using UniModules.UniGame.UniBuild.Editor.ClientBuild;
     using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
@@ -66,7 +68,7 @@ namespace UniGame
             var artifactPath = UnityCloudPostBuild.OutputFiles.FirstOrDefault();
             if (string.IsNullOrEmpty(artifactPath) == false)
             {
-                parameters.BuildParameters.ArtifactPath = artifactPath;
+                parameters.BuildParameters.artifactPath = artifactPath;
             }
 
             var builder = new UnityPlayerBuilder();
@@ -88,7 +90,13 @@ namespace UniGame
             var buildTarget = argumentsProvider.GetBuildTarget();
             var buildTargetGroup = argumentsProvider.GetBuildTargetGroup();
 
-            var buildParameters = new BuildParameters(buildTarget, buildTargetGroup, argumentsProvider)
+            var buildData = new UniBuildConfigurationData()
+            {
+                buildTarget = buildTarget,
+                buildTargetGroup = buildTargetGroup,
+            };
+            
+            var buildParameters = new BuildParameters(buildData, argumentsProvider)
             {
                 buildTarget = buildTarget,
                 environmentType = BuildEnvironmentType.UnityCloudBuild,

@@ -5,6 +5,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
 
     public class ArgumentsProvider : IArgumentsProvider 
@@ -46,6 +47,11 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             return resultExpression;
         }
 
+        public void SetArgument(string key, string value)
+        {
+            arguments[key] = value;
+        }
+
         public string SetValue(string key, string value)
         {
             var argument = key.TrimStart(ArgumentKey);
@@ -79,15 +85,20 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             return contain;
         }
     
-        public bool GetEnumValue<TEnum>(string parameterName,Type enumType, out TEnum result)
+        public bool GetEnumValue<TEnum>(string parameterName,out TEnum result)
             where TEnum : struct
         {
-
             if (GetStringValue(parameterName, out var value))
                 return Enum.TryParse(value, out result);
             
             result = default(TEnum);
             return false;
+        }
+        
+        public bool GetEnumValue<TEnum>(string parameterName,Type enumType, out TEnum result)
+            where TEnum : struct
+        {
+            return GetEnumValue(parameterName, out result);
         }
     
         public bool GetStringValue(string name, out string result,string defaultValue = "")
@@ -157,6 +168,11 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                     key = argument.Substring(0, separatorIndex);
                     value = argument.Substring(separatorIndex + lenght, 
                         argument.Length - separatorIndex - lenght);
+                }
+                else
+                {
+                    var next = i + 1;
+                    if(next < args.Length) value = args[next];
                 }
             
                 resultArguments[key] = value;

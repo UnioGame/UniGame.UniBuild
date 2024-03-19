@@ -7,6 +7,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     using System;
     using Abstract;
     using BuildConfiguration;
+    using global::UniGame.UniBuild.Editor.ClientBuild;
+    using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
     using UnityEditor.Build.Reporting;
@@ -18,14 +21,14 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
         private static UnityPlayerBuilder builder = new UnityPlayerBuilder();
     
-        public static EditorBuildConfiguration CreateConfiguration(string outputFileName,BuildTarget buildTarget,BuildTargetGroup targetGroup)
+        public static EditorBuildConfiguration CreateConfiguration(UniBuildConfigurationData buildData)
         {
             var commandLineParameters = Environment.GetCommandLineArgs().ToList();
             commandLineParameters.Add( $"{BuildArguments.BuildOutputFolderKey}:Builds");
-            commandLineParameters.Add( $"{BuildArguments.BuildOutputNameKey}:{outputFileName}");
+            commandLineParameters.Add( $"{BuildArguments.BuildOutputNameKey}:{buildData.artifactName}");
             
             var argumentsProvider = new ArgumentsProvider(commandLineParameters.ToArray());
-            var buildParameters = new BuildParameters(buildTarget, targetGroup, argumentsProvider);
+            var buildParameters = new BuildParameters(buildData, argumentsProvider);
             var buildConfiguration = new EditorBuildConfiguration(argumentsProvider, buildParameters);
             
             Debug.LogFormat("\nUNIBUILD [CreateConfiguration] {0} \n", argumentsProvider);
@@ -40,31 +43,23 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             var asset     = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
             UniBuildTool.ExecuteBuild(asset);
         }
-
-        public static BuildReport ExecuteBuild(string outputFileName,BuildTarget buildTarget,BuildTargetGroup targetGroup)
-        {
-            var buildConfiguration = CreateConfiguration(outputFileName, buildTarget, targetGroup);
-            return UniBuildTool.BuildPlayer(buildConfiguration);
-        }
-
         
         public static BuildReport ExecuteBuild(IUniBuildCommandsMap commandsMap)
         {
             var buildData     = commandsMap.BuildData;
-            var configuration = CreateConfiguration(buildData.ArtifactName, buildData.BuildTarget, buildData.BuildTargetGroup);
+            var configuration = CreateConfiguration(buildData);
             return BuildPlayer(configuration,commandsMap);
         }
 
-        public static void ExecuteCommands(this IEnumerable<IUnityBuildCommand> commands, IUniBuildConfigurationData buildData = null)
+        public static void ExecuteCommands(this IEnumerable<IUnityBuildCommand> commands, UniBuildConfigurationData buildData = null)
         {
             buildData ??= new UniBuildConfigurationData()
             {
-                _buildTarget = EditorUserBuildSettings.activeBuildTarget,
-                _buildTargetGroup = EditorUserBuildSettings.selectedBuildTargetGroup,
-                _artifactName = "Empty"
+                buildTarget = EditorUserBuildSettings.activeBuildTarget,
+                buildTargetGroup = EditorUserBuildSettings.selectedBuildTargetGroup,
+                artifactName = "Empty"
             }; 
-            
-            var configuration = CreateConfiguration(buildData.ArtifactName, buildData.BuildTarget, buildData.BuildTargetGroup);
+            var configuration = CreateConfiguration(buildData);
             builder.ExecuteCommands(commands,configuration);
         }
         

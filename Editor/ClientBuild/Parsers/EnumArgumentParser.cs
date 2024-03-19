@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
 
     public class EnumArgumentParser<TValue> 

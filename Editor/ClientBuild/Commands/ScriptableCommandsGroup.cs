@@ -3,6 +3,7 @@ namespace UniModules.UniGame.UniBuild
     using Editor.ClientBuild;
     using Editor.ClientBuild.Commands.PreBuildCommands;
     using Editor.ClientBuild.Interfaces;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEngine;
     
     [CreateAssetMenu(menuName = "UniGame/UniBuild/ScriptableCommandsGroup",fileName = nameof(ScriptableCommandsGroup))]

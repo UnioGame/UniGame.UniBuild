@@ -1,11 +1,11 @@
-﻿using UnityEditor.Build.Reporting;
-
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
+﻿namespace UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
-    using Extensions;
-    using Interfaces;
-    using Parsers;
+    using UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Parsers;
     using UnityEditor;
+    using UnityEditor.Build.Reporting;
     using UnityEngine;
 
     public class UniBuilderConsoleConfiguration : IUniBuilderConfiguration
@@ -24,15 +24,20 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
             var buildTarget      = argumentsProvider.GetBuildTarget();
             var buildTargetGroup = argumentsProvider.GetBuildTargetGroup();
 
-            buildParameters = new BuildParameters(buildTarget,buildTargetGroup, argumentsProvider);
+            var buildData = new UniBuildConfigurationData()
+            {
+                buildTarget = buildTarget,
+                buildTargetGroup = buildTargetGroup,
+            };
+            
+            buildParameters = new BuildParameters(buildData, argumentsProvider);
 
             Debug.Log(argumentsProvider);
-            
         }
 
         public IArgumentsProvider Arguments => argumentsProvider;
 
-        public IBuildParameters BuildParameters => buildParameters;
+        public BuildParameters BuildParameters => buildParameters;
 
         public BuildReport BuildReport
         {

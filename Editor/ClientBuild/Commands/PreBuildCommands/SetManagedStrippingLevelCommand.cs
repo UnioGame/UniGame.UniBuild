@@ -1,5 +1,6 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
@@ -17,7 +18,7 @@
         {
             var buildParameters = configuration.BuildParameters;
 
-            PlayerSettings.SetManagedStrippingLevel(buildParameters.BuildTargetGroup,_managedStrippingLevel);
+            PlayerSettings.SetManagedStrippingLevel(buildParameters.buildTargetGroup,_managedStrippingLevel);
         }
         
     }

@@ -5,6 +5,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
     using global::UniGame.Core.Runtime.Extension;
     using UnityEditor;
     using System;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
 
     [Serializable]
@@ -22,12 +23,12 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
         public override void Execute(IUniBuilderConfiguration configuration)
         {
             var buildParameters = configuration.BuildParameters;
-            var resultLocation = buildParameters.OutputFolder;
-            var artifact = buildParameters.OutputFile;
-            var buildTarget = buildParameters.BuildTarget;
+            var resultLocation = buildParameters.outputFolder;
+            var artifact = buildParameters.outputFile;
+            var buildTarget = buildParameters.buildTarget;
             
             resultLocation =CreateArtifactLocation(artifact,resultLocation,buildTarget);
-            buildParameters.OutputFolder = resultLocation;
+            buildParameters.outputFolder = resultLocation;
         }
 
         public string CreateArtifactLocation(string artifactName,string sourceLocation,BuildTarget buildTarget)

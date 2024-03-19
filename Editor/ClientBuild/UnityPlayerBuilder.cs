@@ -7,6 +7,7 @@
     using BuildConfiguration;
     using UniModules.Editor;
     using Extensions;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
     using UnityEditor.Build.Reporting;
@@ -28,9 +29,7 @@
             BuildLogger.Initialize();
             
             var id = BuildLogger.LogWithTimeTrack($"Build Start At {DateTime.Now.ToLongDateString()}");
-            
-            commandsMap.ArgumentsCommand?.Execute(configuration);
-            
+
             ExecuteCommands(commandsMap.PreBuildCommands,configuration);
 
             BuildReport report = null;
@@ -55,15 +54,15 @@
             ExecuteCommands(commands,x => x.Execute(configuration));
         }
 
-        public string GetTargetBuildLocation(IBuildParameters buildParameters)
+        public string GetTargetBuildLocation(BuildParameters buildParameters)
         {
-            var file   = buildParameters.OutputFile;
-            var folder = buildParameters.OutputFolder;
+            var file   = buildParameters.outputFile;
+            var folder = buildParameters.outputFolder;
             var artifactPath = folder.
 //                CombinePath(buildParameters.BuildTarget.ToString()).
                 CombinePath(file);
             
-            buildParameters.ArtifactPath = artifactPath;
+            buildParameters.artifactPath = artifactPath;
             
             return artifactPath;
         }
@@ -138,12 +137,12 @@
 
             var buildParameters = configuration.BuildParameters;
             var outputLocation = GetTargetBuildLocation(configuration.BuildParameters);
-            var buildOptions   = buildParameters.BuildOptions;
+            var buildOptions   = buildParameters.buildOptions;
     
             BuildLogger.Log($"OUTPUT LOCATION : {outputLocation}");
 
             var report = BuildPipeline.BuildPlayer(scenes, outputLocation,
-                buildParameters.BuildTarget, buildOptions);
+                buildParameters.buildTarget, buildOptions);
 
             BuildLogger.Log(report.ReportMessage());
 
@@ -160,7 +159,7 @@
         private EditorBuildSettingsScene[] GetBuildInScenes(IUniBuilderConfiguration configuration)
         {
             var parameters = configuration.BuildParameters;
-            var scenes = parameters.Scenes.Count > 0 ? parameters.Scenes :
+            var scenes = parameters.scenes.Count > 0 ? parameters.scenes.ToArray() :
                 EditorBuildSettings.scenes;
             return scenes.Where(x => x.enabled).ToArray();
         }

@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using GitTools.Runtime;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
@@ -24,9 +25,9 @@
 
         public override void Execute(IUniBuilderConfiguration buildParameters)
         {
-            var outputFilename = buildParameters.BuildParameters.OutputFile;
+            var outputFilename = buildParameters.BuildParameters.outputFile;
             var artifactName = CreateArtifactLocation(outputFilename, PlayerSettings.productName);
-            buildParameters.BuildParameters.OutputFile = artifactName;
+            buildParameters.BuildParameters.outputFile = artifactName;
         }
 
         public string CreateArtifactLocation(string outputFilename, string productName)

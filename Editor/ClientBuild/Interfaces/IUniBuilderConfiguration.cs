@@ -1,7 +1,8 @@
-using UnityEditor.Build.Reporting;
-
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces
+namespace UniGame.UniBuild.Editor.ClientBuild.Interfaces
 {
+    using UniModules.UniGame.UniBuild.Editor.ClientBuild;
+    using UnityEditor.Build.Reporting;
+
     public interface IUniBuilderConfiguration
     {
         /// <summary>
@@ -12,7 +13,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces
         /// <summary>
         /// Current Unity build parameters
         /// </summary>
-        IBuildParameters BuildParameters { get; }
+        BuildParameters BuildParameters { get; }
         
         BuildReport BuildReport { get; set; }
         

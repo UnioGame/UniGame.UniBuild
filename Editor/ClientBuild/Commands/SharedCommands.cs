@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands
 {
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+
     [Serializable]
     public class SharedCommands : UnityBuildCommand
     {

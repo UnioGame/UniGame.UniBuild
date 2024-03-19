@@ -1,25 +1,53 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
+﻿namespace UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using System;
-    using Abstract;
+    using Sirenix.OdinInspector;
+    using UniModules.UniGame.UniBuild;
     using UnityEditor;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
     [Serializable]
-    public class UniBuildConfigurationData : IUniBuildConfigurationData
+    public class UniBuildConfigurationData
     {
-
+        [FormerlySerializedAs("_artifactName")]
         [SerializeField]
-        public string _artifactName = string.Empty;
+        public string artifactName = string.Empty;
+        
+        [FormerlySerializedAs("_buildTarget")]
         [SerializeField]
-        public BuildTarget _buildTarget;
+        public BuildTarget buildTarget;
+        
+        [FormerlySerializedAs("_buildTargetGroup")]
         [SerializeField]
-        public BuildTargetGroup _buildTargetGroup;
+        public BuildTargetGroup buildTargetGroup;
 
-        public BuildTargetGroup BuildTargetGroup => _buildTargetGroup;
+        [ShowIf(nameof(IsShownStandaloneSubTarget))]
+        public StandaloneBuildSubtarget standaloneBuildSubTarget = StandaloneBuildSubtarget.Player;
 
-        public BuildTarget BuildTarget => _buildTarget;
+        public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
 
-        public string ArtifactName => _artifactName;
+        [PropertySpace(8)]
+        [Tooltip("Build Arguments")]
+        [BoxGroup("Build Arguments")]
+        [HideLabel]
+        [InlineProperty]
+        public ArgumentsMap buildArguments = new();
+        
+        public bool IsShownStandaloneSubTarget()
+        {
+            switch (buildTarget)
+            {
+                case BuildTarget.StandaloneOSX:
+                case BuildTarget.StandaloneWindows:
+                case BuildTarget.StandaloneWindows64:
+                case BuildTarget.StandaloneLinux64:
+                case BuildTarget.LinuxHeadlessSimulation:
+                case BuildTarget.NoTarget:
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

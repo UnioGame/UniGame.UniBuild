@@ -9,6 +9,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     using Interfaces;
     using global::UniGame.Runtime.ObjectPool;
     using global::UniGame.Runtime.ObjectPool.Extensions;
+    using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEngine;
 
 #if ODIN_INSPECTOR
@@ -29,18 +31,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [FormerlySerializedAs("_buildData")]
         [SerializeField]
         private UniBuildConfigurationData buildData = new UniBuildConfigurationData();
-
-        /// <summary>
-        /// you can set build arguments with inspector
-        /// </summary>
-#if ODIN_INSPECTOR
-        [InlineProperty]
-        [HideLabel]
-        [BoxGroup()]
-        [Title("Arguments")]
-#endif
-        public ApplyBuildArgumentsCommand arguments = new ApplyBuildArgumentsCommand();
-
         
 #if ODIN_INSPECTOR
         [Space]
@@ -63,10 +53,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         #region public properties
 
         public bool PlayerBuildEnabled => playerBuildEnabled;
-
-        public IUnityBuildCommand ArgumentsCommand => arguments;
-
-        public IUniBuildConfigurationData BuildData => buildData;
+        
+        public UniBuildConfigurationData BuildData => buildData;
         
         public IEnumerable<IUnityBuildCommand> PreBuildCommands => FilterActiveCommands(preBuildCommands);
 
@@ -134,10 +122,10 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         {
             var buildParameters = config.BuildParameters;
 
-            if (BuildData.BuildTarget != buildParameters.BuildTarget)
+            if (BuildData.buildTarget != buildParameters.buildTarget)
                 return false;
 
-            if (BuildData.BuildTargetGroup!=buildParameters.BuildTargetGroup)
+            if (BuildData.buildTargetGroup!=buildParameters.buildTargetGroup)
                 return false;
             
             return ValidatePlatform(config);

@@ -1,6 +1,7 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
     using System;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
@@ -31,10 +32,10 @@
             scriptingBackend = ScriptingImplementation.IL2CPP;
 #endif
             
-            switch (buildParameters.BuildTargetGroup) {
+            switch (buildParameters.buildTargetGroup) {
                 case BuildTargetGroup.Standalone:
                 case BuildTargetGroup.Android:
-                    PlayerSettings.SetScriptingBackend(buildParameters.BuildTargetGroup,scriptingBackend);
+                    PlayerSettings.SetScriptingBackend(buildParameters.buildTargetGroup,scriptingBackend);
                     Debug.Log($"Set ScriptingBackend: {scriptingBackend}");
                     return;
             }

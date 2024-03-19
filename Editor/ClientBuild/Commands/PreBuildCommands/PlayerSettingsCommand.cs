@@ -1,4 +1,5 @@
 using System;
+using UniGame.UniBuild.Editor.ClientBuild.Interfaces;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
 using UnityEditor;
@@ -10,7 +11,7 @@ public class PlayerSettingsCommand : SerializableBuildCommand
     
     public override void Execute(IUniBuilderConfiguration buildParameters)
     {
-        Execute(buildParameters.BuildParameters.BuildTargetGroup);
+        Execute(buildParameters.BuildParameters.buildTargetGroup);
     }
 
 #if ODIN_INSPECTOR

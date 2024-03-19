@@ -5,6 +5,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
     using System;
     using System.Text;
     using GitTools.Runtime;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
@@ -32,8 +33,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
         {
 
             var buildParameters = configuration.BuildParameters;
-            var branch = appendBranch ? configuration.BuildParameters.Branch : null;
-            UpdateBuildVersion(buildParameters.BuildTarget, buildParameters.BuildNumber, branch);
+            var branch = appendBranch ? configuration.BuildParameters.branch : null;
+            UpdateBuildVersion(buildParameters.buildTarget, buildParameters.buildNumber, branch);
             if(printBuildVersion) PrintBuildVersion();
         }
 

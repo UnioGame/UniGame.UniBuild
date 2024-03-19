@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
     using UnityEngine;
@@ -52,7 +53,7 @@
 #if UNITY_CLOUD_BUILD
             return;
 #endif
-            if (configuration.BuildParameters.EnvironmentType == BuildEnvironmentType.UnityCloudBuild) {
+            if (configuration.BuildParameters.environmentType == BuildEnvironmentType.UnityCloudBuild) {
                 Debug.Log("Skipped in UnityCloudBuild environment");
                 return;
             }

@@ -6,6 +6,8 @@ using UnityEngine;
 
 namespace UniModules.UniGame.UniBuild
 {
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+
     [Serializable]
     public class BuildCommandsGroup : SerializableBuildCommand,IUnityPreBuildCommand,IUnityPostBuildCommand
     {

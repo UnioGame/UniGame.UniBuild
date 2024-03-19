@@ -3,6 +3,7 @@
 namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.AssetsCommands
 {
     using System.Collections.Generic;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEditor;
     using UnityEngine;
 

@@ -2,17 +2,27 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 {
     using System;
     using System.Collections.Generic;
+    using BuildConfiguration;
+    using global::UniGame.UniBuild.Editor.ClientBuild;
+    using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+    using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
+    using UniCore.Runtime.Utils;
+    using UniModules.Editor;
     using UnityEditor;
+    using UnityEditor.Build;
+    using UnityEngine.Serialization;
 
     [Serializable]
-    public class BuildParameters : IBuildParameters {
+    public class BuildParameters {
 
         public const string BuildFolder = "Build";
         
         public BuildTarget buildTarget;
         public BuildTargetGroup buildTargetGroup;
-
+        public StandaloneBuildSubtarget standaloneBuildSubtarget;
+        public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
+        
         public string                         projectId    = string.Empty;
         public int                            buildNumber  = 0;
         public string                         outputFolder = "Build";
@@ -22,6 +32,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public List<EditorBuildSettingsScene> scenes       = new List<EditorBuildSettingsScene>();
         
         public string bundleId = string.Empty;
+        public string bundleVersion = string.Empty;
             
         //Android
         public string keyStorePath;
@@ -29,64 +40,125 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public string keyStoreAlias;
         public string keyStoreAliasPass;
         public string branch = null;
+        
         public BuildEnvironmentType environmentType = BuildEnvironmentType.Custom;
 
-#region public properties
-        
-        public BuildTarget BuildTarget => this.buildTarget;
-
-        public BuildTargetGroup BuildTargetGroup => buildTargetGroup;
-
-        public string ArtifactPath
+        public BuildParameters(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
         {
-            get => artifactPath;
-            set => artifactPath = value;
-        }
+            buildTarget      = buildData.buildTarget;
+            buildTargetGroup = buildData.buildTargetGroup;
+            standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
+            scriptingImplementation = buildData.scriptingImplementation;
 
-        public int BuildNumber
-        {
-            get => this.buildNumber;
-            set => this.buildNumber = value;
-        }
-        
-        public string OutputFile
-        {
-            get => this.outputFile;
-            set => this.outputFile = value;
-        }
-
-        public string OutputFolder
-        {
-            get => this.outputFolder;
-            set => this.outputFolder = value;
-        }      
-        
-        public BuildOptions BuildOptions => this.buildOptions;
-        
-        public string ProjectId => projectId;
-        
-        public string BundleId => bundleId;
-        
-        public BuildEnvironmentType EnvironmentType => environmentType;
-
-        public string Branch
-        {
-            get =>  branch;
-            set => branch = value;
-        }
-
-        public IReadOnlyList<EditorBuildSettingsScene> Scenes => scenes;
-
-        #endregion
-
-        public BuildParameters(BuildTarget target, 
-            BuildTargetGroup targetGroup,
-            IArgumentsProvider arguments)
-        {
+            var buildArguments = buildData.buildArguments;
+            if (buildArguments.isEnable)
+            {
+                var args = buildData.buildArguments.arguments;
+                foreach (var argument in args)
+                {
+                    if(arguments.Contains(argument.Key)) continue;
+                    arguments.SetArgument(argument.Key,argument.Value.Value);
+                }
+            }
             
-            buildTarget      = target;
-            buildTargetGroup = targetGroup;
+            UpdateArguments(arguments);
 
+            if (buildArguments.isEnable)
+            {
+                foreach (var argument in buildData.buildArguments.arguments)
+                {
+                    if (argument.Value.Override)
+                        arguments.SetArgument(argument.Key, argument.Value.Value);
+                }
+            }
+
+            EditorUserBuildSettings.standaloneBuildSubtarget = standaloneBuildSubtarget;
+            PlayerSettings.SetScriptingBackend(buildTargetGroup,scriptingImplementation);
+            var namedTarget = standaloneBuildSubtarget == StandaloneBuildSubtarget.Player ||
+                              standaloneBuildSubtarget == StandaloneBuildSubtarget.NoSubtarget
+                ? NamedBuildTarget.Standalone
+                : NamedBuildTarget.Server;
+            
+            PlayerSettings.SetScriptingBackend(namedTarget, backend: ScriptingImplementation.IL2CPP);
+            PlayerSettings.bundleVersion = bundleVersion;
+            
+            var file   = outputFile;
+            var folder = outputFolder;
+            var resultArtifactPath = folder.CombinePath(file);
+            artifactPath = resultArtifactPath;
+        }
+        
+        public void UpdateArguments(IArgumentsProvider arguments)
+        {
+            if(arguments.GetStringValue(BuildArguments.GitBranchKey,out var branchValue))
+                branch = branchValue;
+
+            bundleVersion = PlayerSettings.bundleVersion;
+            if(arguments.GetStringValue(BuildArguments.BundleVersionKey,out var bundleVersionValue))
+                bundleVersion = branchValue;
+            
+            if (arguments.GetStringValue(BuildArguments.Linux64BuildTargetKey, out var linuxPath))
+            {
+                buildTarget = BuildTarget.StandaloneLinux64;
+                buildTargetGroup = BuildTargetGroup.Standalone;
+                outputFolder = linuxPath;
+            }
+            
+            if (arguments.GetStringValue(BuildArguments.LinuxUniversalBuildTargetKey, out var universalPath))
+            {
+                buildTarget = BuildTarget.StandaloneLinux64;
+                buildTargetGroup = BuildTargetGroup.Standalone;
+                outputFolder = universalPath;
+            }
+            
+            if (arguments.GetStringValue(BuildArguments.Windows64PlayerBuildTargetKey, out var windowsPath))
+            {
+                buildTarget = BuildTarget.StandaloneWindows64;
+                buildTargetGroup = BuildTargetGroup.Standalone;
+                outputFolder = windowsPath;
+            }
+
+            standaloneBuildSubtarget = EditorUserBuildSettings.standaloneBuildSubtarget;
+            if (arguments.GetEnumValue<StandaloneBuildSubtarget>(
+                    BuildArguments.StandaloneBuildSubTargetKey,out var subTarget))
+            {
+                standaloneBuildSubtarget = subTarget;
+                EditorUserBuildSettings.standaloneBuildSubtarget = subTarget;
+            }
+            
+            if (arguments.GetEnumValue<BuildEnvironmentType>(
+                    BuildArguments.BuildEnvironmentType,out var buildEnvironmentValue))
+            {
+                environmentType = buildEnvironmentValue;
+            }
+
+            if (arguments.GetEnumValue<BuildTarget>(BuildArguments.BuildTargetKey,
+                    out var buildTargetValue))
+            {
+                buildTarget = buildTargetValue;
+            }
+            
+            if (arguments.GetEnumValue<BuildTargetGroup>(BuildArguments.BuildTargetGroupKey,
+                    out var buildTargetGroupValue))
+            {
+                buildTargetGroup = buildTargetGroupValue;
+            }
+            
+            if (arguments.GetStringValue(BuildArguments.BundleIdKey,
+                    out var bundleIdValue))
+            {
+                bundleId = bundleIdValue;
+            }
+            
+            if (arguments.GetStringValue(BuildArguments.BuildOutputNameKey,
+                    out var outputFileValue))
+            {
+                outputFile = outputFileValue;
+            }
+            
+            if(arguments.GetEnumValue<ScriptingImplementation>(BuildArguments.ScriptingImplementationKey,out var scripting))
+                scriptingImplementation = scripting;
+            
             if (arguments.GetIntValue(BuildArguments.BuildNumberKey, out var version))
                 buildNumber = version;
 
@@ -96,6 +168,12 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
             arguments.GetStringValue(BuildArguments.BuildOutputNameKey, out var file, string.Empty);
             outputFile = file;
+            
+            arguments.SetValue(BuildArguments.BuildNumberKey, buildNumber.ToString());
+            arguments.SetValue(BuildArguments.BuildOutputFolderKey, outputFolder);
+            arguments.SetValue(BuildArguments.BuildOutputNameKey, outputFile);
+            
+            //EditorUserBuildSettings.SwitchActiveBuildTarget(buildTargetGroup,buildTarget);
         }
         
         public void SetBuildOptions(BuildOptions targetBuildOptions, bool replace = true)
