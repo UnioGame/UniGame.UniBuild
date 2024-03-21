@@ -45,11 +45,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
         public BuildParameters(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
         {
-            buildTarget      = buildData.buildTarget;
-            buildTargetGroup = buildData.buildTargetGroup;
-            standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
-            scriptingImplementation = buildData.scriptingImplementation;
-
             var buildArguments = buildData.buildArguments;
             if (buildArguments.isEnable)
             {
@@ -72,14 +67,15 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                 }
             }
 
-            EditorUserBuildSettings.standaloneBuildSubtarget = standaloneBuildSubtarget;
-            PlayerSettings.SetScriptingBackend(buildTargetGroup,scriptingImplementation);
-            var namedTarget = standaloneBuildSubtarget == StandaloneBuildSubtarget.Player ||
-                              standaloneBuildSubtarget == StandaloneBuildSubtarget.NoSubtarget
+            buildTarget      = buildData.buildTarget;
+            buildTargetGroup = buildData.buildTargetGroup;
+            standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
+            scriptingImplementation = buildData.scriptingImplementation;
+            var namedTarget = standaloneBuildSubtarget is StandaloneBuildSubtarget.Player or StandaloneBuildSubtarget.NoSubtarget
                 ? NamedBuildTarget.Standalone
                 : NamedBuildTarget.Server;
-            
-            PlayerSettings.SetScriptingBackend(namedTarget, backend: ScriptingImplementation.IL2CPP);
+
+            PlayerSettings.SetScriptingBackend(namedTarget, scriptingImplementation);
             PlayerSettings.bundleVersion = bundleVersion;
             
             var file   = outputFile;
