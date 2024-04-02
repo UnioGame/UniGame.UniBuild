@@ -22,6 +22,10 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public BuildTargetGroup buildTargetGroup;
         public StandaloneBuildSubtarget standaloneBuildSubtarget;
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
+        public bool developmentBuild;
+        public bool autoconnectProfiler;
+        public bool deepProfiling;
+        public bool scriptDebugging;
         
         public string                         projectId    = string.Empty;
         public int                            buildNumber  = 0;
@@ -71,12 +75,20 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             buildTargetGroup = buildData.buildTargetGroup;
             standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
             scriptingImplementation = buildData.scriptingImplementation;
+            developmentBuild = buildData.developmentBuild;
+            autoconnectProfiler = buildData.autoconnectProfiler;
+            deepProfiling = buildData.deepProfiling;
+            scriptDebugging = buildData.scriptDebugging;
             var namedTarget = standaloneBuildSubtarget is StandaloneBuildSubtarget.Player or StandaloneBuildSubtarget.NoSubtarget
                 ? NamedBuildTarget.Standalone
                 : NamedBuildTarget.Server;
 
             PlayerSettings.SetScriptingBackend(namedTarget, scriptingImplementation);
             PlayerSettings.bundleVersion = bundleVersion;
+            EditorUserBuildSettings.development = developmentBuild;
+            EditorUserBuildSettings.connectProfiler = autoconnectProfiler;
+            EditorUserBuildSettings.buildWithDeepProfilingSupport = deepProfiling;
+            EditorUserBuildSettings.allowDebugging = scriptDebugging;
             
             var file   = outputFile;
             var folder = outputFolder;
