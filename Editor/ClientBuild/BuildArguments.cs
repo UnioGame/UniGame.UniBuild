@@ -16,5 +16,9 @@
         public const string Windows64PlayerBuildTargetKey = "-buildWindows64Player";
         public const string ScriptingImplementationKey = "-scriptingImplementation";
         public const string BuildEnvironmentType = "-buildEnvironmentType";
+        public const string DevelopmentBuild = "-developmentBuild";
+        public const string AutoConnectProfiler = "-autoconnectProfiler";
+        public const string DeepProfiling = "-deepProfiling";
+        public const string ScriptDebugging = "-scriptDebugging";
     }
 }
