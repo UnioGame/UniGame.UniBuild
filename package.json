@@ -4,7 +4,7 @@
   "displayName": "UniGame UniBuild Scriptable Build Pipeline",
   "description": "Configurable unity project build",
   "unity": "2022.0.0",
-  "version": "2024.0.0",
+  "version": "2024.0.1",
   "homepage": "https://github.com/UniGameTeam/UniGame.UniBuild#readme",
   "repository": {
     "type": "git",
