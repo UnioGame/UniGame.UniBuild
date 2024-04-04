@@ -75,20 +75,40 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             buildTargetGroup = buildData.buildTargetGroup;
             standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
             scriptingImplementation = buildData.scriptingImplementation;
+            
             developmentBuild = buildData.developmentBuild;
             autoconnectProfiler = buildData.autoconnectProfiler;
             deepProfiling = buildData.deepProfiling;
             scriptDebugging = buildData.scriptDebugging;
+            
             var namedTarget = standaloneBuildSubtarget is StandaloneBuildSubtarget.Player or StandaloneBuildSubtarget.NoSubtarget
                 ? NamedBuildTarget.Standalone
                 : NamedBuildTarget.Server;
 
             PlayerSettings.SetScriptingBackend(namedTarget, scriptingImplementation);
             PlayerSettings.bundleVersion = bundleVersion;
+            
             EditorUserBuildSettings.development = developmentBuild;
             EditorUserBuildSettings.connectProfiler = autoconnectProfiler;
             EditorUserBuildSettings.buildWithDeepProfilingSupport = deepProfiling;
             EditorUserBuildSettings.allowDebugging = scriptDebugging;
+
+            if (developmentBuild)
+            {
+                SetBuildOptions(BuildOptions.Development, false);
+            }
+            if (autoconnectProfiler)
+            {
+                SetBuildOptions(BuildOptions.ConnectWithProfiler, false);
+            }
+            if (deepProfiling)
+            {
+                SetBuildOptions(BuildOptions.EnableDeepProfilingSupport, false);
+            }
+            if (scriptDebugging)
+            {
+                SetBuildOptions(BuildOptions.AllowDebugging, false);
+            }
             
             var file   = outputFile;
             var folder = outputFolder;
