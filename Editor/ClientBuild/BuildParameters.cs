@@ -189,6 +189,15 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             
             if (arguments.GetIntValue(BuildArguments.BuildNumberKey, out var version))
                 buildNumber = version;
+            
+            if (arguments.GetBoolValue(BuildArguments.DevelopmentBuild, out var devBuild))
+                developmentBuild = devBuild;
+            if (arguments.GetBoolValue(BuildArguments.AutoConnectProfiler, out var autoConnectProfiler))
+                autoconnectProfiler = autoConnectProfiler;
+            if (arguments.GetBoolValue(BuildArguments.DeepProfiling, out var profiling))
+                deepProfiling = profiling;
+            if (arguments.GetBoolValue(BuildArguments.ScriptDebugging, out var allowDebugging))
+                scriptDebugging = allowDebugging;
 
             arguments.GetStringValue(BuildArguments.BuildOutputFolderKey,
                 out var folder, BuildFolder);
