@@ -3,7 +3,7 @@
   "author": "UniGameTeam",
   "displayName": "UniGame UniBuild Scriptable Build Pipeline",
   "description": "Configurable unity project build",
-  "unity": "2022",
+  "unity": "2022.0.0",
   "version": "2024.0.0",
   "homepage": "https://github.com/UniGameTeam/UniGame.UniBuild#readme",
   "repository": {
@@ -12,7 +12,8 @@
   },
   "keywords": [
     "Build",
-    "Pipeline"
+    "Pipeline",
+    "CI"
   ],
   "dependencies": {
     "com.unigame.coremodules": "https://github.com/UnioGame/UniGame.CoreModules.git",
