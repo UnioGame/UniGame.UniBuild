@@ -17,7 +17,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     using Sirenix.OdinInspector;
 #endif
 
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuildConfiguration",fileName = "UniGame Builder")]
+    [CreateAssetMenu(menuName = "UniBuild/UniBuildConfiguration",fileName = "UniGame Builder")]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
     {
         private static Color _oddColor = new Color(0.2f, 0.4f, 0.3f);

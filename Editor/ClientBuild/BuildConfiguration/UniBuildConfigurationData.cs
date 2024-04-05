@@ -1,12 +1,19 @@
 ﻿namespace UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using System;
-    using Sirenix.OdinInspector;
     using UniModules.UniGame.UniBuild;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Serialization;
 
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+    
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class UniBuildConfigurationData
     {
@@ -22,30 +29,27 @@
         [SerializeField]
         public BuildTargetGroup buildTargetGroup;
 
-#if ODIN_INSPECTOR
         [ShowIf(nameof(IsShownStandaloneSubTarget))]
-#endif
         public StandaloneBuildSubtarget standaloneBuildSubTarget = StandaloneBuildSubtarget.Player;
 
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
 
         public bool developmentBuild;
-#if ODIN_INSPECTOR
+
         [ShowIf("developmentBuild")]
-#endif
         public bool autoconnectProfiler;
-#if ODIN_INSPECTOR
+
         [ShowIf("developmentBuild")]
-#endif
         public bool deepProfiling;
-#if ODIN_INSPECTOR
+
         [ShowIf("developmentBuild")]
-#endif
         public bool scriptDebugging;
 
         [PropertySpace(8)]
         [Tooltip("Build Arguments")]
+#if ODIN_INSPECTOR
         [BoxGroup("Build Arguments")]
+#endif
         [HideLabel]
         [InlineProperty]
         public ArgumentsMap buildArguments = new();

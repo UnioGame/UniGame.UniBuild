@@ -6,7 +6,7 @@ namespace UniModules.UniGame.UniBuild
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEngine;
     
-    [CreateAssetMenu(menuName = "UniGame/UniBuild/ScriptableCommandsGroup",fileName = nameof(ScriptableCommandsGroup))]
+    [CreateAssetMenu(menuName = "UniBuild/ScriptableCommandsGroup",fileName = nameof(ScriptableCommandsGroup))]
     public class ScriptableCommandsGroup : UnityBuildCommand, IUnityPreBuildCommand,IUnityPostBuildCommand
     {
 #if ODIN_INSPECTOR

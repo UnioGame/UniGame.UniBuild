@@ -7,7 +7,7 @@ using UniModules.Editor;
 using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "UniGame/UniBuild/UniBuild ConfigurationAsset", fileName ="UniBuildConfigurationAsset")]
+[CreateAssetMenu(menuName = "UniBuild/UniBuild ConfigurationAsset", fileName ="UniBuildConfigurationAsset")]
 public class UniBuildConfigurationAsset : ScriptableObject
 {
     #region public properties

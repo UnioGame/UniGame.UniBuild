@@ -16,7 +16,7 @@
     "CI"
   ],
   "dependencies": {
-    "com.unigame.coremodules": "git://github.com/UnioGame/UniGame.CoreModules.git",
+    "com.unigame.coremodules": "https://github.com/UnioGame/UniGame.CoreModules.git",
     "com.unity.test-framework": "1.1.30",
     "com.unity.nuget.newtonsoft-json": "3.0.2"
   }
