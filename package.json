@@ -1,6 +1,6 @@
 {
   "name": "com.unigame.unibuildpipeline",
-  "author": "UniGameTeam",
+  "author": "UniGame",
   "displayName": "UniGame UniBuild Scriptable Build Pipeline",
   "description": "Configurable unity project build",
   "unity": "2022.1",
