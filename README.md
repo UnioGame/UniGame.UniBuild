@@ -14,6 +14,7 @@ Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json t
  "dependencies": {
     "com.unigame.unibuildpipeline": "https://github.com/UnioGame/UniGame.UniBuild.git",
     "com.unigame.coremodules": "https://github.com/UnioGame/UniGame.CoreModules.git",
+    "com.cysharp.unitask" : "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
   }
 }
 ```
