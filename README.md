@@ -12,7 +12,8 @@ Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json t
 ```json
 {
  "dependencies": {
-    "com.unigame.unibuildpipeline" : "https://github.com/UnioGame/UniGame.UniBuild.git",
+    "com.unigame.unibuildpipeline": "https://github.com/UnioGame/UniGame.UniBuild.git",
+    "com.unigame.coremodules": "https://github.com/UnioGame/UniGame.CoreModules.git",
   }
 }
 ```
