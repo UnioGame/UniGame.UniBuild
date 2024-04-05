@@ -11,28 +11,14 @@ Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json t
 
 ```json
 {
-  "scopedRegistries": [
-    {
-      "name": "Unity",
-      "url": "https://package.unity.com",
-      "scopes": [
-        "com.unity"
-      ]
-    },
-    {
-      "name": "UniGame",
-      "url": "http://package.unigame.pro:4873/",
-      "scopes": [
-        "com.unigame"
-      ]
-    }
-  ],
+ "dependencies": {
+    "com.unigame.unibuildpipeline" : "https://github.com/UnioGame/UniGame.UniBuild.git",
+  }
 }
 ```
 Open window Package Manager in Unity and install UniBuild 
 
 ![](https://i.gyazo.com/724a7a8c10ad8876d1bdd99a4ab7c13f.png)
-
 
 ### Configurations SO
 
