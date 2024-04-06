@@ -166,10 +166,14 @@ ArgumentsProvider API
 
 ## Commands
 
-All build commands realize two type of API:
+All build commands realize common API:
 
-- IUnityPreBuildCommand
-- IUnityPostBuildCommand
+- IUnityBuildCommand
+
+For simplification, you can implement one of the ready-made templates:
+
+- SerializableBuildCommand
+- UnityBuildCommand (Scriptable Object Template)
 
 You can create your own command with two ways: 
 
