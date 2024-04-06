@@ -1,7 +1,14 @@
 # UniBuild
+
 Command based scriptable build pipeline for Unity 3D
 
-## How To Install
+- [Getting Started](#getting-started)
+- [Build Pipeline](#build-pipeline)
+- [Build Console Arguments](#build-console-arguments)
+- [Commands](#commands)
+
+
+## Getting Started
 
 ### Unity Package Installation
 
@@ -18,7 +25,8 @@ Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json t
   }
 }
 ```
-### Configurations SO
+
+## Build Pipeline
 
 ![](https://github.com/UnioGame/UniGame.UniBuild/blob/master/GitAssets/unibuild2.png)
 
