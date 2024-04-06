@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.UpdateVersionCommand
+﻿namespace UniModules.UniGame.UniBuild.Editor.UpdateVersionCommand
 {
     using System.Text;
     using UnityEditor;

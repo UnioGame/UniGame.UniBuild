@@ -1,15 +1,23 @@
 ﻿using System.IO;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.UpdateVersionCommand 
+namespace UniModules.UniGame.UniBuild.Editor.UpdateVersionCommand 
 {
     using System;
     using System.Text;
     using GitTools.Runtime;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using Interfaces;
+    using ClientBuild.Commands.PreBuildCommands;
     using UnityEditor;
     using UnityEngine;
+    
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
 
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+    
     /// <summary>
     /// update current project version
     /// </summary>
@@ -24,8 +32,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
 
         public bool printBuildVersion = true;
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.ShowIf(nameof(printBuildVersion))]
+#if ODIN_INSPECTOR || TRI_INSPECTOR
+        [ShowIf(nameof(printBuildVersion))]
 #endif
         public string versionLocation = "Builds/version.txt";
         
@@ -38,8 +46,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
             if(printBuildVersion) PrintBuildVersion();
         }
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Button]
+#if ODIN_INSPECTOR || TRI_INSPECTOR
+        [Button]
 #endif
         public void Execute()
         {

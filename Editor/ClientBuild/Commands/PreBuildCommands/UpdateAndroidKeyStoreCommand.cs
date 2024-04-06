@@ -7,6 +7,14 @@
     using UnityEditor;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+    
     [Serializable]
     public class UpdateAndroidKeyStoreCommand : UnitySerializablePreBuildCommand
     {
@@ -40,8 +48,8 @@
         public string _defaultStoreAliasPass = string.Empty;
         public string _defaultStoreAlias     = string.Empty;
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Button()]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [Button]
 #endif
         public void Execute()
         {

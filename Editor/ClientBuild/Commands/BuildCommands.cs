@@ -9,7 +9,11 @@ namespace UniModules.UniGame.UniBuild
     using UnityEngine;
 
 #if ODIN_INSPECTOR
-    using Sirenix.OdinInspector;
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
 #endif
     
     [Serializable]

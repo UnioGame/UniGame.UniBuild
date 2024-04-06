@@ -8,6 +8,14 @@ namespace UniModules.UniGame.UniBuild
 {
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
 
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+
     [Serializable]
     public class BuildCommandsGroup : SerializableBuildCommand,IUnityPreBuildCommand,IUnityPostBuildCommand
     {
@@ -18,9 +26,9 @@ namespace UniModules.UniGame.UniBuild
 #endif 
         public string description;
     
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineProperty]
-        [Sirenix.OdinInspector.HideLabel]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [InlineProperty]
+        [HideLabel]
 #endif
         public BuildCommands commands = new BuildCommands();
     

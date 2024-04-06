@@ -18,19 +18,12 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [
-        "TRI_INSPECTOR || ODIN_INSPECTOR"
-    ],
+    "defineConstraints": [],
     "versionDefines": [
         {
             "name": "com.codewriter.triinspector",
             "expression": "",
             "define": "TRI_INSPECTOR"
-        },
-        {
-            "name": "com.codewriter.triinspector",
-            "expression": "",
-            "define": "ENABLE_EXTENDED_INSPECTOR"
         }
     ],
     "noEngineReferences": false

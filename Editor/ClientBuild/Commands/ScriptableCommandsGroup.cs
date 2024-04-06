@@ -6,36 +6,48 @@ namespace UniModules.UniGame.UniBuild
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEngine;
     
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+    
     [CreateAssetMenu(menuName = "UniBuild/ScriptableCommandsGroup",fileName = nameof(ScriptableCommandsGroup))]
     public class ScriptableCommandsGroup : UnityBuildCommand, IUnityPreBuildCommand,IUnityPostBuildCommand
     {
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.MultiLineProperty]
-        [Sirenix.OdinInspector.PropertyOrder(0)]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [PropertyOrder(0)]
 #endif 
+#if  ODIN_INSPECTOR
+        [Sirenix.OdinInspector.MultiLineProperty]
+#endif
         public string description;
         
         /// <summary>
         /// you can set build arguments with inspector
         /// </summary>
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineProperty]
-        [Sirenix.OdinInspector.HideLabel]
-        [Sirenix.OdinInspector.BoxGroup()]
-        [Sirenix.OdinInspector.Title(nameof(arguments))]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [InlineProperty]
+        [HideLabel]
+        [Title(nameof(arguments))]
+#endif
+#if  ODIN_INSPECTOR
+        [BoxGroup()]
 #endif
         [Space]
         public ApplyBuildArgumentsCommand arguments = new ApplyBuildArgumentsCommand();
         
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineProperty]
-        [Sirenix.OdinInspector.HideLabel]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [InlineProperty]
+        [HideLabel]
 #endif
         [Space]
         public BuildCommands commands = new BuildCommands();
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Button]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [Button]
 #endif
         public void ExecuteGroup()
         {

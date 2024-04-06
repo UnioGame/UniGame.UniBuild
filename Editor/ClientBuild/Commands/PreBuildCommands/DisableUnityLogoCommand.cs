@@ -6,6 +6,14 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
     using Interfaces;
     using UnityEditor;
 
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+    
     [Serializable]
     public class DisableUnityLogoCommand : UnitySerializablePreBuildCommand, ICommand
     {
@@ -16,8 +24,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildComman
         
         public override void Execute(IUniBuilderConfiguration buildParameters) => Execute();
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Button]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [Button]
 #endif
         public void Execute()
         {

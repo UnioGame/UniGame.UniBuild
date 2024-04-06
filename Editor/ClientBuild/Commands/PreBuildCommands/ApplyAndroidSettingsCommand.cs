@@ -5,18 +5,27 @@
     using Interfaces;
     using UnityEditor;
 
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+    
     [Serializable]
     public class ApplyAndroidSettingsCommand : UnitySerializablePreBuildCommand
     {
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineProperty] [Sirenix.OdinInspector.HideLabel]
+#if ODIN_INSPECTOR || TRI_INSPECTOR
+        [InlineProperty] 
+        [HideLabel]
 #endif
         public UniAndroidSettings AndroidSettings = new UniAndroidSettings();
 
         public override void Execute(IUniBuilderConfiguration buildParameters) => Execute();
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Button]
+#if ODIN_INSPECTOR || TRI_INSPECTOR
+        [Button]
 #endif
         public void Execute()
         {

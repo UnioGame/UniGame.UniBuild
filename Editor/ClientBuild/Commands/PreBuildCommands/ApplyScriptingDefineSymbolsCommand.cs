@@ -9,6 +9,14 @@
     using UnityEditor;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
+#endif
+    
     [Serializable]
     public class ApplyScriptingDefineSymbolsCommand : UnitySerializablePreBuildCommand
     {
@@ -66,8 +74,8 @@
             PlayerSettings.SetScriptingDefineSymbolsForGroup(activeBuildGroup,  definesBuilder.ToString());
         }
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.Button]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [Button]
 #endif
         public void Execute() => Execute(String.Empty);
     }

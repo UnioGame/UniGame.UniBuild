@@ -9,29 +9,39 @@
     using UnityEngine;
 
 #if ODIN_INSPECTOR
-    using Sirenix.OdinInspector;
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
 #endif
     
     [Serializable]
     public class BuildCommandStep
     {
         [Space]
-#if  ODIN_INSPECTOR
-        [ValueDropdown(nameof(GetBuildCommands))]
-        [FoldoutGroup("$GroupLabel")]
-        //[HideLabel]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf(nameof(IsUnityCommandInitialized))]
         [InlineEditor()]
+#endif
+#if  ODIN_INSPECTOR
+        [FoldoutGroup("$GroupLabel")]
+        [ValueDropdown(nameof(GetBuildCommands))]
+#endif
+#if  TRI_INSPECTOR
+        [Dropdown(nameof(GetBuildCommands))]
 #endif
         public UnityBuildCommand buildCommand = null;
 
         [Space] 
         [SerializeReference] 
-#if  ODIN_INSPECTOR
-        [FoldoutGroup("$GroupLabel")]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [HideLabel]
         [ShowIf(nameof(IsSerializedCommandInitialized))]
         [InlineProperty]
+#endif
+#if  ODIN_INSPECTOR
+        [FoldoutGroup("$GroupLabel")]
 #endif
         public IUnityBuildCommand serializableCommand = null;
 
@@ -56,6 +66,21 @@
             if (serializableCommand != null)
                 yield return serializableCommand;
         }
+
+
+#if TRI_INSPECTOR
+        private IEnumerable<TriDropdownItem<UnityBuildCommand>> GetTriVectorValues()
+        {
+            foreach (var command in AssetEditorTools.GetAssets<UnityBuildCommand>())
+            {
+                yield return new TriDropdownItem<UnityBuildCommand>()
+                {
+                    Text = command.name,
+                    Value = command,
+                };
+            }
+        }
+#endif
         
         public IEnumerable<UnityBuildCommand> GetBuildCommands()
         {

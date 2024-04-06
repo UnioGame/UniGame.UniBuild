@@ -14,7 +14,11 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     using UnityEngine;
 
 #if ODIN_INSPECTOR
-    using Sirenix.OdinInspector;
+     using Sirenix.OdinInspector;
+#endif
+
+#if TRI_INSPECTOR
+    using TriInspector;
 #endif
 
     [CreateAssetMenu(menuName = "UniBuild/UniBuildConfiguration",fileName = "UniGame Builder")]
@@ -24,7 +28,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         
         public bool playerBuildEnabled = true;
         
-#if  ODIN_INSPECTOR
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [InlineProperty()]
         [HideLabel()]
 #endif
@@ -32,8 +36,10 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [SerializeField]
         private UniBuildConfigurationData buildData = new UniBuildConfigurationData();
         
-#if ODIN_INSPECTOR
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [Space]
+#endif
+#if ODIN_INSPECTOR
         [Searchable]
         [BoxGroup(nameof(PreBuildCommands),false)]
         [ListDrawerSettings(AddCopiesLastElement = false,ElementColor = nameof(GetElementColor))]
@@ -41,10 +47,12 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [Space]
         public List<BuildCommandStep> preBuildCommands = new List<BuildCommandStep>();
 
-#if ODIN_INSPECTOR
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [Space(6f)]
+#endif
+#if ODIN_INSPECTOR
         [Searchable]
-        [BoxGroup(nameof(PostBuildCommands),false)]
+        [BoxGroup(nameof(PreBuildCommands),false)]
         [ListDrawerSettings(AddCopiesLastElement = false,ElementColor = nameof(GetElementColor))]
 #endif
         [Space]
@@ -131,23 +139,32 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
             return ValidatePlatform(config);
         }
 
-#if ODIN_INSPECTOR
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [GUIColor(0.2f, 0.6f, 0.1f)]
-        [BoxGroup(nameof(PreBuildCommands))]
         [Button(nameof(ExecutePreBuildCommands))]
+#endif
+#if ODIN_INSPECTOR
+        [BoxGroup(nameof(PreBuildCommands))]
 #endif
         public void ExecutePreBuildCommands() => PreBuildCommands.ExecuteCommands(buildData);
         
-#if ODIN_INSPECTOR
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [GUIColor(0.2f, 0.6f, 0.1f)]
-        [BoxGroup(nameof(PostBuildCommands))]
         [Button(nameof(ExecutePostBuildCommands))]
+#endif
+#if ODIN_INSPECTOR
+        [BoxGroup(nameof(PostBuildCommands))]
 #endif
         public void ExecutePostBuildCommands() => PostBuildCommands.ExecuteCommands(buildData);
         
-#if  ODIN_INSPECTOR
-        [Button("Execute",ButtonSizes.Large)]
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [GUIColor(0.2f, 0.8f, 0.1f)]
+#endif
+#if TRI_INSPECTOR
+        [Button(ButtonSizes.Large)]
+#endif
+#if ODIN_INSPECTOR
+        [Button("Execute",ButtonSizes.Large)]
 #endif
         public void ExecuteBuild()
         {

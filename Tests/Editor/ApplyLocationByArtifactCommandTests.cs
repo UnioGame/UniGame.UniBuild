@@ -1,11 +1,11 @@
-using System;
-using NUnit.Framework;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-using UnityEditor;
-using UnityEngine;
-
 namespace UniModules.UniGame.UniBuild.Tests.Editor
 {
+    using System;
+    using NUnit.Framework;
+    using UnityEditor;
+    using UnityEngine;
+    using UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
+
     [TestFixture]
     public class ApplyLocationByArtifactCommandTests
     {

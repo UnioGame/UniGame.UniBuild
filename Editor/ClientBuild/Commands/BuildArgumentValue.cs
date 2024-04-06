@@ -3,12 +3,12 @@
     using System;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+
 #if TRI_INSPECTOR
     using TriInspector;
-#endif
-    
-#if ODIN_INSPECTOR
-    using Sirenix.OdinInspector;
 #endif
     
     [Serializable]
