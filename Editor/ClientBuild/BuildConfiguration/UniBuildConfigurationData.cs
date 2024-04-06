@@ -29,29 +29,40 @@
         [SerializeField]
         public BuildTargetGroup buildTargetGroup;
 
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf(nameof(IsShownStandaloneSubTarget))]
+#endif
         public StandaloneBuildSubtarget standaloneBuildSubTarget = StandaloneBuildSubtarget.Player;
 
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
 
         public bool developmentBuild;
 
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
+#endif
         public bool autoconnectProfiler;
 
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
+#endif
         public bool deepProfiling;
 
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
+#endif
         public bool scriptDebugging;
 
-        [PropertySpace(8)]
+        
         [Tooltip("Build Arguments")]
 #if ODIN_INSPECTOR
         [BoxGroup("Build Arguments")]
 #endif
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [PropertySpace(8)]
         [HideLabel]
         [InlineProperty]
+#endif
         public ArgumentsMap buildArguments = new();
         
         public bool IsShownStandaloneSubTarget()
