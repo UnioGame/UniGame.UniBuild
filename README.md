@@ -12,7 +12,7 @@ Command based scriptable build pipeline for Unity 3D
 
 ### Unity Package Installation
 
-**Odin Inspector Asset recommended to usage with this Package (https://odininspector.com)**
+**Odin Inspector or Tri-Inspector recommended to usage with this Package (https://odininspector.com | https://github.com/codewriter-packages/Tri-Inspector)**
 
 Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json these lines:
 
