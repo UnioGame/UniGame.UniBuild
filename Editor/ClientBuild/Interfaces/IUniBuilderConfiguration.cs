@@ -9,13 +9,13 @@ namespace UniGame.UniBuild.Editor.ClientBuild.Interfaces
         /// Allow to use local argument data between build steps
         /// </summary>
         IArgumentsProvider Arguments { get; }
-    
         /// <summary>
         /// Current Unity build parameters
         /// </summary>
         BuildParameters BuildParameters { get; }
-        
+        /// <summary>
+        /// Build report data, use only after build process
+        /// </summary>
         BuildReport BuildReport { get; set; }
-        
     }
 }
