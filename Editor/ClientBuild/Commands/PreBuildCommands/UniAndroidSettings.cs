@@ -40,9 +40,13 @@
         public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;
         
 #if UNITY_2023_1_OR_NEWER
-        public AndroidCreateSymbols AndroidDebugSymbolsMode = AndroidCreateSymbols.Public;
-#elif UNITY_2021_1_OR_NEWER
+        
+#else 
         public AndroidETC2Fallback ETC2Fallback = AndroidETC2Fallback.Quality32BitDownscaled;
+#endif
+        
+#if UNITY_2021_1_OR_NEWER
+        public AndroidCreateSymbols AndroidDebugSymbolsMode = AndroidCreateSymbols.Public;
 #else
         
 #endif
