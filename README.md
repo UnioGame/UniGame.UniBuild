@@ -1,11 +1,18 @@
 # UniBuild
+
 Command based scriptable build pipeline for Unity 3D
 
-## How To Install
+- [Getting Started](#getting-started)
+- [Build Pipeline](#build-pipeline)
+- [Build Console Arguments](#build-console-arguments)
+- [Commands](#commands)
+
+
+## Getting Started
 
 ### Unity Package Installation
 
-**Odin Inspector Asset recommended to usage with this Package (https://odininspector.com)**
+**Odin Inspector or Tri-Inspector recommended to usage with this Package (https://odininspector.com | https://github.com/codewriter-packages/Tri-Inspector)**
 
 Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json these lines:
 
@@ -18,7 +25,8 @@ Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json t
   }
 }
 ```
-### Configurations SO
+
+## Build Pipeline
 
 ![](https://github.com/UnioGame/UniGame.UniBuild/blob/master/GitAssets/unibuild2.png)
 
@@ -85,83 +93,90 @@ Demo Arguments Command
 
 ```cs
 [Serializable]
-    public class DemoBuildCommand : SerializableBuildCommand
+public class DemoBuildCommand : SerializableBuildCommand
+{
+    public string demoIntArgument = "-demoIntValue";
+    public string demoBoolArgument = "-demoBoolValue";
+    public string demoEnumArgument = "-demoEnumValue";
+    public int defaultIntValue = 100;
+    
+    public override void Execute(IUniBuilderConfiguration buildParameters)
     {
-        public string demoIntArgument = "-demoIntValue";
-        public string demoBoolArgument = "-demoBoolValue";
-        public string demoEnumArgument = "-demoEnumValue";
-        public int defaultIntValue = 100;
+        var arguments = buildParameters.Arguments;
         
-        public override void Execute(IUniBuilderConfiguration buildParameters)
-        {
-            var arguments = buildParameters.Arguments;
-            
-            var intExists = arguments
-                .GetIntValue(demoIntArgument,out var argumentIntValue, defaultIntValue);
-            var boolExists = arguments
-                .GetBoolValue(demoBoolArgument,out var boolValue, false);
-            var enumExists = arguments
-                .GetEnumValue(demoEnumArgument,typeof(DemoArgEnum),out DemoArgEnum enumValue);
+        var intExists = arguments
+            .GetIntValue(demoIntArgument,out var argumentIntValue, defaultIntValue);
+        var boolExists = arguments
+            .GetBoolValue(demoBoolArgument,out var boolValue, false);
+        var enumExists = arguments
+            .GetEnumValue(demoEnumArgument,typeof(DemoArgEnum),out DemoArgEnum enumValue);
 
-            //set value of argument all other commands after this will use this value
-            arguments.SetValue(demoIntArgument, argumentIntValue.ToString());
+        //set value of argument all other commands after this will use this value
+        arguments.SetValue(demoIntArgument, argumentIntValue.ToString());
 
-        }
-
-        public enum DemoArgEnum
-        {
-            None,
-            Value1,
-            Value2,
-        }
-        
     }
+
+    public enum DemoArgEnum
+    {
+        None,
+        Value1,
+        Value2,
+    }
+    
+}
 ```
 
 
 ```cs
 public interface IUniBuilderConfiguration
-    {
-        /// <summary>
-        /// Allow to use local argument data between build steps
-        /// </summary>
-        IArgumentsProvider Arguments { get; }
-        /// <summary>
-        /// Current Unity build parameters
-        /// </summary>
-        BuildParameters BuildParameters { get; }
-        /// <summary>
-        /// Build report data, use only after build process
-        /// </summary>
-        BuildReport BuildReport { get; set; }
-    }
+{
+    /// <summary>
+    /// Allow to use local argument data between build steps
+    /// </summary>
+    IArgumentsProvider Arguments { get; }
+    /// <summary>
+    /// Current Unity build parameters
+    /// </summary>
+    BuildParameters BuildParameters { get; }
+    /// <summary>
+    /// Build report data, use only after build process
+    /// </summary>
+    BuildReport BuildReport { get; set; }
+}
 ```
 
 ArgumentsProvider API
 
 ```cs
  public interface IArgumentsProvider
-    {
-        List<string> SourceArguments { get; }
-        string EvaluateValue(string expression);
-        IReadOnlyDictionary<string, string> Arguments { get; }
-        public void SetArgument(string key, string value);
-        string SetValue(string key, string value);
-        bool GetIntValue(string name, out int result, int defaultValue = 0);
-        bool GetBoolValue(string name, out bool result, bool defaultValue = false);
-        bool Contains(string name);
-        bool GetEnumValue<TEnum>(string parameterName,out TEnum result) where TEnum : struct;
-        bool GetEnumValue<TEnum>(string parameterName,Type enumType, out TEnum result) where TEnum : struct;
-        bool GetStringValue(string name, out string result,string defaultValue = "");
-    }
+ {
+     List<string> SourceArguments { get; }
+     
+     IReadOnlyDictionary<string, string> Arguments { get; }
+
+     string EvaluateValue(string expression);
+     void SetArgument(string key, string value);
+     void SetValue(string key, string value);
+
+     bool GetIntValue(string name, out int result, int defaultValue = 0);
+     bool GetBoolValue(string name, out bool result, bool defaultValue = false);
+     bool Contains(string name);
+     bool GetEnumValue<TEnum>(string parameterName,out TEnum result) where TEnum : struct;
+     bool GetEnumValue<TEnum>(string parameterName,Type enumType, out TEnum result) where TEnum : struct;
+     bool GetStringValue(string name, out string result,string defaultValue = "");
+}
 ```
 
 ## Commands
 
-All build commands realize two type of API:
+All build commands realize common API:
 
-- IUnityPreBuildCommand
-- IUnityPostBuildCommand
+- IUnityBuildCommand
+
+For simplification, you can implement one of the ready-made templates:
+
+- SerializableBuildCommand
+- UnityBuildCommand (Scriptable Object Template)
 
 You can create your own command with two ways: 
 
