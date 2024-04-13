@@ -2,6 +2,7 @@
 {
     using System;
     using UnityEditor;
+    using UnityEngine;
     using UnityEngine.Serialization;
 
     [Serializable]
@@ -25,20 +26,27 @@
         
         public bool ForceInternetPermission = false;
 
-        public bool UseAPKExpansionFiles = false;
-
+        /// <summary>
+        /// UseAPKExpansionFiles is deprecated in Unity 2023.1
+        /// </summary>
+        [Tooltip("equivalent to PlayerSettings.Android.UseAPKExpansionFiles for Unity before 2023.1")]
+        public bool SplitApplicationBinary = false;
         public bool AutoConnetcProfiler = false;
         
         public Il2CppCompilerConfiguration CppCompilerConfiguration = Il2CppCompilerConfiguration.Debug;
         
         public MobileTextureSubtarget TextureCompression = MobileTextureSubtarget.ASTC;
         
-        public AndroidETC2Fallback ETC2Fallback = AndroidETC2Fallback.Quality32BitDownscaled;
+        public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;
         
-#if UNITY_2021_1_OR_NEWER
+#if UNITY_2023_1_OR_NEWER
         public AndroidCreateSymbols AndroidDebugSymbolsMode = AndroidCreateSymbols.Public;
+#elif UNITY_2021_1_OR_NEWER
+        public AndroidETC2Fallback ETC2Fallback = AndroidETC2Fallback.Quality32BitDownscaled;
+#else
+        
 #endif
 
-        public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;
+        
     }
 }

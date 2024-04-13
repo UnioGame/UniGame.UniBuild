@@ -81,7 +81,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             deepProfiling = buildData.deepProfiling;
             scriptDebugging = buildData.scriptDebugging;
             
-            var namedTarget = standaloneBuildSubtarget is StandaloneBuildSubtarget.Player or StandaloneBuildSubtarget.NoSubtarget
+            var namedTarget = standaloneBuildSubtarget is 
+                StandaloneBuildSubtarget.Player or
+#if UNITY_2023_1_OR_NEWER
+                StandaloneBuildSubtarget.Default
+#else
+                StandaloneBuildSubtarget.NoSubtarget
+#endif
                 ? NamedBuildTarget.Standalone
                 : NamedBuildTarget.Server;
 

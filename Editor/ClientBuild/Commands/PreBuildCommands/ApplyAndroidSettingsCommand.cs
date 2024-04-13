@@ -4,6 +4,7 @@
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
+    using UnityEditor.Build;
 
 #if ODIN_INSPECTOR
      using Sirenix.OdinInspector;
@@ -33,7 +34,6 @@
             EditorUserBuildSettings.androidCreateSymbols = AndroidSettings.AndroidDebugSymbolsMode;
 #endif
             EditorUserBuildSettings.connectProfiler = AndroidSettings.AutoConnetcProfiler;
-            EditorUserBuildSettings.androidETC2Fallback = AndroidSettings.ETC2Fallback;
             EditorUserBuildSettings.androidBuildSubtarget = AndroidSettings.TextureCompression;
             EditorUserBuildSettings.androidBuildType = AndroidSettings.AndroidBuildType;
             EditorUserBuildSettings.buildAppBundle = AndroidSettings.BuildAppBundle;
@@ -44,11 +44,20 @@
             PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
             PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSDCardPermission;
             PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;
+            PlayerSettings.Android.splitApplicationBinary = AndroidSettings.SplitApplicationBinary;
+#if !UNITY_2023_1_OR_NEWER
+            EditorUserBuildSettings.androidETC2Fallback = AndroidSettings.SplitApplicationBinary;
             PlayerSettings.Android.useAPKExpansionFiles = AndroidSettings.UseAPKExpansionFiles;
-
+            
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, AndroidSettings.ScriptingBackend);
             PlayerSettings.SetIl2CppCompilerConfiguration(BuildTargetGroup.Android,AndroidSettings.CppCompilerConfiguration);
+#else
+            PlayerSettings.SetApiCompatibilityLevel(NamedBuildTarget.Android, AndroidSettings.ApiCompatibilityLevel);
+            PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, AndroidSettings.ScriptingBackend);
+            PlayerSettings.SetIl2CppCompilerConfiguration(NamedBuildTarget.Android,AndroidSettings.CppCompilerConfiguration);
+#endif
+            
         }
     }
 }
