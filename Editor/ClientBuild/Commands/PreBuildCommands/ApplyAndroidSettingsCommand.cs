@@ -44,11 +44,14 @@
             PlayerSettings.Android.targetArchitectures = AndroidSettings.AndroidArchitecture;
             PlayerSettings.Android.forceSDCardPermission = AndroidSettings.ForceSDCardPermission;
             PlayerSettings.Android.forceInternetPermission = AndroidSettings.ForceInternetPermission;
+#if UNITY_2023_1_OR_NEWER
             PlayerSettings.Android.splitApplicationBinary = AndroidSettings.SplitApplicationBinary;
-#if !UNITY_2023_1_OR_NEWER
-            EditorUserBuildSettings.androidETC2Fallback = AndroidSettings.SplitApplicationBinary;
-            PlayerSettings.Android.useAPKExpansionFiles = AndroidSettings.UseAPKExpansionFiles;
+#else
+            EditorUserBuildSettings.androidETC2Fallback = AndroidSettings.ETC2Fallback;
+            PlayerSettings.Android.useAPKExpansionFiles = AndroidSettings.SplitApplicationBinary;
+#endif
             
+#if !UNITY_2023_1_OR_NEWER
             PlayerSettings.SetApiCompatibilityLevel(BuildTargetGroup.Android, AndroidSettings.ApiCompatibilityLevel);
             PlayerSettings.SetScriptingBackend(BuildTargetGroup.Android, AndroidSettings.ScriptingBackend);
             PlayerSettings.SetIl2CppCompilerConfiguration(BuildTargetGroup.Android,AndroidSettings.CppCompilerConfiguration);
