@@ -1,7 +1,7 @@
 {
   "name": "com.unigame.unibuildpipeline",
   "author": "UniGame",
-  "displayName": "UniGame UniBuild Scriptable Build Pipeline",
+  "displayName": "UniBuild Scriptable Build Pipeline",
   "description": "Configurable unity project build",
   "unity": "2022.1",
   "version": "2024.0.3",
