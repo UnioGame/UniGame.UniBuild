@@ -20,14 +20,15 @@
                         
             versionBuilder.Append(buildNumber);
 
-            if (buildTarget == BuildTarget.Android && !string.IsNullOrEmpty(branch)) {
-                var shortBranch = GetShortBranch(branch);
-                if (!string.IsNullOrEmpty(shortBranch)) {
-                    versionBuilder.Append(" ");
-                    versionBuilder.Append(shortBranch);
-                }
-            }
+            if (buildTarget != BuildTarget.Android || string.IsNullOrEmpty(branch)) 
+                return versionBuilder.ToString();
             
+            var shortBranch = GetShortBranch(branch);
+            if (string.IsNullOrEmpty(shortBranch)) 
+                return versionBuilder.ToString();
+            versionBuilder.Append(" ");
+            versionBuilder.Append(shortBranch);
+
             return versionBuilder.ToString();
             
         }

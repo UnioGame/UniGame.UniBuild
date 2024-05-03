@@ -22,7 +22,7 @@ namespace UniModules.UniGame.UniBuild
         private const string LogMessageFormat = "GROUP [{0}] : \n{1}";
         
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.MultiLineProperty]
+        [MultiLineProperty]
 #endif 
         public string description;
     

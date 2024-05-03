@@ -78,7 +78,8 @@ namespace UniModules.UniGame.UniBuild.Editor.UpdateVersionCommand
             activeBuildNumber = Mathf.Max(1, activeBuildNumber);
             var resultBuildNumber  = currentBuildNumber + activeBuildNumber;
             
-            var bundleVersion     = buildVersionProvider.GetBuildVersion(buildTarget, PlayerSettings.bundleVersion, resultBuildNumber, branch);
+            var bundleVersion     = buildVersionProvider
+                .GetBuildVersion(buildTarget, PlayerSettings.bundleVersion, resultBuildNumber, branch);
             
             PlayerSettings.bundleVersion = bundleVersion;
             var buildNumberString =  resultBuildNumber.ToString();

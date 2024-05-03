@@ -13,7 +13,7 @@
         
         public bool IsActive => isActive;
 
-        public virtual string Name => this.GetType().Name;
+        public virtual string Name => GetType().Name;
         
         public virtual bool Validate(IUniBuilderConfiguration config) => isActive;
         

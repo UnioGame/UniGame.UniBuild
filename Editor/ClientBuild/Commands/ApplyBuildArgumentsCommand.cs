@@ -2,9 +2,9 @@
 {
     using System;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using Editor.ClientBuild;
+    using Editor.ClientBuild.Commands.PreBuildCommands;
+    using Editor.ClientBuild.Interfaces;
 
 
     [Serializable]

@@ -17,14 +17,6 @@ namespace UniModules.UniGame.UniBuild
     [CreateAssetMenu(menuName = "UniBuild/ScriptableCommandsGroup",fileName = nameof(ScriptableCommandsGroup))]
     public class ScriptableCommandsGroup : UnityBuildCommand, IUnityPreBuildCommand,IUnityPostBuildCommand
     {
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
-        [PropertyOrder(0)]
-#endif 
-#if  ODIN_INSPECTOR
-        [Sirenix.OdinInspector.MultiLineProperty]
-#endif
-        public string description;
-        
         /// <summary>
         /// you can set build arguments with inspector
         /// </summary>
@@ -34,7 +26,7 @@ namespace UniModules.UniGame.UniBuild
         [Title(nameof(arguments))]
 #endif
 #if  ODIN_INSPECTOR
-        [BoxGroup()]
+        [FoldoutGroup(nameof(arguments),expanded:false)]
 #endif
         [Space]
         public ApplyBuildArgumentsCommand arguments = new ApplyBuildArgumentsCommand();

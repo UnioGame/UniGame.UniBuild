@@ -23,20 +23,20 @@
 
         [Space]
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.VerticalGroup()]
+        [VerticalGroup()]
 #endif
         //android keys
         public string KeyStorePath      = "-keystorePath";
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.VerticalGroup()]
+        [VerticalGroup()]
 #endif
         public string KeyStorePass      = "-keystorePass";
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.VerticalGroup()]
+        [VerticalGroup()]
 #endif
         public string KeyStoreAlias     = "-keystoreAlias";
 #if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.VerticalGroup()]
+        [VerticalGroup()]
 #endif
         public string KeyStoreAliasPass = "-keystoreAliasPass";
 
