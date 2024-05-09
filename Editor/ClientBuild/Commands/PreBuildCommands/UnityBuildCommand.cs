@@ -14,7 +14,7 @@
 
         public bool IsActive => _isActive;
         
-        public virtual string Name => $"{name} : [{GetType().Name}]";
+        public virtual string Name => $"[{GetType().Name}]";
         
         public abstract void Execute(IUniBuilderConfiguration configuration);
 
