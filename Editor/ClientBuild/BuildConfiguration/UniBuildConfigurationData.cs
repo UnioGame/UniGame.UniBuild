@@ -17,9 +17,24 @@
     [Serializable]
     public class UniBuildConfigurationData
     {
+        [HorizontalGroup(nameof(artifactName))]
+        [Tooltip("use application name as artifact name")]
+        public bool overrideArtifactName = true;
+            
+        [HorizontalGroup(nameof(artifactName))]
+        [Tooltip("artifact name")]
         [FormerlySerializedAs("_artifactName")]
-        [SerializeField]
+        [ShowIf(nameof(overrideArtifactName))]
         public string artifactName = string.Empty;
+
+        [HorizontalGroup(nameof(bundleName))]
+        [Tooltip("override bundle name")]
+        public bool overrideBundleName = false;
+        
+        [HorizontalGroup(nameof(bundleName))]
+        [ShowIf(nameof(overrideArtifactName))]
+        [Tooltip("use application name as bundle name")]
+        public string bundleName = string.Empty;
         
         [FormerlySerializedAs("_buildTarget")]
         [SerializeField]
@@ -36,6 +51,7 @@
 
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
 
+        [Tooltip("development build")]
         public bool developmentBuild;
 
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
@@ -46,13 +62,14 @@
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
 #endif
+        [Tooltip("enable deep profiling")]
         public bool deepProfiling;
 
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
 #endif
+        [Tooltip("allow script debugging")]
         public bool scriptDebugging;
-
         
         [Tooltip("Build Arguments")]
 #if ODIN_INSPECTOR

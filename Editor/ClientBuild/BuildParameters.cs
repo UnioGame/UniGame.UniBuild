@@ -26,15 +26,15 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public bool autoconnectProfiler;
         public bool deepProfiling;
         public bool scriptDebugging;
-        
-        public string                         projectId    = string.Empty;
+
         public int                            buildNumber  = 0;
         public string                         outputFolder = "Build";
         public string                         outputFile   = "artifact";
         public string                         artifactPath;
         public BuildOptions                   buildOptions = BuildOptions.None;
         public List<EditorBuildSettingsScene> scenes       = new List<EditorBuildSettingsScene>();
-        
+
+        public string projectId = string.Empty;
         public string bundleId = string.Empty;
         public string bundleVersion = string.Empty;
             
@@ -43,7 +43,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public string keyStorePass;
         public string keyStoreAlias;
         public string keyStoreAliasPass;
-        public string branch = null;
+        public string branch = string.Empty;
         
         public BuildEnvironmentType environmentType = BuildEnvironmentType.Custom;
 
@@ -60,6 +60,27 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                 }
             }
             
+            outputFile = buildData.overrideArtifactName  &&
+                         !string.IsNullOrEmpty(buildData.artifactName)
+                ? PlayerSettings.productName 
+                : buildData.artifactName;
+            outputFile = outputFile.Replace(" ", "_");
+            
+            bundleId = buildData.overrideBundleName && 
+                       !string.IsNullOrEmpty(buildData.bundleName)
+                ? PlayerSettings.applicationIdentifier 
+                : buildData.bundleName;
+            
+            buildTarget      = buildData.buildTarget;
+            buildTargetGroup = buildData.buildTargetGroup;
+            standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
+            scriptingImplementation = buildData.scriptingImplementation;
+            
+            developmentBuild = buildData.developmentBuild;
+            autoconnectProfiler = buildData.autoconnectProfiler;
+            deepProfiling = buildData.deepProfiling;
+            scriptDebugging = buildData.scriptDebugging;
+            
             UpdateArguments(arguments);
 
             if (buildArguments.isEnable)
@@ -71,15 +92,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                 }
             }
 
-            buildTarget      = buildData.buildTarget;
-            buildTargetGroup = buildData.buildTargetGroup;
-            standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
-            scriptingImplementation = buildData.scriptingImplementation;
-            
-            developmentBuild = buildData.developmentBuild;
-            autoconnectProfiler = buildData.autoconnectProfiler;
-            deepProfiling = buildData.deepProfiling;
-            scriptDebugging = buildData.scriptDebugging;
             
             var namedTarget = standaloneBuildSubtarget is 
                 StandaloneBuildSubtarget.Player or
@@ -93,11 +105,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
             PlayerSettings.SetScriptingBackend(namedTarget, scriptingImplementation);
             PlayerSettings.bundleVersion = bundleVersion;
+            PlayerSettings.applicationIdentifier = bundleId;
             
             EditorUserBuildSettings.development = developmentBuild;
             EditorUserBuildSettings.connectProfiler = autoconnectProfiler;
             EditorUserBuildSettings.buildWithDeepProfilingSupport = deepProfiling;
             EditorUserBuildSettings.allowDebugging = scriptDebugging;
+            
 
             if (developmentBuild)
             {
