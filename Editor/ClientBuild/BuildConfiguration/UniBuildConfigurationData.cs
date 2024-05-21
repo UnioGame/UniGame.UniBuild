@@ -17,22 +17,18 @@
     [Serializable]
     public class UniBuildConfigurationData
     {
-        [HorizontalGroup(nameof(artifactName))]
         [Tooltip("use application name as artifact name")]
         public bool overrideArtifactName = true;
             
-        [HorizontalGroup(nameof(artifactName))]
         [Tooltip("artifact name")]
         [FormerlySerializedAs("_artifactName")]
         [ShowIf(nameof(overrideArtifactName))]
         public string artifactName = string.Empty;
 
-        [HorizontalGroup(nameof(bundleName))]
         [Tooltip("override bundle name")]
         public bool overrideBundleName = false;
         
-        [HorizontalGroup(nameof(bundleName))]
-        [ShowIf(nameof(overrideArtifactName))]
+        [ShowIf(nameof(overrideBundleName))]
         [Tooltip("use application name as bundle name")]
         public string bundleName = string.Empty;
         
