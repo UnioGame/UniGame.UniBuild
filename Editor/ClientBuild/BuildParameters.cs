@@ -59,17 +59,16 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                     arguments.SetArgument(argument.Key,argument.Value.Value);
                 }
             }
+
+            outputFile = PlayerSettings.productName;
+            if(buildData.overrideArtifactName && !string.IsNullOrEmpty(buildData.artifactName))
+                outputFile = buildData.artifactName;
             
-            outputFile = buildData.overrideArtifactName  &&
-                         !string.IsNullOrEmpty(buildData.artifactName)
-                ? PlayerSettings.productName 
-                : buildData.artifactName;
             outputFile = outputFile.Replace(" ", "_");
-            
-            bundleId = buildData.overrideBundleName && 
-                       !string.IsNullOrEmpty(buildData.bundleName)
-                ? PlayerSettings.applicationIdentifier 
-                : buildData.bundleName;
+
+            bundleId = PlayerSettings.applicationIdentifier;
+            if(buildData.overrideBundleName && !string.IsNullOrEmpty(buildData.bundleName))
+                bundleId = buildData.bundleName;
             
             buildTarget      = buildData.buildTarget;
             buildTargetGroup = buildData.buildTargetGroup;
