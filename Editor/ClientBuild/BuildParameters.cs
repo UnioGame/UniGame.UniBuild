@@ -36,6 +36,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
         public string projectId = string.Empty;
         public string bundleId = string.Empty;
+        public string companyName = string.Empty;
         public string bundleVersion = string.Empty;
             
         //Android
@@ -69,6 +70,10 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             bundleId = PlayerSettings.applicationIdentifier;
             if(buildData.overrideBundleName && !string.IsNullOrEmpty(buildData.bundleName))
                 bundleId = buildData.bundleName;
+            
+            companyName = PlayerSettings.companyName;
+            if(buildData.overrideCompanyName && !string.IsNullOrEmpty(buildData.companyName))
+                companyName = buildData.companyName;
             
             buildTarget      = buildData.buildTarget;
             buildTargetGroup = buildData.buildTargetGroup;

@@ -32,6 +32,13 @@
         [Tooltip("use application name as bundle name")]
         public string bundleName = string.Empty;
         
+        [Tooltip("override bundle name")]
+        public bool overrideCompanyName = false;
+        
+        [ShowIf(nameof(overrideCompanyName))]
+        [Tooltip("game company name")]
+        public string companyName = string.Empty;
+        
         [FormerlySerializedAs("_buildTarget")]
         [SerializeField]
         public BuildTarget buildTarget;
