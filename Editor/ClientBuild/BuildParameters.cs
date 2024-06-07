@@ -28,6 +28,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public bool scriptDebugging;
 
         public int                            buildNumber  = 0;
+        public string                         productName = string.Empty;
         public string                         outputFolder = "Build";
         public string                         outputFile   = "artifact";
         public string                         artifactPath;
@@ -61,6 +62,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                 }
             }
 
+            productName = PlayerSettings.productName;
+            SetProductName(productName,buildData,arguments);
+            
             outputFile = PlayerSettings.productName;
             if(buildData.overrideArtifactName && !string.IsNullOrEmpty(buildData.artifactName))
                 outputFile = buildData.artifactName;
@@ -138,6 +142,17 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             var folder = outputFolder;
             var resultArtifactPath = folder.CombinePath(file);
             artifactPath = resultArtifactPath;
+        }
+
+        public void SetProductName(string product,UniBuildConfigurationData buildData,IArgumentsProvider arguments)
+        {
+            if (buildData.overrideProductName && !string.IsNullOrEmpty(buildData.productName))
+                productName = buildData.productName;
+            
+            if(arguments.GetStringValue(BuildArguments.ProductNameKey,out var branchValue))
+                productName = branchValue;
+            
+            PlayerSettings.productName = productName;
         }
         
         public void UpdateArguments(IArgumentsProvider arguments)

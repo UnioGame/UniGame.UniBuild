@@ -21,10 +21,16 @@
         public bool overrideArtifactName = true;
             
         [Tooltip("artifact name")]
-        [FormerlySerializedAs("_artifactName")]
         [ShowIf(nameof(overrideArtifactName))]
         public string artifactName = string.Empty;
 
+        [Tooltip("override product name")]
+        public bool overrideProductName = false;
+            
+        [Tooltip("artifact name")]
+        [ShowIf(nameof(overrideProductName))]
+        public string productName = string.Empty;
+        
         [Tooltip("override bundle name")]
         public bool overrideBundleName = false;
         

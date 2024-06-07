@@ -2,6 +2,7 @@
 {
     public class BuildArguments
     {
+        public const string ProductNameKey = "-productName";
         public const string GitBranchKey = "-gitBranch";
         public const string BundleVersionKey = "-bundleVersion";
         public const string BuildNumberKey = "-buildnumber";
