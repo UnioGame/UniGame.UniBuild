@@ -21,5 +21,13 @@
         public const string AutoConnectProfiler = "-autoconnectProfiler";
         public const string DeepProfiling = "-deepProfiling";
         public const string ScriptDebugging = "-scriptDebugging";
+        
+        //WebGL
+        public const string WebShowDiagnostics = "-webShowDiagnostics";
+        public const string WebCompressionFormat = "-webCompressionFormat";
+        public const string WebMemorySize = "-webMemorySize";
+        public const string WebDataCaching = "-webDataCaching";
+        public const string WebCodeOptimization = "-webCodeOptimization";
+        
     }
 }

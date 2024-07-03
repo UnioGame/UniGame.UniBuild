@@ -11,6 +11,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     using UniModules.Editor;
     using UnityEditor;
     using UnityEditor.Build;
+    using UnityEditor.WebGL;
     using UnityEngine.Serialization;
 
     [Serializable]
@@ -46,6 +47,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public string keyStoreAlias;
         public string keyStoreAliasPass;
         public string branch = string.Empty;
+        
+        //webgl
+        public WebGlBuildData webGlBuildData = new WebGlBuildData();
         
         public BuildEnvironmentType environmentType = BuildEnvironmentType.Custom;
 
@@ -119,8 +123,10 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             EditorUserBuildSettings.connectProfiler = autoconnectProfiler;
             EditorUserBuildSettings.buildWithDeepProfilingSupport = deepProfiling;
             EditorUserBuildSettings.allowDebugging = scriptDebugging;
-            
 
+            UpdateWebGLData(buildData.webGlBuildData);
+            UpdateWebGLData(arguments);
+            
             if (developmentBuild)
             {
                 SetBuildOptions(BuildOptions.Development, false);
@@ -142,6 +148,33 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             var folder = outputFolder;
             var resultArtifactPath = folder.CombinePath(file);
             artifactPath = resultArtifactPath;
+        }
+        
+        public void UpdateWebGLData(IArgumentsProvider arguments)
+        {
+            if(arguments.GetEnumValue<WasmCodeOptimization>(BuildArguments.WebCodeOptimization, out var branchValue))
+                webGlBuildData.CodeOptimization = branchValue;
+            if(arguments.GetBoolValue(BuildArguments.WebDataCaching, out var caching,webGlBuildData.DataCaching))
+                webGlBuildData.DataCaching = caching;
+            if(arguments.GetEnumValue<WebGLCompressionFormat>(BuildArguments.WebCompressionFormat, out var compressionFormat))
+                webGlBuildData.CompressionFormat = compressionFormat;
+            if(arguments.GetIntValue(BuildArguments.WebMemorySize, out var memorySize))
+                webGlBuildData.MaxMemorySize = memorySize;
+            if(arguments.GetBoolValue(BuildArguments.WebShowDiagnostics, out var showDiagnostics))
+                webGlBuildData.ShowDiagnostics = showDiagnostics;
+        }
+        
+        public void UpdateWebGLData(WebGlBuildData buildData)
+        {
+            webGlBuildData = buildData;
+            PlayerSettings.WebGL.showDiagnostics = webGlBuildData.ShowDiagnostics;
+            PlayerSettings.WebGL.compressionFormat = webGlBuildData.CompressionFormat;
+            PlayerSettings.WebGL.memorySize = webGlBuildData.MaxMemorySize;
+            PlayerSettings.WebGL.dataCaching = webGlBuildData.DataCaching;
+            PlayerSettings.defaultWebScreenWidth = webGlBuildData.Resolution.x;
+            PlayerSettings.defaultWebScreenHeight = webGlBuildData.Resolution.y;
+            
+            UserBuildSettings.codeOptimization = webGlBuildData.CodeOptimization;
         }
 
         public void SetProductName(string product,UniBuildConfigurationData buildData,IArgumentsProvider arguments)

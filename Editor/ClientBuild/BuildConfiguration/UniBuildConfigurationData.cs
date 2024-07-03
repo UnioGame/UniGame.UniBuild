@@ -9,88 +9,97 @@
 #if TRI_INSPECTOR
     using TriInspector;
 #endif
-    
+
 #if ODIN_INSPECTOR
     using Sirenix.OdinInspector;
 #endif
-    
+
     [Serializable]
     public class UniBuildConfigurationData
     {
         [Tooltip("use application name as artifact name")]
         public bool overrideArtifactName = true;
-            
+
         [Tooltip("artifact name")]
         [ShowIf(nameof(overrideArtifactName))]
         public string artifactName = string.Empty;
 
         [Tooltip("override product name")]
         public bool overrideProductName = false;
-            
+
         [Tooltip("artifact name")]
         [ShowIf(nameof(overrideProductName))]
         public string productName = string.Empty;
-        
+
         [Tooltip("override bundle name")]
         public bool overrideBundleName = false;
-        
+
         [ShowIf(nameof(overrideBundleName))]
         [Tooltip("use application name as bundle name")]
         public string bundleName = string.Empty;
-        
+
         [Tooltip("override bundle name")]
         public bool overrideCompanyName = false;
-        
+
         [ShowIf(nameof(overrideCompanyName))]
         [Tooltip("game company name")]
         public string companyName = string.Empty;
-        
+
         [FormerlySerializedAs("_buildTarget")]
         [SerializeField]
         public BuildTarget buildTarget;
-        
+
         [FormerlySerializedAs("_buildTargetGroup")]
         [SerializeField]
         public BuildTargetGroup buildTargetGroup;
 
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf(nameof(IsShownStandaloneSubTarget))]
 #endif
         public StandaloneBuildSubtarget standaloneBuildSubTarget = StandaloneBuildSubtarget.Player;
 
+#if ODIN_INSPECTOR || TRI_INSPECTOR
+        [ShowIf(nameof(IsWebGL))]
+        [InlineProperty]
+        [HideLabel]
+        [BoxGroup("WebGL")]
+#endif
+        public WebGlBuildData webGlBuildData = new();
+            
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
+        public bool IsWebGL => buildTarget == BuildTarget.WebGL;
 
         [Tooltip("development build")]
         public bool developmentBuild;
 
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
 #endif
         public bool autoconnectProfiler;
 
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
 #endif
         [Tooltip("enable deep profiling")]
         public bool deepProfiling;
 
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf("developmentBuild")]
 #endif
         [Tooltip("allow script debugging")]
         public bool scriptDebugging;
-        
+
         [Tooltip("Build Arguments")]
 #if ODIN_INSPECTOR
         [BoxGroup("Build Arguments")]
 #endif
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [PropertySpace(8)]
         [HideLabel]
         [InlineProperty]
 #endif
         public ArgumentsMap buildArguments = new();
-        
+
         public bool IsShownStandaloneSubTarget()
         {
             switch (buildTarget)
