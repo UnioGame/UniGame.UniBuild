@@ -7,26 +7,30 @@
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
+    using UnityEditor.Build;
     using UnityEngine;
 
 #if ODIN_INSPECTOR
-     using Sirenix.OdinInspector;
+    using Sirenix.OdinInspector;
 #endif
 
 #if TRI_INSPECTOR
     using TriInspector;
 #endif
-    
+
     [Serializable]
     public class ApplyScriptingDefineSymbolsCommand : UnitySerializablePreBuildCommand
     {
         private const string DefinesSeparator = ";";
 
-        [SerializeField] private string definesKey = "-defineValues";
+        [SerializeField]
+        public string definesKey = "-defineValues";
 
-        [SerializeField] private List<string> defaultDefines = new List<string>();
+        [SerializeField]
+        public List<string> defaultDefines = new List<string>();
 
-        [SerializeField] private List<string> removeDefines = new List<string>();
+        [SerializeField]
+        public List<string> removeDefines = new List<string>();
 
         public override void Execute(IUniBuilderConfiguration configuration)
         {
@@ -38,45 +42,50 @@
             Execute(defineValues);
         }
 
-        public void Execute(string defineValues)
+        public void Execute(List<string> addKeys, List<string> removeKeys, string definesValue = "")
         {
             var activeBuildGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-            var symbolsValue = PlayerSettings.GetScriptingDefineSymbolsForGroup(activeBuildGroup);
+            var namedGroup = NamedBuildTarget.FromBuildTargetGroup(activeBuildGroup);
+            PlayerSettings.GetScriptingDefineSymbols(namedGroup, out var symbolsValue);
 
-            var origin = symbolsValue.Split(new[] { DefinesSeparator }, StringSplitOptions.None);
-            var symbols = symbolsValue.Split(new[] { DefinesSeparator }, StringSplitOptions.None);
-            var buildDefines = defineValues.Split(new[] { DefinesSeparator }, StringSplitOptions.None);
+            var origin = symbolsValue.ToArray();
+            var symbols = symbolsValue;
+            var buildDefines = definesValue.Split(new[] { DefinesSeparator }, StringSplitOptions.None);
 
-            var defines = new List<string>(symbols.Length + buildDefines.Length + defaultDefines.Count);
+            var defines = new List<string>(symbols.Length + buildDefines.Length + addKeys.Count);
 
             defines.AddRange(symbols);
             defines.AddRange(buildDefines);
-            defines.AddRange(defaultDefines);
-            defines.RemoveAll(x => removeDefines.Contains(x));
+            defines.AddRange(addKeys);
+            defines.RemoveAll(removeKeys.Contains);
             defines.RemoveAll(string.IsNullOrEmpty);
 
             defines = defines.Distinct().ToList();
 
-            if (defines.Count == 0)
-                return;
+            if (defines.Count == 0) return;
 
             if (origin.All(defines.Contains) && defines.All(origin.Contains))
                 return;
 
             var definesBuilder = new StringBuilder(300);
-            
+
             foreach (var define in defines)
             {
                 definesBuilder.Append(define);
                 definesBuilder.Append(DefinesSeparator);
             }
 
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(activeBuildGroup,  definesBuilder.ToString());
+            PlayerSettings.SetScriptingDefineSymbols(namedGroup, definesBuilder.ToString());
         }
 
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        public void Execute(string defineValues)
+        {
+            Execute(defaultDefines, removeDefines, defineValues);
+        }
+
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [Button]
 #endif
-        public void Execute() => Execute(String.Empty);
+        public void Execute() => Execute(string.Empty);
     }
 }
