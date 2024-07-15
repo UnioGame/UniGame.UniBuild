@@ -53,7 +53,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 #if ODIN_INSPECTOR
         [Searchable]
         [BoxGroup(nameof(PreBuildCommands),false)]
-        [ListDrawerSettings(AddCopiesLastElement = false,ElementColor = nameof(GetElementColor))]
+        [ListDrawerSettings(AddCopiesLastElement = false,
+            ElementColor = nameof(GetElementColor))]
 #endif
         [Space]
         public List<BuildCommandStep> postBuildCommands = new List<BuildCommandStep>();
