@@ -11,8 +11,11 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     using UniModules.Editor;
     using UnityEditor;
     using UnityEditor.Build;
-    using UnityEditor.WebGL;
     using UnityEngine.Serialization;
+    
+#if UNITY_WEBGL
+    using UnityEditor.WebGL;
+#endif
 
     [Serializable]
     public class BuildParameters {
@@ -152,8 +155,10 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         
         public void UpdateWebGLData(IArgumentsProvider arguments)
         {
+#if UNITY_WEBGL
             if(arguments.GetEnumValue<WasmCodeOptimization>(BuildArguments.WebCodeOptimization, out var branchValue))
                 webGlBuildData.CodeOptimization = branchValue;
+#endif
             if(arguments.GetBoolValue(BuildArguments.WebDataCaching, out var caching,webGlBuildData.DataCaching))
                 webGlBuildData.DataCaching = caching;
             if(arguments.GetEnumValue<WebGLCompressionFormat>(BuildArguments.WebCompressionFormat, out var compressionFormat))
@@ -174,7 +179,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             PlayerSettings.defaultWebScreenWidth = webGlBuildData.Resolution.x;
             PlayerSettings.defaultWebScreenHeight = webGlBuildData.Resolution.y;
             
+#if UNITY_WEBGL
             UserBuildSettings.codeOptimization = webGlBuildData.CodeOptimization;
+#endif
         }
 
         public void SetProductName(string product,UniBuildConfigurationData buildData,IArgumentsProvider arguments)

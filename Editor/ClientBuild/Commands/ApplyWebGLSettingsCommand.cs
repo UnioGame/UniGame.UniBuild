@@ -42,7 +42,9 @@
             PlayerSettings.defaultWebScreenWidth = data.Resolution.x;
             PlayerSettings.defaultWebScreenHeight = data.Resolution.y;
             
+#if UNITY_WEBGL
             UnityEditor.WebGL.UserBuildSettings.codeOptimization = data.CodeOptimization;
+#endif
         }
     }
 }

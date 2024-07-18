@@ -2,8 +2,11 @@
 {
     using System;
     using UnityEditor;
-    using UnityEditor.WebGL;
     using UnityEngine;
+    
+#if UNITY_WEBGL
+    using UnityEditor.WebGL;
+#endif
 
     [Serializable]
     public class WebGlBuildData
@@ -13,6 +16,9 @@
         public int MaxMemorySize = 1024;
         public bool DataCaching = true;
         public WebGLCompressionFormat CompressionFormat = WebGLCompressionFormat.Brotli;
+        
+#if UNITY_WEBGL
         public WasmCodeOptimization CodeOptimization = WasmCodeOptimization.BuildTimes;
+#endif
     }
 }
