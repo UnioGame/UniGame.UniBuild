@@ -57,7 +57,9 @@
         [ShowIf(nameof(IsShownStandaloneSubTarget))]
 #endif
         public StandaloneBuildSubtarget standaloneBuildSubTarget = StandaloneBuildSubtarget.Player;
-
+        
+        public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
+        
 #if ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf(nameof(IsWebGL))]
         [InlineProperty]
@@ -65,30 +67,41 @@
         [BoxGroup("WebGL")]
 #endif
         public WebGlBuildData webGlBuildData = new();
-            
-        public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
+        
         public bool IsWebGL => buildTarget == BuildTarget.WebGL;
 
+#if ODIN_INSPECTOR || TRI_INSPECTOR
+        [BoxGroup(nameof(buildOptions))]
+#endif
         [Tooltip("development build")]
         public bool developmentBuild;
 
 #if ODIN_INSPECTOR || TRI_INSPECTOR
-        [ShowIf("developmentBuild")]
+        [BoxGroup(nameof(buildOptions))]
+        [ShowIf(nameof(developmentBuild))]
 #endif
         public bool autoconnectProfiler;
 
 #if ODIN_INSPECTOR || TRI_INSPECTOR
-        [ShowIf("developmentBuild")]
+        [BoxGroup(nameof(buildOptions))]
+        [ShowIf(nameof(developmentBuild))]
 #endif
         [Tooltip("enable deep profiling")]
         public bool deepProfiling;
 
 #if ODIN_INSPECTOR || TRI_INSPECTOR
-        [ShowIf("developmentBuild")]
+        [ShowIf(nameof(developmentBuild))]
+        [BoxGroup(nameof(buildOptions))]
 #endif
         [Tooltip("allow script debugging")]
         public bool scriptDebugging;
-
+        
+        [BoxGroup(nameof(buildOptions))]
+        public bool runOnBuildFinish;
+        
+        [BoxGroup(nameof(buildOptions))]
+        public BuildOptions buildOptions = BuildOptions.None;
+        
         [Tooltip("Build Arguments")]
 #if ODIN_INSPECTOR
         [BoxGroup("Build Arguments")]

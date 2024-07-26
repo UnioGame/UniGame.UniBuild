@@ -7,6 +7,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
+    using UniCore.Runtime.Extension;
     using UniCore.Runtime.Utils;
     using UniModules.Editor;
     using UnityEditor;
@@ -26,10 +27,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public BuildTargetGroup buildTargetGroup;
         public StandaloneBuildSubtarget standaloneBuildSubtarget;
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
-        public bool developmentBuild;
-        public bool autoconnectProfiler;
-        public bool deepProfiling;
-        public bool scriptDebugging;
 
         public int                            buildNumber  = 0;
         public string                         productName = string.Empty;
@@ -91,11 +88,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
             scriptingImplementation = buildData.scriptingImplementation;
             
-            developmentBuild = buildData.developmentBuild;
-            autoconnectProfiler = buildData.autoconnectProfiler;
-            deepProfiling = buildData.deepProfiling;
-            scriptDebugging = buildData.scriptDebugging;
-            
+            UpdateBuildOptions(buildData,arguments);
             UpdateArguments(arguments);
 
             if (buildArguments.isEnable)
@@ -106,7 +99,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                         arguments.SetArgument(argument.Key, argument.Value.Value);
                 }
             }
-
             
             var namedTarget = standaloneBuildSubtarget is 
                 StandaloneBuildSubtarget.Player or
@@ -122,35 +114,71 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             PlayerSettings.bundleVersion = bundleVersion;
             PlayerSettings.applicationIdentifier = bundleId;
             
-            EditorUserBuildSettings.development = developmentBuild;
-            EditorUserBuildSettings.connectProfiler = autoconnectProfiler;
-            EditorUserBuildSettings.buildWithDeepProfilingSupport = deepProfiling;
-            EditorUserBuildSettings.allowDebugging = scriptDebugging;
-
             UpdateWebGLData(buildData.webGlBuildData);
             UpdateWebGLData(arguments);
             
-            if (developmentBuild)
-            {
-                SetBuildOptions(BuildOptions.Development, false);
-            }
-            if (autoconnectProfiler)
-            {
-                SetBuildOptions(BuildOptions.ConnectWithProfiler, false);
-            }
-            if (deepProfiling)
-            {
-                SetBuildOptions(BuildOptions.EnableDeepProfilingSupport, false);
-            }
-            if (scriptDebugging)
-            {
-                SetBuildOptions(BuildOptions.AllowDebugging, false);
-            }
+            EditorUserBuildSettings.development = buildOptions.IsFlagSet(BuildOptions.Development);
+            EditorUserBuildSettings.connectProfiler = buildOptions.IsFlagSet(BuildOptions.ConnectWithProfiler);
+            EditorUserBuildSettings.buildWithDeepProfilingSupport =  buildOptions.IsFlagSet(BuildOptions.EnableDeepProfilingSupport);
+            EditorUserBuildSettings.allowDebugging = buildOptions.IsFlagSet(BuildOptions.AllowDebugging);
             
             var file   = outputFile;
             var folder = outputFolder;
             var resultArtifactPath = folder.CombinePath(file);
             artifactPath = resultArtifactPath;
+        }
+
+        public void UpdateBuildOptions(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
+        {
+            SetBuildOptions(buildData.buildOptions, true);
+            
+            if (buildData.runOnBuildFinish)
+            {
+                SetBuildOptions(BuildOptions.AutoRunPlayer, false);
+            }
+            if (buildData.developmentBuild)
+            {
+                SetBuildOptions(BuildOptions.Development, false);
+            }
+            if (buildData.autoconnectProfiler)
+            {
+                SetBuildOptions(BuildOptions.ConnectWithProfiler, false);
+            }
+            if (buildData.deepProfiling)
+            {
+                SetBuildOptions(BuildOptions.EnableDeepProfilingSupport, false);
+            }
+            if (buildData.scriptDebugging)
+            {
+                SetBuildOptions(BuildOptions.AllowDebugging, false);
+            }
+        }
+
+        public void UpdateBuildOptionsArguments(IArgumentsProvider arguments)
+        {
+            arguments.GetStringValue(BuildArguments.BuildOptions, out var options);
+            if (string.IsNullOrEmpty(options)) return;
+            var optionsArray = options.Split(',');
+            foreach (var option in optionsArray)
+            {
+                if (Enum.TryParse(option, out BuildOptions buildOption))
+                {
+                    SetBuildOptions(buildOption, false);
+                }
+            }
+            if (Enum.TryParse(options, out BuildOptions singleOption))
+            {
+                SetBuildOptions(singleOption, false);
+            }
+            
+            if (arguments.GetBoolValue(BuildArguments.DevelopmentBuild, out var devBuild))
+                SetBuildOptions(BuildOptions.Development, false);
+            if (arguments.GetBoolValue(BuildArguments.AutoConnectProfiler, out var autoConnectProfiler))
+                SetBuildOptions(BuildOptions.Development, false);
+            if (arguments.GetBoolValue(BuildArguments.DeepProfiling, out var profiling))
+                SetBuildOptions(BuildOptions.EnableDeepProfilingSupport, false);
+            if (arguments.GetBoolValue(BuildArguments.ScriptDebugging, out var allowDebugging))
+                SetBuildOptions(BuildOptions.Development, false);
         }
         
         public void UpdateWebGLData(IArgumentsProvider arguments)
@@ -197,6 +225,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         
         public void UpdateArguments(IArgumentsProvider arguments)
         {
+            UpdateBuildOptionsArguments(arguments);
+            
             if(arguments.GetStringValue(BuildArguments.GitBranchKey,out var branchValue))
                 branch = branchValue;
 
@@ -268,15 +298,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             
             if (arguments.GetIntValue(BuildArguments.BuildNumberKey, out var version))
                 buildNumber = version;
-            
-            if (arguments.GetBoolValue(BuildArguments.DevelopmentBuild, out var devBuild))
-                developmentBuild = devBuild;
-            if (arguments.GetBoolValue(BuildArguments.AutoConnectProfiler, out var autoConnectProfiler))
-                autoconnectProfiler = autoConnectProfiler;
-            if (arguments.GetBoolValue(BuildArguments.DeepProfiling, out var profiling))
-                deepProfiling = profiling;
-            if (arguments.GetBoolValue(BuildArguments.ScriptDebugging, out var allowDebugging))
-                scriptDebugging = allowDebugging;
 
             arguments.GetStringValue(BuildArguments.BuildOutputFolderKey,
                 out var folder, BuildFolder);
@@ -294,7 +315,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         
         public void SetBuildOptions(BuildOptions targetBuildOptions, bool replace = true)
         {
-            
             if (replace) {
                 buildOptions = targetBuildOptions;
                 return;

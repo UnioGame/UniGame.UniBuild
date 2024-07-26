@@ -11,7 +11,6 @@
     using Interfaces;
     using UnityEditor;
     using UnityEditor.Build.Reporting;
-    using UnityEngine;
 
     public class UnityPlayerBuilder : IUnityPlayerBuilder
     {

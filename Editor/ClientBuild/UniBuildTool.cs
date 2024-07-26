@@ -13,6 +13,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     using Interfaces;
     using UnityEditor;
     using UnityEditor.Build.Reporting;
+    using Object = UnityEngine.Object;
 
     public static class UniBuildTool
     {
@@ -42,6 +43,15 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             var assetPath = AssetDatabase.GUIDToAssetPath(guid);
             var asset     = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
             UniBuildTool.ExecuteBuild(asset);
+        }
+        
+        public static void BuildAndRunByConfigurationId(string guid)
+        {
+            var assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            var asset     = AssetDatabase.LoadAssetAtPath<UniBuildCommandsMap>(assetPath);
+            var instance = Object.Instantiate(asset);
+            instance.BuildData.buildOptions |= BuildOptions.AutoRunPlayer;
+            UniBuildTool.ExecuteBuild(instance);
         }
         
         public static BuildReport ExecuteBuild(IUniBuildCommandsMap commandsMap)

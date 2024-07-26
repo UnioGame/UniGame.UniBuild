@@ -11,7 +11,10 @@
     public class BuildMenuGenerator
     {
         private readonly BuildConfigurationBuilder buildConfigurationBuilder;
-        private const string _menuTemplate = "[MenuItem(\"UniGame/Uni Build/UniBuild_{0}\")]\n";
+        private const string _menuTemplate = "[MenuItem(\"UniGame/Uni Build/{0}_Build\")]\n";
+        private const string _menuAndRunTemplate = "[MenuItem(\"UniGame/Uni Build/{0}_Build_And_Run\")]\n";
+        private const string _buildTemplate = " Build_{0}";
+        private const string _buildAndRunTemplate = " BuildAndRun_{0}";
 
         public ScriptData CreateBuilderScriptBody()
         {
@@ -33,17 +36,21 @@
             var map = new List<string>();
             var commands = AssetEditorTools.GetAssets<UniBuildCommandsMap>();
             foreach (var command in commands) {
-                map.Add(CreateBuildMethod(command));
+                map.Add(CreateBuildMethod(_menuTemplate,_buildTemplate,nameof(UniBuildTool.BuildByConfigurationId),command));
+            }
+            foreach (var command in commands) {
+                map.Add(CreateBuildMethod(_menuAndRunTemplate,_buildAndRunTemplate,nameof(UniBuildTool.BuildAndRunByConfigurationId),command));
             }
             return map.ToArray();
         }
 
-        public string CreateBuildMethod(UniBuildCommandsMap config)
+        public string CreateBuildMethod(string template,string menuTemplate,string buildMethod,UniBuildCommandsMap config)
         {
             var name = config.ItemName.RemoveSpecialAndDotsCharacters();
-            var id = AssetEditorTools.GetGUID(config);
-            var method = $"{string.Format(_menuTemplate,name)} public static void Build_{name}() => UniBuildTool.BuildByConfigurationId(\"{id}\");";
-            return method;
+            var id = config.GetGUID();
+            var menuMethodName = string.Format(menuTemplate,name);
+            var method = $"{string.Format(template,name)} public static void {menuMethodName}() => UniBuildTool.{buildMethod}(\"{id}\");";
+             return method;
         }
     }
     

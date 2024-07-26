@@ -11,6 +11,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     using global::UniGame.Runtime.ObjectPool.Extensions;
     using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using UnityEditor;
     using UnityEngine;
 
 #if ODIN_INSPECTOR
@@ -24,13 +25,22 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
     [CreateAssetMenu(menuName = "UniBuild/UniBuildConfiguration",fileName = "UniGame Builder")]
     public class UniBuildCommandsMap : ScriptableObject, IUniBuildCommandsMap
     {
+        public const string SettingsTabKey = "settings";
+        public const string CommandsTabKey = "commands";
+        
         private static Color _oddColor = new Color(0.2f, 0.4f, 0.3f);
         
+#if  ODIN_INSPECTOR
+        [TabGroup(SettingsTabKey)]
+#endif
         public bool playerBuildEnabled = true;
         
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
         [InlineProperty()]
         [HideLabel()]
+#endif
+#if  ODIN_INSPECTOR
+        [TabGroup(SettingsTabKey)]
 #endif
         [FormerlySerializedAs("_buildData")]
         [SerializeField]
@@ -41,7 +51,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 #endif
 #if ODIN_INSPECTOR
         [Searchable]
-        [BoxGroup(nameof(PreBuildCommands),false)]
+        [TabGroup(CommandsTabKey)]
         [ListDrawerSettings(AddCopiesLastElement = false,ElementColor = nameof(GetElementColor))]
 #endif
         [Space]
@@ -52,9 +62,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 #endif
 #if ODIN_INSPECTOR
         [Searchable]
-        [BoxGroup(nameof(PreBuildCommands),false)]
-        [ListDrawerSettings(AddCopiesLastElement = false,
-            ElementColor = nameof(GetElementColor))]
+        [TabGroup(CommandsTabKey)]
+        [ListDrawerSettings(AddCopiesLastElement = false, ElementColor = nameof(GetElementColor))]
 #endif
         [Space]
         public List<BuildCommandStep> postBuildCommands = new List<BuildCommandStep>();
@@ -140,21 +149,21 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
             return ValidatePlatform(config);
         }
 
+#if ODIN_INSPECTOR
+        [TabGroup(CommandsTabKey)]
+#endif
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
-        [GUIColor(0.2f, 0.6f, 0.1f)]
+        [GUIColor(0.5f, 0.4f, 0.1f)]
         [Button(nameof(ExecutePreBuildCommands))]
 #endif
-#if ODIN_INSPECTOR
-        [BoxGroup(nameof(PreBuildCommands))]
-#endif
         public void ExecutePreBuildCommands() => PreBuildCommands.ExecuteCommands(buildData);
-        
-#if  ODIN_INSPECTOR || TRI_INSPECTOR
-        [GUIColor(0.2f, 0.6f, 0.1f)]
-        [Button(nameof(ExecutePostBuildCommands))]
-#endif
+      
 #if ODIN_INSPECTOR
-        [BoxGroup(nameof(PostBuildCommands))]
+        [TabGroup(CommandsTabKey)]
+#endif
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [GUIColor(0.5f, 0.4f, 0.1f)]
+        [Button(nameof(ExecutePostBuildCommands))]
 #endif
         public void ExecutePostBuildCommands() => PostBuildCommands.ExecuteCommands(buildData);
         
@@ -165,11 +174,31 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
         [Button(ButtonSizes.Large)]
 #endif
 #if ODIN_INSPECTOR
-        [Button("Execute",ButtonSizes.Large)]
+        [PropertyOrder(-1)]
+        [Button("Build",ButtonSizes.Large)]
+        [TabGroup(CommandsTabKey)]
 #endif
         public void ExecuteBuild()
         {
             UniBuildTool.ExecuteBuild(this);
+        }
+        
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [GUIColor(0.2f, 0.8f, 0.1f)]
+#endif
+#if TRI_INSPECTOR
+        [Button(ButtonSizes.Large)]
+#endif
+#if ODIN_INSPECTOR
+        [PropertyOrder(-1)]
+        [Button("Build And Run",ButtonSizes.Large)]
+        [TabGroup(CommandsTabKey)]
+#endif
+        public void ExecuteAndRunBuild()
+        {
+            var commandsMap = Instantiate(this);
+            commandsMap.buildData.buildOptions |= BuildOptions.AutoRunPlayer;
+            UniBuildTool.ExecuteBuild(commandsMap);
         }
 
         private IEnumerable<IUnityBuildCommand> FilterActiveCommands(IEnumerable<BuildCommandStep> commands)
