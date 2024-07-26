@@ -3,6 +3,7 @@
     using System;
     using UniModules.UniGame.UniBuild;
     using UnityEditor;
+    using UnityEditor.Build;
     using UnityEngine;
     using UnityEngine.Serialization;
 
@@ -59,6 +60,8 @@
         public StandaloneBuildSubtarget standaloneBuildSubTarget = StandaloneBuildSubtarget.Player;
         
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
+        public Il2CppCodeGeneration il2CppCodeGeneration = Il2CppCodeGeneration.OptimizeSpeed;
+        public Il2CppCompilerConfiguration cppCompilerConfiguration = Il2CppCompilerConfiguration.Release;
         
 #if ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf(nameof(IsWebGL))]

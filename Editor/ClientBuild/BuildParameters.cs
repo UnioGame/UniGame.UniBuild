@@ -2,18 +2,14 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 {
     using System;
     using System.Collections.Generic;
-    using BuildConfiguration;
     using global::UniGame.UniBuild.Editor.ClientBuild;
     using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using Interfaces;
     using UniCore.Runtime.Extension;
-    using UniCore.Runtime.Utils;
     using UniModules.Editor;
     using UnityEditor;
     using UnityEditor.Build;
-    using UnityEngine.Serialization;
-    
+
 #if UNITY_WEBGL
     using UnityEditor.WebGL;
 #endif
@@ -111,6 +107,9 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                 : NamedBuildTarget.Server;
 
             PlayerSettings.SetScriptingBackend(namedTarget, scriptingImplementation);
+            PlayerSettings.SetIl2CppCodeGeneration(namedTarget,buildData.il2CppCodeGeneration);
+            PlayerSettings.SetIl2CppCompilerConfiguration(namedTarget,buildData.cppCompilerConfiguration);
+            
             PlayerSettings.bundleVersion = bundleVersion;
             PlayerSettings.applicationIdentifier = bundleId;
             
@@ -204,11 +203,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             PlayerSettings.WebGL.compressionFormat = webGlBuildData.CompressionFormat;
             PlayerSettings.WebGL.memorySize = webGlBuildData.MaxMemorySize;
             PlayerSettings.WebGL.dataCaching = webGlBuildData.DataCaching;
+            PlayerSettings.WebGL.debugSymbolMode = webGlBuildData.DebugSymbolMode;
+            PlayerSettings.WebGL.exceptionSupport = webGlBuildData.ExceptionSupport;
             PlayerSettings.defaultWebScreenWidth = webGlBuildData.Resolution.x;
             PlayerSettings.defaultWebScreenHeight = webGlBuildData.Resolution.y;
             
 #if UNITY_WEBGL
-            UserBuildSettings.codeOptimization = webGlBuildData.CodeOptimization;
+            UnityEditor.WebGL.UserBuildSettings.codeOptimization = buildData.CodeOptimization;
 #endif
         }
 

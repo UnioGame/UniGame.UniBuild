@@ -35,12 +35,14 @@
         
         public void UpdateWebGLData(WebGlBuildData data)
         {
-            PlayerSettings.WebGL.showDiagnostics = data.ShowDiagnostics;
-            PlayerSettings.WebGL.compressionFormat = data.CompressionFormat;
-            PlayerSettings.WebGL.memorySize = data.MaxMemorySize;
-            PlayerSettings.WebGL.dataCaching = data.DataCaching;
-            PlayerSettings.defaultWebScreenWidth = data.Resolution.x;
-            PlayerSettings.defaultWebScreenHeight = data.Resolution.y;
+            PlayerSettings.WebGL.showDiagnostics = webGlBuildData.ShowDiagnostics;
+            PlayerSettings.WebGL.compressionFormat = webGlBuildData.CompressionFormat;
+            PlayerSettings.WebGL.memorySize = webGlBuildData.MaxMemorySize;
+            PlayerSettings.WebGL.dataCaching = webGlBuildData.DataCaching;
+            PlayerSettings.WebGL.debugSymbolMode = webGlBuildData.DebugSymbolMode;
+            PlayerSettings.WebGL.exceptionSupport = webGlBuildData.ExceptionSupport;
+            PlayerSettings.defaultWebScreenWidth = webGlBuildData.Resolution.x;
+            PlayerSettings.defaultWebScreenHeight = webGlBuildData.Resolution.y;
             
 #if UNITY_WEBGL
             UnityEditor.WebGL.UserBuildSettings.codeOptimization = data.CodeOptimization;

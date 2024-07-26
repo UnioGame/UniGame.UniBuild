@@ -15,6 +15,8 @@
         public Vector2Int Resolution = new(1080,1920);
         public int MaxMemorySize = 1024;
         public bool DataCaching = true;
+        public WebGLExceptionSupport ExceptionSupport = WebGLExceptionSupport.None;
+        public WebGLDebugSymbolMode DebugSymbolMode = WebGLDebugSymbolMode.Off;
         public WebGLCompressionFormat CompressionFormat = WebGLCompressionFormat.Brotli;
         
 #if UNITY_WEBGL
