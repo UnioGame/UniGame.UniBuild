@@ -46,13 +46,33 @@
                         activeVersion = iosBuildNumber;
                     break;
                 default:
-                    if(int.TryParse(PlayerSettings.bundleVersion, out var standaloneBuildNumber))
-                        activeVersion = standaloneBuildNumber;
+                    var versionPoints = GetVersionsFromString(PlayerSettings.bundleVersion);
+                    activeVersion = versionPoints[^1];
                     break;
             }
 
             return activeVersion;
 
+        }
+
+        public int[] GetVersionsFromString(string version)
+        {
+            if (string.IsNullOrEmpty(version))
+                return new[] { 0, 0, 0, 0 };
+            
+            var versionPoints = version.Split('.');
+            var versions = new int[4];
+            for (var i = 0; i < versionPoints.Length; i++)
+            {
+                var versionPoint = versionPoints[i];
+                if (int.TryParse(versionPoint, out var versionValue))
+                    versions[i] = versionValue;
+            }
+
+            if (int.TryParse(version, out var singleVersion))
+                versions[0] = singleVersion;
+            
+            return versions;
         }
 
         public int GetVersionLength(BuildTarget buildTarget) {
