@@ -205,6 +205,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             PlayerSettings.WebGL.dataCaching = webGlBuildData.DataCaching;
             PlayerSettings.WebGL.debugSymbolMode = webGlBuildData.DebugSymbolMode;
             PlayerSettings.WebGL.exceptionSupport = webGlBuildData.ExceptionSupport;
+            PlayerSettings.WebGL.linkerTarget = webGlBuildData.LinkerTarget;
+            
             PlayerSettings.defaultWebScreenWidth = webGlBuildData.Resolution.x;
             PlayerSettings.defaultWebScreenHeight = webGlBuildData.Resolution.y;
             

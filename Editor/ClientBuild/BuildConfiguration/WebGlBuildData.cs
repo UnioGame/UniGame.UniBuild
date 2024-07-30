@@ -18,6 +18,7 @@
         public WebGLExceptionSupport ExceptionSupport = WebGLExceptionSupport.None;
         public WebGLDebugSymbolMode DebugSymbolMode = WebGLDebugSymbolMode.Off;
         public WebGLCompressionFormat CompressionFormat = WebGLCompressionFormat.Brotli;
+        public WebGLLinkerTarget LinkerTarget = WebGLLinkerTarget.Wasm;
         
 #if UNITY_WEBGL
         public WasmCodeOptimization CodeOptimization = WasmCodeOptimization.BuildTimes;

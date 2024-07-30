@@ -43,6 +43,7 @@
             PlayerSettings.WebGL.exceptionSupport = webGlBuildData.ExceptionSupport;
             PlayerSettings.defaultWebScreenWidth = webGlBuildData.Resolution.x;
             PlayerSettings.defaultWebScreenHeight = webGlBuildData.Resolution.y;
+            PlayerSettings.WebGL.linkerTarget = webGlBuildData.LinkerTarget;
             
 #if UNITY_WEBGL
             UnityEditor.WebGL.UserBuildSettings.codeOptimization = data.CodeOptimization;
