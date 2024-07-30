@@ -26,6 +26,10 @@
         public BuildReport Build(IUniBuilderConfiguration configuration,IUniBuildCommandsMap commandsMap)
         {
             BuildLogger.Initialize();
+
+            //apply build settings
+            var buildParameters = configuration.BuildParameters;
+            buildParameters.Execute();
             
             var id = BuildLogger.LogWithTimeTrack($"Build Start At {DateTime.Now.ToLongDateString()}");
 

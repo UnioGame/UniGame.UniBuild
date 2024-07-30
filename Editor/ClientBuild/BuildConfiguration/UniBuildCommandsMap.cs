@@ -200,6 +200,18 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
             commandsMap.buildData.buildOptions |= BuildOptions.AutoRunPlayer;
             UniBuildTool.ExecuteBuild(commandsMap);
         }
+        
+#if ODIN_INSPECTOR
+        [GUIColor(0.2f, 0.8f, 0.1f)]
+        [PropertyOrder(-1)]
+        [Button(size:ButtonSizes.Large,Name = "Apply Settings", Icon = SdfIconType.Activity)]
+        [TabGroup(SettingsTabKey)]
+#endif
+        public void ApplySettings()
+        {
+            var parameters = new BuildParameters(buildData, new ArgumentsProvider(Array.Empty<string>()));
+            parameters.Execute();
+        }
 
         private IEnumerable<IUnityBuildCommand> FilterActiveCommands(IEnumerable<BuildCommandStep> commands)
         {

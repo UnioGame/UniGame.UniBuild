@@ -31,6 +31,7 @@
             };
             
             buildParameters = new BuildParameters(buildData, argumentsProvider);
+            buildParameters.Execute();
 
             Debug.Log(argumentsProvider);
         }

@@ -46,53 +46,61 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         
         //webgl
         public WebGlBuildData webGlBuildData = new WebGlBuildData();
-        
         public BuildEnvironmentType environmentType = BuildEnvironmentType.Custom;
 
+        private UniBuildConfigurationData _buildData;
+        private IArgumentsProvider _arguments;
+        
         public BuildParameters(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
         {
-            var buildArguments = buildData.buildArguments;
+            _buildData = buildData;
+            _arguments = arguments;
+        }
+
+        public void Execute()
+        {
+            var buildArguments = _buildData.buildArguments;
             if (buildArguments.isEnable)
             {
-                var args = buildData.buildArguments.arguments;
+                var args = _buildData.buildArguments.arguments;
                 foreach (var argument in args)
                 {
-                    if(arguments.Contains(argument.Key)) continue;
-                    arguments.SetArgument(argument.Key,argument.Value.Value);
+                    if(_arguments.Contains(argument.Key)) continue;
+                    _arguments.SetArgument(argument.Key,argument.Value.Value);
                 }
             }
 
             productName = PlayerSettings.productName;
-            SetProductName(productName,buildData,arguments);
+            SetProductName(productName,_buildData,_arguments);
             
             outputFile = PlayerSettings.productName;
-            if(buildData.overrideArtifactName && !string.IsNullOrEmpty(buildData.artifactName))
-                outputFile = buildData.artifactName;
+            if(_buildData.overrideArtifactName && !string.IsNullOrEmpty(_buildData.artifactName))
+                outputFile = _buildData.artifactName;
             
             outputFile = outputFile.Replace(" ", "_");
 
             bundleId = PlayerSettings.applicationIdentifier;
-            if(buildData.overrideBundleName && !string.IsNullOrEmpty(buildData.bundleName))
-                bundleId = buildData.bundleName;
+            if(_buildData.overrideBundleName && !string.IsNullOrEmpty(_buildData.bundleName))
+                bundleId = _buildData.bundleName;
             
             companyName = PlayerSettings.companyName;
-            if(buildData.overrideCompanyName && !string.IsNullOrEmpty(buildData.companyName))
-                companyName = buildData.companyName;
+            if(_buildData.overrideCompanyName && !string.IsNullOrEmpty(_buildData.companyName))
+                companyName = _buildData.companyName;
             
-            buildTarget      = buildData.buildTarget;
-            buildTargetGroup = buildData.buildTargetGroup;
-            standaloneBuildSubtarget = buildData.standaloneBuildSubTarget;
-            scriptingImplementation = buildData.scriptingImplementation;
+            buildTarget      = _buildData.buildTarget;
+            buildTargetGroup = _buildData.buildTargetGroup;
+            standaloneBuildSubtarget = _buildData.standaloneBuildSubTarget;
+            scriptingImplementation = _buildData.scriptingImplementation;
             
-            UpdateBuildOptions(buildData,arguments);
-            UpdateArguments(arguments);
+            UpdateBuildOptions(_buildData,_arguments);
+            UpdateArguments(_arguments);
 
             if (buildArguments.isEnable)
             {
-                foreach (var argument in buildData.buildArguments.arguments)
+                foreach (var argument in _buildData.buildArguments.arguments)
                 {
                     if (argument.Value.Override)
-                        arguments.SetArgument(argument.Key, argument.Value.Value);
+                        _arguments.SetArgument(argument.Key, argument.Value.Value);
                 }
             }
             
@@ -107,14 +115,13 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
                 : NamedBuildTarget.Server;
 
             PlayerSettings.SetScriptingBackend(namedTarget, scriptingImplementation);
-            PlayerSettings.SetIl2CppCodeGeneration(namedTarget,buildData.il2CppCodeGeneration);
-            PlayerSettings.SetIl2CppCompilerConfiguration(namedTarget,buildData.cppCompilerConfiguration);
-            
+            PlayerSettings.SetIl2CppCodeGeneration(namedTarget,_buildData.il2CppCodeGeneration);
+            PlayerSettings.SetIl2CppCompilerConfiguration(namedTarget,_buildData.cppCompilerConfiguration);
             PlayerSettings.bundleVersion = bundleVersion;
             PlayerSettings.applicationIdentifier = bundleId;
             
-            UpdateWebGLData(buildData.webGlBuildData);
-            UpdateWebGLData(arguments);
+            UpdateWebGLData(_buildData.webGlBuildData);
+            UpdateWebGLData(_arguments);
             
             EditorUserBuildSettings.development = buildOptions.IsFlagSet(BuildOptions.Development);
             EditorUserBuildSettings.connectProfiler = buildOptions.IsFlagSet(BuildOptions.ConnectWithProfiler);
@@ -126,7 +133,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             var resultArtifactPath = folder.CombinePath(file);
             artifactPath = resultArtifactPath;
         }
-
+        
         public void UpdateBuildOptions(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
         {
             SetBuildOptions(buildData.buildOptions, true);
