@@ -67,7 +67,7 @@
         [ShowIf(nameof(IsWebGL))]
         [InlineProperty]
         [HideLabel]
-        [BoxGroup("WebGL")]
+        [FoldoutGroup("WebGL")]
 #endif
         public WebGlBuildData webGlBuildData = new();
         
@@ -104,6 +104,41 @@
         
         [BoxGroup(nameof(buildOptions))]
         public BuildOptions buildOptions = BuildOptions.None;
+
+#if ODIN_INSPECTOR
+        [FoldoutGroup("Logging")]
+#endif
+        public bool overrideLogsSettings = false;
+        
+#if ODIN_INSPECTOR
+        [FoldoutGroup("Logging")]
+        [ShowIf(nameof(overrideLogsSettings))]
+#endif
+        public StackTraceLogType logsLevel = StackTraceLogType.None;
+        
+#if ODIN_INSPECTOR
+        [FoldoutGroup("Logging")]
+        [ShowIf(nameof(overrideLogsSettings))]
+#endif
+        public StackTraceLogType warningLevel = StackTraceLogType.None;
+        
+#if ODIN_INSPECTOR
+        [FoldoutGroup("Logging")]
+        [ShowIf(nameof(overrideLogsSettings))]
+#endif
+        public StackTraceLogType errorLevel = StackTraceLogType.ScriptOnly;
+        
+#if ODIN_INSPECTOR
+        [FoldoutGroup("Logging")]
+        [ShowIf(nameof(overrideLogsSettings))]
+#endif
+        public StackTraceLogType exceptionLevel = StackTraceLogType.ScriptOnly;
+        
+#if ODIN_INSPECTOR
+        [FoldoutGroup("Logging")]
+        [ShowIf(nameof(overrideLogsSettings))]
+#endif
+        public StackTraceLogType assertLevel = StackTraceLogType.ScriptOnly;
         
         [Tooltip("Build Arguments")]
 #if ODIN_INSPECTOR

@@ -9,6 +9,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
     using UniModules.Editor;
     using UnityEditor;
     using UnityEditor.Build;
+    using UnityEngine;
 
 #if UNITY_WEBGL
     using UnityEditor.WebGL;
@@ -93,6 +94,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             scriptingImplementation = _buildData.scriptingImplementation;
             
             UpdateBuildOptions(_buildData,_arguments);
+            UpdateLoggingSettings(_buildData,_arguments);
             UpdateArguments(_arguments);
 
             if (buildArguments.isEnable)
@@ -132,6 +134,16 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             var folder = outputFolder;
             var resultArtifactPath = folder.CombinePath(file);
             artifactPath = resultArtifactPath;
+        }
+
+        public void UpdateLoggingSettings(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
+        {
+            if (!buildData.overrideLogsSettings) return;
+            Application.SetStackTraceLogType(LogType.Log, buildData.logsLevel);
+            Application.SetStackTraceLogType(LogType.Warning, buildData.warningLevel);
+            Application.SetStackTraceLogType(LogType.Error, buildData.errorLevel);
+            Application.SetStackTraceLogType(LogType.Exception, buildData.exceptionLevel);
+            Application.SetStackTraceLogType(LogType.Assert, buildData.assertLevel);
         }
         
         public void UpdateBuildOptions(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
