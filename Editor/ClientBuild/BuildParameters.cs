@@ -96,7 +96,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             UpdateBuildOptions(_buildData,_arguments);
             UpdateLoggingSettings(_buildData,_arguments);
             UpdateArguments(_arguments);
-
+            
             if (buildArguments.isEnable)
             {
                 foreach (var argument in _buildData.buildArguments.arguments)
@@ -121,6 +121,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             PlayerSettings.SetIl2CppCompilerConfiguration(namedTarget,_buildData.cppCompilerConfiguration);
             PlayerSettings.bundleVersion = bundleVersion;
             PlayerSettings.applicationIdentifier = bundleId;
+            PlayerSettings.SetManagedStrippingLevel(namedTarget,_buildData.strippingLevel);
             
             UpdateWebGLData(_buildData.webGlBuildData);
             UpdateWebGLData(_arguments);

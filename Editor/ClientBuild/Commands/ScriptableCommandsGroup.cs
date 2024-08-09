@@ -62,12 +62,13 @@ namespace UniModules.UniGame.UniBuild
         {
             foreach (var buildCommand in commands.Commands)
             {
+                if(!buildCommand.IsActive) continue;
+                
                 var id = buildCommand.Name;
                 
                 var message = $"\tExecute COMMAND {id}";
                 
                 var logId = BuildLogger.LogWithTimeTrack(message);
-
                 buildCommand.Execute(configuration);
                 
                 BuildLogger.Log($"\tExecute COMMAND {buildCommand.Name} FINISHED",logId);

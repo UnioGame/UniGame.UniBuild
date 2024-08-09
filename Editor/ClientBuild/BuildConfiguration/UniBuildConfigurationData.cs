@@ -105,6 +105,9 @@
         [BoxGroup(nameof(buildOptions))]
         public BuildOptions buildOptions = BuildOptions.None;
 
+        [BoxGroup(nameof(buildOptions))]
+        public ManagedStrippingLevel strippingLevel = ManagedStrippingLevel.Minimal;
+        
 #if ODIN_INSPECTOR
         [FoldoutGroup("Logging")]
 #endif
