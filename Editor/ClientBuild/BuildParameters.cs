@@ -20,6 +20,8 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
         public const string BuildFolder = "Build";
         
+        public bool printBuildReport = true;
+        
         public BuildTarget buildTarget;
         public BuildTargetGroup buildTargetGroup;
         public StandaloneBuildSubtarget standaloneBuildSubtarget;
@@ -27,7 +29,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
 
         public int                            buildNumber  = 0;
         public string                         productName = string.Empty;
-        public string                         outputFolder = "Build";
+        public string                         outputFolder = "Builds";
         public string                         outputFile   = "artifact";
         public string                         artifactPath;
         public BuildOptions                   buildOptions = BuildOptions.None;
@@ -88,6 +90,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             if(_buildData.overrideCompanyName && !string.IsNullOrEmpty(_buildData.companyName))
                 companyName = _buildData.companyName;
             
+            printBuildReport=  _buildData.printBuildReport;
             buildTarget      = _buildData.buildTarget;
             buildTargetGroup = _buildData.buildTargetGroup;
             standaloneBuildSubtarget = _buildData.standaloneBuildSubTarget;

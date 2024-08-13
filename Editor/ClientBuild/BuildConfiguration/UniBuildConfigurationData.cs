@@ -18,6 +18,9 @@
     [Serializable]
     public class UniBuildConfigurationData
     {
+        [Tooltip("if true build report will be printed")]
+        public bool printBuildReport = true;
+
         [Tooltip("use application name as artifact name")]
         public bool overrideArtifactName = true;
 
@@ -58,11 +61,11 @@
         [ShowIf(nameof(IsShownStandaloneSubTarget))]
 #endif
         public StandaloneBuildSubtarget standaloneBuildSubTarget = StandaloneBuildSubtarget.Player;
-        
+
         public ScriptingImplementation scriptingImplementation = ScriptingImplementation.Mono2x;
         public Il2CppCodeGeneration il2CppCodeGeneration = Il2CppCodeGeneration.OptimizeSpeed;
         public Il2CppCompilerConfiguration cppCompilerConfiguration = Il2CppCompilerConfiguration.Release;
-        
+
 #if ODIN_INSPECTOR || TRI_INSPECTOR
         [ShowIf(nameof(IsWebGL))]
         [InlineProperty]
@@ -70,7 +73,7 @@
         [FoldoutGroup("WebGL")]
 #endif
         public WebGlBuildData webGlBuildData = new();
-        
+
         public bool IsWebGL => buildTarget == BuildTarget.WebGL;
 
 #if ODIN_INSPECTOR || TRI_INSPECTOR
@@ -98,51 +101,51 @@
 #endif
         [Tooltip("allow script debugging")]
         public bool scriptDebugging;
-        
+
         [BoxGroup(nameof(buildOptions))]
         public bool runOnBuildFinish;
-        
+
         [BoxGroup(nameof(buildOptions))]
         public BuildOptions buildOptions = BuildOptions.None;
 
         [BoxGroup(nameof(buildOptions))]
         public ManagedStrippingLevel strippingLevel = ManagedStrippingLevel.Minimal;
-        
+
 #if ODIN_INSPECTOR
         [FoldoutGroup("Logging")]
 #endif
         public bool overrideLogsSettings = false;
-        
+
 #if ODIN_INSPECTOR
         [FoldoutGroup("Logging")]
         [ShowIf(nameof(overrideLogsSettings))]
 #endif
         public StackTraceLogType logsLevel = StackTraceLogType.None;
-        
+
 #if ODIN_INSPECTOR
         [FoldoutGroup("Logging")]
         [ShowIf(nameof(overrideLogsSettings))]
 #endif
         public StackTraceLogType warningLevel = StackTraceLogType.None;
-        
+
 #if ODIN_INSPECTOR
         [FoldoutGroup("Logging")]
         [ShowIf(nameof(overrideLogsSettings))]
 #endif
         public StackTraceLogType errorLevel = StackTraceLogType.ScriptOnly;
-        
+
 #if ODIN_INSPECTOR
         [FoldoutGroup("Logging")]
         [ShowIf(nameof(overrideLogsSettings))]
 #endif
         public StackTraceLogType exceptionLevel = StackTraceLogType.ScriptOnly;
-        
+
 #if ODIN_INSPECTOR
         [FoldoutGroup("Logging")]
         [ShowIf(nameof(overrideLogsSettings))]
 #endif
         public StackTraceLogType assertLevel = StackTraceLogType.ScriptOnly;
-        
+
         [Tooltip("Build Arguments")]
 #if ODIN_INSPECTOR
         [BoxGroup("Build Arguments")]

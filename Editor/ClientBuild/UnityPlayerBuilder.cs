@@ -46,10 +46,24 @@
             ExecuteCommands(commandsMap.PostBuildCommands,configuration);
 
             BuildLogger.Log($"Build Finish At At {DateTime.Now.ToLongDateString()}",id,false);
+
+            var buildReportData = new BuildReportData()
+            {
+                report = report,
+                writeLog = true,
+                writeToFile = true
+            };
             
+            PrintBuilderReport(buildReportData);
             PrintBuildLog();
             
             return report;
+        }
+        
+        public void PrintBuilderReport(BuildReportData reportData)
+        {
+            var reportBuilder = new UniBuildReportBuilder();
+            reportBuilder.ApplyReport(reportData);
         }
 
         public void ExecuteCommands(IEnumerable<IUnityBuildCommand> commands, IUniBuilderConfiguration configuration)
