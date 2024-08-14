@@ -143,11 +143,11 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
         public void UpdateLoggingSettings(UniBuildConfigurationData buildData, IArgumentsProvider arguments)
         {
             if (!buildData.overrideLogsSettings) return;
-            Application.SetStackTraceLogType(LogType.Log, buildData.logsLevel);
-            Application.SetStackTraceLogType(LogType.Warning, buildData.warningLevel);
-            Application.SetStackTraceLogType(LogType.Error, buildData.errorLevel);
-            Application.SetStackTraceLogType(LogType.Exception, buildData.exceptionLevel);
-            Application.SetStackTraceLogType(LogType.Assert, buildData.assertLevel);
+            PlayerSettings.SetStackTraceLogType(LogType.Log, buildData.logsLevel);
+            PlayerSettings.SetStackTraceLogType(LogType.Warning, buildData.warningLevel);
+            PlayerSettings.SetStackTraceLogType(LogType.Error, buildData.errorLevel);
+            PlayerSettings.SetStackTraceLogType(LogType.Exception, buildData.exceptionLevel);
+            PlayerSettings.SetStackTraceLogType(LogType.Assert, buildData.assertLevel);
         }
         
         public void UpdateBuildOptions(UniBuildConfigurationData buildData, IArgumentsProvider arguments)

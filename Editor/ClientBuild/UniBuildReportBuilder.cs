@@ -86,6 +86,8 @@
             stringBuilder.AppendLine($"===== Packed Assets Info=====");
             
             var packedData = reportData.report.packedAssets;
+            if(packedData == null) return;
+            
             var index = 0;
             foreach (var packedItem in packedData)
             {
@@ -118,6 +120,8 @@
             stringBuilder.AppendLine($"===== Build Steps Info =====");
             
             var steps = reportData.report.steps;
+            if(steps == null) return;
+            
             var index = 0;
             
             foreach (var buildStep in steps)
@@ -136,6 +140,8 @@
             stringBuilder.AppendLine($"===== Stripping Info=====");
             
             var stripingInfo = reportData.report.strippingInfo;
+            if(stripingInfo == null) return;
+            
             var included = stripingInfo.includedModules;
             var index = 0;
             
