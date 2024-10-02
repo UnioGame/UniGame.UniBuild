@@ -25,16 +25,22 @@
         [BoxGroup(nameof(artifactName))]
 #endif
         public bool useVersionAsArtifactName = false;
+
+#if  ODIN_INSPECTOR || TRI_INSPECTOR
+        [BoxGroup(nameof(artifactName))]
+        [ShowIf(nameof(ShowUseProductName))]
+#endif
+        public bool useProductNameAsArtifactName = false;
         
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
         [BoxGroup(nameof(artifactName))]
-        [HideIf(nameof(useVersionAsArtifactName))]
+        [ShowIf(nameof(ShowOverrideArtifactName))]
 #endif
         public bool overrideArtifactName = false;
 
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
         [BoxGroup(nameof(artifactName))]
-        [ShowIf(nameof(OverrideArtifactName))]
+        [ShowIf(nameof(ShowOverrideArtifactName))]
 #endif
         public string artifactName = string.Empty;
         
@@ -52,8 +58,11 @@
         [Header("Optional: Extension: use '.' before file extension")]
         public string artifactExtension = "";
         
-        public bool OverrideArtifactName => !useVersionAsArtifactName && 
+        public bool ShowOverrideArtifactName => !useVersionAsArtifactName && 
                                             overrideArtifactName;
+        
+        public bool ShowUseProductName => !useVersionAsArtifactName && 
+                                          !overrideArtifactName;
         
         public override void Execute(IUniBuilderConfiguration buildParameters)
         {
@@ -70,14 +79,20 @@
                 : artifactExtension;
             
             var fileName = Path.GetFileNameWithoutExtension(outputFilename);
+            var outputName = fileName;
             
-            var outputName = useVersionAsArtifactName 
-                ? Application.version
-                : productName;
-            
-            outputName = OverrideArtifactName 
-                ? overrideArtifactName ? artifactName :productName  
-                : fileName;
+            if (useVersionAsArtifactName)
+            {
+                outputName = Application.version;
+            }
+            else if (overrideArtifactName)
+            {
+                outputName = artifactName;
+            }
+            else if (useProductNameAsArtifactName)
+            {
+                outputName = productName;
+            }
 
             if (useNameTemplate)
             {
@@ -98,9 +113,14 @@
                 outputName = string.Format(nameFormatTemplate, outputName, PlayerSettings.bundleVersion);
             }
 
-            outputName = outputName.Replace(":", "");
+            outputName = outputName.Replace(":", "_");
+            outputName = outputName.Replace(" ", "_");
             outputName += $"{outputExtension}";
 
+            var message = $"[{nameof(ApplyArtifactNameCommand)}] Artifact name: {outputName}";
+            Debug.Log(message);
+            BuildLogger.Log(message);
+            
             return outputName;
         }
 
