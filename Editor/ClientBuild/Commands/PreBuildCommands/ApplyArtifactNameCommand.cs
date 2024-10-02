@@ -6,6 +6,7 @@
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEditor;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
 #if ODIN_INSPECTOR
     using Sirenix.OdinInspector;
@@ -16,28 +17,28 @@
 #endif
     
     [Serializable]
-    public class ApplyArtifactNameWithVersionCommand : UnitySerializablePreBuildCommand
+    public class ApplyArtifactNameCommand : UnitySerializablePreBuildCommand
     {
         private const string nameFormatTemplate = "{0}-{1}";
 
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
         [BoxGroup(nameof(artifactName))]
 #endif
-        public bool overrideArtifactName = false;
+        public bool useVersionAsArtifactName = false;
         
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
-        [ShowIf(nameof(overrideArtifactName))]
         [BoxGroup(nameof(artifactName))]
+        [HideIf(nameof(useVersionAsArtifactName))]
 #endif
-        public bool useProductName = true;
-        
+        public bool overrideArtifactName = false;
+
 #if  ODIN_INSPECTOR || TRI_INSPECTOR
         [BoxGroup(nameof(artifactName))]
-        [HideIf(nameof(useProductName))]
+        [ShowIf(nameof(OverrideArtifactName))]
 #endif
         public string artifactName = string.Empty;
         
-        public bool includeGitBranch;
+        public bool includeGitBranch = false;
         public bool includeBundleVersion = true;
         public bool useNameTemplate = false;
 
@@ -50,7 +51,10 @@
 #endif
         [Header("Optional: Extension: use '.' before file extension")]
         public string artifactExtension = "";
-
+        
+        public bool OverrideArtifactName => !useVersionAsArtifactName && 
+                                            overrideArtifactName;
+        
         public override void Execute(IUniBuilderConfiguration buildParameters)
         {
             var outputFilename = buildParameters.BuildParameters.outputFile;
@@ -67,8 +71,12 @@
             
             var fileName = Path.GetFileNameWithoutExtension(outputFilename);
             
-            var outputName = overrideArtifactName 
-                ? useProductName ? productName : artifactName 
+            var outputName = useVersionAsArtifactName 
+                ? Application.version
+                : productName;
+            
+            outputName = OverrideArtifactName 
+                ? overrideArtifactName ? artifactName :productName  
                 : fileName;
 
             if (useNameTemplate)
