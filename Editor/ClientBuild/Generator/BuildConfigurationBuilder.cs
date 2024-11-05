@@ -3,7 +3,6 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
 {
     using UniModules.Editor;
     using CodeWriter.Editor.UnityTools;
-    using Core.EditorTools.Editor;
     using UnityEditor;
 
     public class BuildConfigurationBuilder
