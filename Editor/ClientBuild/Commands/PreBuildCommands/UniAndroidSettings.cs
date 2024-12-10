@@ -36,6 +36,10 @@
         public Il2CppCompilerConfiguration CppCompilerConfiguration = Il2CppCompilerConfiguration.Debug;
         
         public MobileTextureSubtarget TextureCompression = MobileTextureSubtarget.ASTC;
+        public TextureCompressionFormat[] TextureCompressionFormats = new TextureCompressionFormat[]
+        {
+            TextureCompressionFormat.ASTC
+        };
         
         public ScriptingImplementation ScriptingBackend = ScriptingImplementation.Mono2x;
         
