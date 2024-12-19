@@ -1,6 +1,7 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
     using System;
+    using Sirenix.OdinInspector;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Serialization;
@@ -35,7 +36,11 @@
         
         public Il2CppCompilerConfiguration CppCompilerConfiguration = Il2CppCompilerConfiguration.Debug;
         
+        public bool overrideTextureCompression = true;
+        
+        [ShowIf(nameof(overrideTextureCompression))]
         public MobileTextureSubtarget TextureCompression = MobileTextureSubtarget.ASTC;
+        [ShowIf(nameof(overrideTextureCompression))]
         public TextureCompressionFormat[] TextureCompressionFormats = new TextureCompressionFormat[]
         {
             TextureCompressionFormat.ASTC

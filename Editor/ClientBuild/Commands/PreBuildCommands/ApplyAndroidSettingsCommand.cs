@@ -34,12 +34,15 @@
             EditorUserBuildSettings.androidCreateSymbols = AndroidSettings.AndroidDebugSymbolsMode;
 #endif
             EditorUserBuildSettings.connectProfiler = AndroidSettings.AutoConnetcProfiler;
-            
-            EditorUserBuildSettings.androidBuildSubtarget = AndroidSettings.TextureCompression;
+
+            if (AndroidSettings.overrideTextureCompression)
+            {
+                EditorUserBuildSettings.androidBuildSubtarget = AndroidSettings.TextureCompression;
             
 #if UNITY_6000_0_OR_NEWER
-            PlayerSettings.Android.textureCompressionFormats = AndroidSettings.TextureCompressionFormats;
+                PlayerSettings.Android.textureCompressionFormats = AndroidSettings.TextureCompressionFormats;
 #endif
+            }
             
             EditorUserBuildSettings.androidBuildType = AndroidSettings.AndroidBuildType;
             EditorUserBuildSettings.buildAppBundle = AndroidSettings.BuildAppBundle;

@@ -158,7 +158,7 @@
     
             BuildLogger.Log($"OUTPUT LOCATION : {outputLocation}");
 
-            var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+            var buildConfig = new BuildPlayerOptions
             {
                 locationPathName = outputLocation,
                 target = buildParameters.buildTarget,
@@ -166,12 +166,13 @@
                 scenes = scenes.Select(x => x.path).ToArray(),
                 options = buildOptions,
                 targetGroup = buildParameters.buildTargetGroup
-            });
-
+            };
+            
+            var report = BuildPipeline.BuildPlayer(buildConfig);
             BuildLogger.Log(report.ReportMessage());
-
             return report;
 
+            return default;
         }
 
         private void PrintBuildLog()
