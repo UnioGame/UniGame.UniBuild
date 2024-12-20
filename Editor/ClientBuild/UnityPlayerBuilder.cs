@@ -10,6 +10,7 @@
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
+    using UnityEditor.Build.Profile;
     using UnityEditor.Build.Reporting;
 
     public class UnityPlayerBuilder : IUnityPlayerBuilder
@@ -162,10 +163,12 @@
             {
                 locationPathName = outputLocation,
                 target = buildParameters.buildTarget,
+                #if UNITY_STANDALONE || UNITY_SERVER
                 subtarget = (int)buildParameters.standaloneBuildSubtarget,
+                #endif
                 scenes = scenes.Select(x => x.path).ToArray(),
                 options = buildOptions,
-                targetGroup = buildParameters.buildTargetGroup
+                targetGroup = buildParameters.buildTargetGroup,
             };
             
             var report = BuildPipeline.BuildPlayer(buildConfig);
