@@ -1,10 +1,14 @@
 ﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
 {
     using System;
+    using global::UniCore.Runtime.Attributes;
     using Sirenix.OdinInspector;
+    using Unity.Android.Types;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Serialization;
+    using AndroidArchitecture = UnityEditor.AndroidArchitecture;
+    using AndroidBuildType = UnityEditor.AndroidBuildType;
 
     [Serializable]
     public class UniAndroidSettings
@@ -56,8 +60,11 @@
         
 #if UNITY_2021_1_OR_NEWER
         public AndroidCreateSymbols AndroidDebugSymbolsMode = AndroidCreateSymbols.Public;
-#else
-        
+#endif
+
+#if UNITY_6000_0_OR_NEWER
+        [EnumFlags]
+        public DebugSymbolFormat DebugSymbolFormat = DebugSymbolFormat.Zip;
 #endif
 
         
