@@ -39,11 +39,9 @@ namespace UniModules.UniGame.UniBuild.Editor.UpdateVersionCommand
         
         public override void Execute(IUniBuilderConfiguration configuration)
         {
-
             var buildParameters = configuration.BuildParameters;
             var branch = appendBranch ? configuration.BuildParameters.branch : null;
             UpdateBuildVersion(buildParameters.buildTarget, buildParameters.buildNumber, branch);
-            if(printBuildVersion) PrintBuildVersion();
         }
 
 #if ODIN_INSPECTOR || TRI_INSPECTOR
@@ -53,13 +51,16 @@ namespace UniModules.UniGame.UniBuild.Editor.UpdateVersionCommand
         {
             var branch = appendBranch ?  GitCommands.GetGitBranch() : string.Empty;
             UpdateBuildVersion(EditorUserBuildSettings.activeBuildTarget, 1, branch);
+            if(printBuildVersion) PrintBuildVersion();
         }
 
         public void PrintBuildVersion()
         {
             try
             {
-                File.WriteAllText(versionLocation,PlayerSettings.bundleVersion);
+                var targetPath = FileUtils.ProjectPath.CombinePath(versionLocation);
+                Debug.Log("version saved to " + targetPath);
+                File.WriteAllText(targetPath,PlayerSettings.bundleVersion);
             }
             catch (Exception e)
             {
