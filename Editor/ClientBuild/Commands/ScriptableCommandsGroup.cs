@@ -1,5 +1,6 @@
 namespace UniModules.UniGame.UniBuild
 {
+    using System.Collections.Generic;
     using Editor.ClientBuild;
     using Editor.ClientBuild.Commands.PreBuildCommands;
     using Editor.ClientBuild.Interfaces;
@@ -44,6 +45,15 @@ namespace UniModules.UniGame.UniBuild
         public void ExecuteGroup()
         {
             commands.Commands.ExecuteCommands();
+        }
+        
+        public IEnumerable<TValue> GetCommands<TValue>() where TValue : IUnityBuildCommand
+        {
+            foreach (var command in commands.Commands)
+            {
+                if (command is TValue value)
+                    yield return value;
+            }
         }
 
         public override void Execute(IUniBuilderConfiguration configuration)
