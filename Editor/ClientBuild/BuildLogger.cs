@@ -61,7 +61,7 @@ namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
             if (resetDuration) _timeLog.Remove(trackId);
             
             var now = DateTime.Now;
-            var nowUnix = now.ToUnixTimestamp();
+            var nowUnix = (int)now.ToUnixTimestamp();
             
             if (!_timeLog.TryGetValue(trackId, out var logTime))
             {
