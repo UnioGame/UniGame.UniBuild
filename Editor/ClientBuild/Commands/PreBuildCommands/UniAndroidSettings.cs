@@ -3,13 +3,16 @@
     using System;
     using global::UniCore.Runtime.Attributes;
     using Sirenix.OdinInspector;
-    using Unity.Android.Types;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Serialization;
     using AndroidArchitecture = UnityEditor.AndroidArchitecture;
     using AndroidBuildType = UnityEditor.AndroidBuildType;
 
+#if UNITY_6000_0_OR_NEWER && UNITY_ANDROID
+    using Unity.Android.Types;
+#endif
+    
     [Serializable]
     public class UniAndroidSettings
     {
@@ -62,11 +65,20 @@
         public AndroidCreateSymbols AndroidDebugSymbolsMode = AndroidCreateSymbols.Public;
 #endif
 
-#if UNITY_6000_0_OR_NEWER
         [EnumFlags]
         public DebugSymbolFormat DebugSymbolFormat = DebugSymbolFormat.Zip;
-#endif
-
         
     }
+    
+    #if !UNITY_ANDROID || !UNITY_6000_0_OR_NEWER
+    /// <summary>
+    /// dummy enum for unity bellow UNITY_6000_0_OR_NEWER
+    /// </summary>
+    public enum DebugSymbolFormat
+    {
+        Zip,//	Includes debug metadata into the zip file.
+        IncludeInBundle,//	Embeds the debug metadata into the app bundle.This option doesn't apply if you're producing an apk or a gradle project.
+        LegacyExtensions,//	Produces debug metadata files with .so extension in the zip package.
+    }
+    #endif
 }

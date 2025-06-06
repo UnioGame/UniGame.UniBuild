@@ -4,9 +4,12 @@
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
     using UnityEditor;
-    using UnityEditor.Android;
     using UnityEditor.Build;
 
+#if UNITY_ANDROID
+    using UnityEditor.Android;
+#endif
+    
 #if ODIN_INSPECTOR
      using Sirenix.OdinInspector;
 #endif
@@ -70,7 +73,7 @@
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, AndroidSettings.ScriptingBackend);
             PlayerSettings.SetIl2CppCompilerConfiguration(NamedBuildTarget.Android,AndroidSettings.CppCompilerConfiguration);
 #endif
-#if UNITY_6000_0_OR_NEWER
+#if UNITY_6000_0_OR_NEWER && UNITY_ANDROID
             UserBuildSettings.DebugSymbols.format = AndroidSettings.DebugSymbolFormat;
 #endif
 
