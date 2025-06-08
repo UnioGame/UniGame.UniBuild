@@ -1,5 +1,5 @@
 ﻿using System;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+using UniGame.UniBuild.Editor;
 
 #if ODIN_INSPECTOR
      using Sirenix.OdinInspector;

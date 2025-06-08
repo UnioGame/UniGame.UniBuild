@@ -1,18 +1,11 @@
 # UniBuild
 
-Command based scriptable build pipeline for Unity 3D
+command based scriptable build pipeline for Unity Engine
 
 - [Getting Started](#getting-started)
 - [Build Pipeline](#build-pipeline)
 - [Build Console Arguments](#build-console-arguments)
 - [Commands](#commands)
-
-
-## Getting Started
-
-![](https://github.com/UnioGame/UniGame.UniBuild/blob/master/GitAssets/unibuild6.png)
-
-![](https://github.com/UnioGame/UniGame.UniBuild/blob/master/GitAssets/unibuild7.png)
 
 ### Unity Package Installation
 
@@ -23,12 +16,16 @@ Add to your project manifiest by path [%UnityProject%]/Packages/manifiest.json t
 ```json
 {
  "dependencies": {
-    "com.unigame.unibuildpipeline": "https://github.com/UnioGame/UniGame.UniBuild.git",
-    "com.unigame.coremodules": "https://github.com/UnioGame/UniGame.CoreModules.git",
-    "com.cysharp.unitask" : "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.unigame.unibuildpipeline": "https://github.com/UnioGame/unigame.buildpipeline"
   }
 }
 ```
+
+## Getting Started
+
+![](https://github.com/UnioGame/UniGame.UniBuild/blob/master/GitAssets/unibuild6.png)
+
+![](https://github.com/UnioGame/UniGame.UniBuild/blob/master/GitAssets/unibuild7.png)
 
 ## Build Pipeline
 
@@ -52,7 +49,6 @@ All exists build pipeline configurations window
 Auto generated content stored in: "Assets\UniGame.Generated\UniBuild\Editor"
 
 ![](https://i.gyazo.com/b6e7796ce761e7d93677a3ec7d084904.png)
-
 
 ### Unity Cloud Build Methods
 
@@ -218,7 +214,7 @@ ArgumentsProvider API
 }
 ```
 
-## Commands
+# Commands
 
 All build commands realize common API:
 

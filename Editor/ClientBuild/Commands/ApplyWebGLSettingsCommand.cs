@@ -3,7 +3,7 @@
     using System;
     using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using global::UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
+    using global::UniGame.UniBuild.Editor.Commands.PreBuildCommands;
     
     using UnityEditor;
 

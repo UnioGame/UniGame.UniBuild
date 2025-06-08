@@ -2,11 +2,11 @@
 using System.Linq;
 using UnityEngine;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
+namespace UniGame.UniBuild.Editor
 {
     using System;
     using Abstract;
-    using BuildConfiguration;
+    using global::UniGame.UniBuild.Editor;
     using global::UniGame.UniBuild.Editor.ClientBuild;
     using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;

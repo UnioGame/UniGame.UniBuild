@@ -1,9 +1,9 @@
 namespace UniModules.UniGame.UniBuild
 {
     using System.Collections.Generic;
-    using Editor.ClientBuild;
-    using Editor.ClientBuild.Commands.PreBuildCommands;
-    using Editor.ClientBuild.Interfaces;
+    using global::UniGame.UniBuild.Editor;
+    using global::UniGame.UniBuild.Editor.Commands.PreBuildCommands;
+    using global::UniGame.UniBuild.Editor.Interfaces;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using UnityEngine;
     

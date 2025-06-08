@@ -1,7 +1,7 @@
 ﻿namespace UniModules.UniGame.UniBuild
 {
     using System;
-    using Core.Runtime.DataStructure;
+    using global::UniGame.DataStructure;
 
     [Serializable]
     public class ArgumentsMap

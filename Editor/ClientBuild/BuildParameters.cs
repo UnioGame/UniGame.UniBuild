@@ -1,11 +1,12 @@
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
+namespace UniGame.UniBuild.Editor
 {
     using System;
     using System.Collections.Generic;
     using global::UniGame.UniBuild.Editor.ClientBuild;
     using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using UniCore.Runtime.Extension;
+    using global::UniGame.Runtime.Extension;
+    using UniModules;
     using UniModules.Editor;
     using UnityEditor;
     using UnityEditor.Build;

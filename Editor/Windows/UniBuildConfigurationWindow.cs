@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+using UniGame.UniBuild.Editor;
 using UnityEditor;
 using UnityEngine;
 

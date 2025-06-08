@@ -1,34 +1,42 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
+﻿namespace UniGame.UniBuild.Editor
 {
     using System.Collections.Generic;
     using System.Linq;
-    using BuildConfiguration;
     using UniModules.Editor;
     using global::UniGame.Core.Runtime.Extension;
-    using global::CodeWriter.Editor.UnityTools;
     using UnityEditor;
 
     public class BuildMenuGenerator
     {
         private readonly BuildConfigurationBuilder buildConfigurationBuilder;
-        private const string _menuTemplate = "[MenuItem(\"UniGame/Uni Build/{0}_Build\")]\n";
-        private const string _menuAndRunTemplate = "[MenuItem(\"UniGame/Uni Build/{0}_Build_And_Run\")]\n";
-        private const string _buildTemplate = " Build_{0}";
-        private const string _buildAndRunTemplate = " BuildAndRun_{0}";
 
-        public ScriptData CreateBuilderScriptBody()
+        public const string ClassTemplate = "namespace UniGame.UniBuild\n{{ \n{0} \npublic static class {1} \n{{ \n{2}\n }} }}";
+        
+        private const string MenuTemplate = "[MenuItem(\"UniGame/Uni Build/{0}_Build\")]\n";
+        private const string MenuAndRunTemplate = "[MenuItem(\"UniGame/Uni Build/{0}_Build_And_Run\")]\n";
+        private const string BuildTemplate = " Build_{0}";
+        private const string BuildAndRunTemplate = " BuildAndRun_{0}";
+        private const string ClassName = "UniPlatformBuilder";
+
+        public string CreateBuilderScriptBody()
         {
-            var scriptData = new ScriptData() {
-                Namespace = "namespace UniGame.UniBuild",
-                Name = "UniPlatformBuilder",
-                Usings = new List<string>() {
-                    typeof(MenuItem).Namespace,
-                    typeof(UniBuildTool).Namespace
-                },
-                Methods = GetBuildMethods().ToList()
+            var methods = GetBuildMethods().ToList();
+            var usings = new List<string>() {
+                typeof(MenuItem).Namespace,
+                typeof(UniBuildTool).Namespace
             };
 
-            return scriptData;
+            var usingDirectives = usings
+                .Select(u => $"using {u};")
+                .Aggregate((current, next) => $"{current}\n{next}");
+            
+            var methodsBody = methods
+                .Select(m => $"{m}\n")
+                .Aggregate((current, next) => $"{current}{next}");
+            
+            var script = string.Format(ClassTemplate,usingDirectives,ClassName,methodsBody);
+            var result = script;
+            return result;
         }
 
         public string[] GetBuildMethods()
@@ -36,10 +44,10 @@
             var map = new List<string>();
             var commands = AssetEditorTools.GetAssets<UniBuildCommandsMap>();
             foreach (var command in commands) {
-                map.Add(CreateBuildMethod(_menuTemplate,_buildTemplate,nameof(UniBuildTool.BuildByConfigurationId),command));
+                map.Add(CreateBuildMethod(MenuTemplate,BuildTemplate,nameof(UniBuildTool.BuildByConfigurationId),command));
             }
             foreach (var command in commands) {
-                map.Add(CreateBuildMethod(_menuAndRunTemplate,_buildAndRunTemplate,nameof(UniBuildTool.BuildAndRunByConfigurationId),command));
+                map.Add(CreateBuildMethod(MenuAndRunTemplate,BuildAndRunTemplate,nameof(UniBuildTool.BuildAndRunByConfigurationId),command));
             }
             return map.ToArray();
         }
@@ -53,7 +61,6 @@
              return method;
         }
     }
-    
 }
 
 

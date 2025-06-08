@@ -1,9 +1,9 @@
 ﻿namespace UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
 {
     using UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Parsers;
+    using Editor;
+    using Editor.Extensions;
+    using Editor.Parsers;
     using UnityEditor;
     using UnityEditor.Build.Reporting;
     using UnityEngine;

@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator;
+using UniGame.UniBuild.Editor;
 
 namespace UniModules.UniGame.UniBuild.Tests.Editor
 {

@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration
+﻿namespace UniGame.UniBuild.Editor
 {
     using System;
     using Commands.PreBuildCommands;

@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UniModules.Editor;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
+using UniGame.UniBuild.Editor;
 using UnityEngine;
 
 #if ODIN_INSPECTOR

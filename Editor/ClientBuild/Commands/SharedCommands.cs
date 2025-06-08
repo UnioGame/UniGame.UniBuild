@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+using UniGame.UniBuild.Editor;
+using UniGame.UniBuild.Editor.Commands.PreBuildCommands;
+using UniGame.UniBuild.Editor.Interfaces;
 using UnityEngine;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands
+namespace UniGame.UniBuild.Editor.Commands
 {
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using PreBuildCommands;
 
     [Serializable]
     public class SharedCommands : UnityBuildCommand

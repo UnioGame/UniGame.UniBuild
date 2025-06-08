@@ -1,12 +1,11 @@
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
+namespace UniGame.UniBuild.Editor.Commands.PreBuildCommands
 {
-    using UniModules.Editor;
     using System.IO;
     using global::UniGame.Core.Runtime.Extension;
     using UnityEditor;
     using System;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using Interfaces;
+    using UniModules;
 
     [Serializable]
     public class ApplyLocationByArtifactCommand : SerializableBuildCommand

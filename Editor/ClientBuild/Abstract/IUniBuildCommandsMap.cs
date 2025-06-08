@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Abstract
+namespace UniGame.UniBuild.Editor.Abstract
 {
     using global::UniGame.Core.Runtime;
     using global::UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;

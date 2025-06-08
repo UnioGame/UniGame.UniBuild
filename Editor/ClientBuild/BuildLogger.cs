@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UniModules.Editor;
-using UniModules.UniCore.Runtime.DateTime;
+using UniGame.Runtime.DateTime;
 using UnityEngine;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
+namespace UniGame.UniBuild.Editor
 {
+    using UniModules;
+
     public static class BuildLogger
     {
         private const string MessageFormat = "=== UNIBUILD [{0}] : {1} {2}\n";

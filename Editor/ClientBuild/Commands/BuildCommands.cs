@@ -3,9 +3,9 @@ namespace UniModules.UniGame.UniBuild
 {
     using System;
     using System.Collections.Generic;
-    using Editor.ClientBuild.Abstract;
-    using Editor.ClientBuild.BuildConfiguration;
-    using Editor.ClientBuild.Interfaces;
+    using global::UniGame.UniBuild.Editor.Abstract;
+    using global::UniGame.UniBuild.Editor;
+    using global::UniGame.UniBuild.Editor.Interfaces;
     using UnityEngine;
 
 #if ODIN_INSPECTOR

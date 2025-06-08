@@ -1,7 +1,7 @@
 ﻿using System;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+using UniGame.UniBuild.Editor;
+using UniGame.UniBuild.Editor.Commands.PreBuildCommands;
+using UniGame.UniBuild.Editor.Interfaces;
 using UnityEngine;
 
 namespace UniModules.UniGame.UniBuild

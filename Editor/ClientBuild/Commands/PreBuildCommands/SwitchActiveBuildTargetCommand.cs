@@ -1,6 +1,6 @@
-﻿using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+﻿using UniGame.UniBuild.Editor.Interfaces;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
+namespace UniGame.UniBuild.Editor.Commands.PreBuildCommands
 {
     using System;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;

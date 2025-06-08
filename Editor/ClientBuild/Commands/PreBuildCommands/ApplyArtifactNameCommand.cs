@@ -1,12 +1,11 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
+﻿namespace UniGame.UniBuild.Editor.Commands.PreBuildCommands
 {
     using System;
     using System.IO;
-    using GitTools.Runtime;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using UniModules.UniGame.GitTools.Runtime;
     using UnityEditor;
     using UnityEngine;
-    using UnityEngine.Serialization;
 
 #if ODIN_INSPECTOR
     using Sirenix.OdinInspector;

@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PostBuildCommands {
+﻿namespace UniGame.UniBuild.Editor.Commands.PostBuildCommands {
     using Interfaces;
     using PreBuildCommands;
 

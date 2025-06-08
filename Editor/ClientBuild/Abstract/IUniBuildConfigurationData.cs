@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Abstract
+﻿namespace UniGame.UniBuild.Editor.Abstract
 {
     using UnityEditor;
 

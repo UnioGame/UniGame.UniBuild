@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+using UniGame.UniBuild.Editor.Interfaces;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Abstract
+namespace UniGame.UniBuild.Editor.Abstract
 {
+    using Interfaces;
+
     public interface IBuildCommands
     {
         IEnumerable<IUnityBuildCommand> Commands { get; }

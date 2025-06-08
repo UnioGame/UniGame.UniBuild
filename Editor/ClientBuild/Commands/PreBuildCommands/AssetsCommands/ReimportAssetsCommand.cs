@@ -1,6 +1,6 @@
-﻿using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+﻿using UniGame.UniBuild.Editor.Interfaces;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands.AssetsCommands
+namespace UniGame.UniBuild.Editor.Commands.PreBuildCommands.AssetsCommands
 {
     using System.Collections.Generic;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;

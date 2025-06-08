@@ -8,10 +8,9 @@ namespace UniGame
     using Newtonsoft.Json;
     using UniBuild.Editor.ClientBuild.BuildConfiguration;
     using UniBuild.Editor.ClientBuild.Interfaces;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions;
-    using UniModules.UniGame.UniBuild.Editor.ClientBuild.Interfaces;
+    using UniBuild.Editor;
+    using UniBuild.Editor.Extensions;
+    using UniBuild.Editor.Interfaces;
     using UniModules.UniGame.UniBuild.Editor.UnityCloudBuild;
     using UnityEditor;
     using UnityEngine;

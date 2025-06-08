@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild
+﻿namespace UniGame.UniBuild.Editor
 {
     using System;
     using System.IO;

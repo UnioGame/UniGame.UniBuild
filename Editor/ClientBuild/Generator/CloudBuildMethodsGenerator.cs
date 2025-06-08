@@ -1,11 +1,11 @@
 ﻿using System.Text.RegularExpressions;
 using UniGame;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Generator
+namespace UniGame.UniBuild.Editor
 {
-    using BuildConfiguration;
     using UniModules.Editor;
     using global::UniGame.Core.Runtime.Extension;
+    using Editor;
     using UnityEngine;
 
     public class CloudBuildMethodsGenerator

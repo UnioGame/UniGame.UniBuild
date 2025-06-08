@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UniModules.Editor;
-using UniModules.UniGame.UniBuild.Editor.ClientBuild.BuildConfiguration;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Processors
+namespace UniGame.UniBuild.Editor
 {
-    using Core.Editor.Tools;
-    using Generator;
+    using UniModules.UniGame.Core.Editor.Tools;
     using UnityEditor;
 
     public class BuildConfigurationsPostProcessor : AssetPostprocessor

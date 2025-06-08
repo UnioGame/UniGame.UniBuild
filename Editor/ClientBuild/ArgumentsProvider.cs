@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace UniModules.UniGame.UniBuild.Editor.ClientBuild 
+namespace UniGame.UniBuild.Editor 
 {
     using System;
     using System.Collections.Generic;

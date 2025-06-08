@@ -6,7 +6,7 @@ namespace UniModules.UniGame.UniBuild.Editor.UpdateVersionCommand
     using System.Text;
     using GitTools.Runtime;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
-    using ClientBuild.Commands.PreBuildCommands;
+    using global::UniGame.UniBuild.Editor.Commands.PreBuildCommands;
     using UnityEditor;
     using UnityEngine;
     

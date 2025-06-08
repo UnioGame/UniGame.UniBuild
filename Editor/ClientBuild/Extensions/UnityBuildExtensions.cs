@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Extensions
+﻿namespace UniGame.UniBuild.Editor.Extensions
 {
     using System.Text;
     using UnityEditor.Build.Reporting;

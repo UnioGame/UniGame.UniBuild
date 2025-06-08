@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Parsers
+﻿namespace UniGame.UniBuild.Editor.Parsers
 {
     using System;
     using System.Collections.Generic;

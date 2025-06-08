@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.UniBuild.Editor.ClientBuild.Commands.PreBuildCommands
+﻿namespace UniGame.UniBuild.Editor.Commands.PreBuildCommands
 {
     using System;
     using System.Collections.Generic;
