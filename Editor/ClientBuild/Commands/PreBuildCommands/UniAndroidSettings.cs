@@ -2,13 +2,16 @@
 {
     using System;
     using global::UniCore.Runtime.Attributes;
-    using Sirenix.OdinInspector;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.Serialization;
     using AndroidArchitecture = UnityEditor.AndroidArchitecture;
     using AndroidBuildType = UnityEditor.AndroidBuildType;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_6000_0_OR_NEWER && UNITY_ANDROID
     using Unity.Android.Types;
 #endif
@@ -45,9 +48,13 @@
         
         public bool overrideTextureCompression = true;
         
+#if ODIN_INSPECTOR
         [ShowIf(nameof(overrideTextureCompression))]
+#endif
         public MobileTextureSubtarget TextureCompression = MobileTextureSubtarget.ASTC;
+#if ODIN_INSPECTOR
         [ShowIf(nameof(overrideTextureCompression))]
+#endif
         public TextureCompressionFormat[] TextureCompressionFormats = new TextureCompressionFormat[]
         {
             TextureCompressionFormat.ASTC

@@ -3,10 +3,13 @@
     using System;
     using global::UniGame.UniBuild.Editor.ClientBuild.Interfaces;
     using Interfaces;
-    using Sirenix.OdinInspector;
     using UniModules.Editor;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public abstract class SerializableBuildCommand : IUnityBuildCommand
     {

@@ -24,28 +24,36 @@
         [Tooltip("use application name as artifact name")]
         public bool overrideArtifactName = true;
 
-        [Tooltip("artifact name")]
+#if ODIN_INSPECTOR
         [ShowIf(nameof(overrideArtifactName))]
+#endif
+        [Tooltip("artifact name")]
         public string artifactName = string.Empty;
 
         [Tooltip("override product name")]
         public bool overrideProductName = false;
 
-        [Tooltip("artifact name")]
+#if ODIN_INSPECTOR
         [ShowIf(nameof(overrideProductName))]
+#endif
+        [Tooltip("artifact name")]
         public string productName = string.Empty;
 
         [Tooltip("override bundle name")]
         public bool overrideBundleName = false;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(overrideBundleName))]
+#endif
         [Tooltip("use application name as bundle name")]
         public string bundleName = string.Empty;
 
         [Tooltip("override bundle name")]
         public bool overrideCompanyName = false;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(overrideCompanyName))]
+#endif
         [Tooltip("game company name")]
         public string companyName = string.Empty;
 
@@ -102,13 +110,19 @@
         [Tooltip("allow script debugging")]
         public bool scriptDebugging;
 
+#if ODIN_INSPECTOR
         [BoxGroup(nameof(buildOptions))]
+#endif
         public bool runOnBuildFinish;
 
+#if ODIN_INSPECTOR
         [BoxGroup(nameof(buildOptions))]
+#endif
         public BuildOptions buildOptions = BuildOptions.None;
 
+#if ODIN_INSPECTOR
         [BoxGroup(nameof(buildOptions))]
+#endif
         public ManagedStrippingLevel strippingLevel = ManagedStrippingLevel.Minimal;
 
 #if ODIN_INSPECTOR

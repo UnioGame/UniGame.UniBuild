@@ -4,7 +4,7 @@
   "displayName": "UniGame Scriptable Build Pipeline",
   "description": "Allow to make build pipeline with commands and group of commands and run from CI and Unity",
   "unity": "2023.1",
-  "version": "2025.0.0",
+  "version": "2025.0.1",
   "homepage": "https://github.com/UniGameTeam/UniGame.UniBuild#readme",
   "repository": {
     "type": "git",
